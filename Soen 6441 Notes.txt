@@ -1,0 +1,217 @@
+SOEN 6441 Final Review
+
+1 Software development models, Predictive and agile models
+
+waterfall model
+	move to a phase only when its preceding phase is reviewed and verified, hard to go back
+	
+Prototyping:early development of prototype software to elicit the problem statement and develop early solutions to get feedback
+
+Iterative and incremental development: structured use of iterations during software development to bring focus on a few development issues at a time. 
+
+Spiral development: risks associated with a particular problem/solution and to minimize risks.
+
+Rapid application development: productivity of software artifacts rather than the strict following of an elaborated process. 
+
+Extreme programming: precepts to be followed in order to achieve productivity while controlling potentially chaotic aspects of software development. 
+
+Predictive model (descriptive model)
+	to define all the roles, activities, and artifacts involved in a clearly defined process.   
+	difficulty changing direction
+	change control board: only most valuable changes are considered 
+	accumulates unstable information at all stages
+	
+Adaptive model (prescriptive models)
+	no exact definition of a process, only set of precepts
+	software dev = managing change
+	minimize risk: short timeboxes (builds), 1-4 weeks
+	real time communication instead of written documents
+	primary measure of progress: working software
+	ripple effect: change in one requirement changes everything beforehand in waterfall model 
+		in Adaptive model: lesser magnitude of ripple effect
+	benefits: 
+		early ROI (return on investment)
+		reduces unstable information by focusing on a subset of requirements at a time 
+		feedback from clients
+		reduced complexity
+	disadvantages:
+		difficulty incorporating builds into existing struction without degrading quality
+		addition of builds must be easy and straighforward
+		reorganization of existing structure 
+	solutions:
+		build plan: define scope, risks, important features & constraints to prevent ad-hoc development
+		structural quality control: refactoring
+		architectural baseline: control structural quality by providing big picture
+		parallel builds
+	
+Entities:
+	Actor: defines a set of skills and responsibilities that are necessary for the achievement of tasks and the production of artifacts in the process. 
+	Artifact: defines a product resulting from the achievement of a task, which is then used as input for further tasks in the process. 
+	Task: defines a unit of work that aims at producing one or more artifacts, using certain tools and techniques.
+	
+Rational Unified Process (RUP): iterative development
+	Role, Artifact, Activity, Discipline, Workflow
+	Components:	
+		Disciplines: major areas of concern in software development (ex: management, environment, requirements, implementation, test)
+		Phases: plan of action for each discipline, ranging from abstract thinking to concrete development to deployment. (ex: inception, elaboration, construction, transition)
+		Iterations: any number of iteration is allowed in each phase in order to reach for the set goals of the phase
+	Based on the results of testing the most recent iteration of a design, changes and refinements are made
+
+2 Extreme Programming
+	planning
+		long term build plan: general goals, can be changed 
+		short term build plan: detailed plan
+		drawbacks: rough plan is bad
+			solution: but small releases enables focus 
+		project: build plan for each successive builds, detailed plan for current task
+	small release
+		working version every week/month
+		drawbacks: time is spent to perfect each release
+			solution: planning & continuous integration reduces effort, testing reduces defect, simple design allows faster implementation 
+		project: each build is small release
+	system metaphor
+		"story" about the system, provides framework & appropriate features (ex: desktop for UI, spreadsheet for accounting)
+		drawback: not enough detail, misleading
+			solution: small releases provide feedback, refactoring within practicality
+		project: initial project description
+	simple design
+		smallest number of features that meet requirements of current phase
+		drawbacks: faults and omissions, overly simple, components might not integrate correctly
+			solution: refactoring prevents omissions, metaphor keeps project on track, pair programming avoid mistakes
+		project: determine simplest solution that satisfies requirement
+	testing
+		fully automated testing process 
+		draw back: time spent on testing must be justified
+			solution: simple design -> simple testing, pair programming: one tests & other codes, morale boost
+	refactoring
+		internal code change, no external
+		drawback: time
+			solution: collective ownership-> easier, coding standards, pair programming, continuous integration
+	pair programming
+		drawback: inefficient
+			solution: coding standards, simpledesign, refactoring, shared metaphor
+	collective ownership
+		anyone can make changes to any part of the code 
+		drawback: caution
+			solution: ocntinuous integration prevents large scale code breakdowns, tests, pair programming, coding standards 
+	continuous integration
+		system is assembled very frequently
+		drawbacks; different directions for different programmers 
+			solution: tests, refactoring, simple design
+		project: frequent commits
+	sustainable pace
+		no one works over time
+		drawback: productivity
+			solution: planning, testing 
+	on-site customer
+		actual user test case
+	coding standards 
+		coding convention for layout, variable names, file structure, documentation
+		
+3 Revision control systems
+Overview
+	why:	
+		structured practice that tracks and provides control over changes to files, particularly source code
+		rollback sequence in the event that some changes need to be undone
+		access previous project versions using version tagging
+	goals: 
+		automate integration tasks
+		providing coordinated changes to software products and components
+		recording the composition of versioned software products evolving
+	General functioning:
+		initial repository -> snapshot of files stored in repo can be retrieved (local copy) -> changes to local copy can be committed -> merge operation can be performed if multiple commits 
+	General concepts:
+		Repository: storage of the project files and directories
+		Working copy, Workspace: copy of a group of files in local
+		Commit: saving(or pushing) files to repo
+		Checkout: retrieving(or pulling) files from repo
+		Branch: collection of revisions that should not be committed onto main trunk (work on a part of code until perfected)
+			controlled isolation
+	Centralized Repository:
+		single server contains all recorded versions
+		client can checkout any version remotely
+		advantages:
+			distributed revisions
+		disadvantages:
+			single point of failure
+		file access concurrency
+		examples:
+			CVS: Concurrent Versioning System
+			Apache Subversion(SVN)
+			Perforce
+	Distributed Repository:
+		A server contains all recorded versions
+		Any client can then act as a server
+			clients can checkout any version remotely from any server
+		advantages:
+			no single point of failure
+			teamwork with individual initiatives/storage
+		examples:
+			git
+			mercuial
+			GNU Bazaar or Darcs
+		
+Eclipse CVS
+	Uses Eclipse IDE
+		based on notion of plugin
+	To create new CVS repo
+		cvs -d fullfoldername init
+Tortoise CVS
+	Under GNU 
+	Integrates with Windows file explorer
+		cvs -d fullfoldername init
+		must be full folder name
+GIT
+	open source distributed revision control system 
+	git repo is a folder where there is a .git folder used to manage revisions
+	git init command to create local git repo
+	git add to add files in folder 
+	git commit 
+	
+4 Coding Conventions
+	set of prescriptive rules that pertain to how code is to be written
+		File organization: how code is distributed between files, and organized within each file. 
+		Indentation: how particular syntactical elements are to be indented in order to maximize readability. 
+		Comments: how to consistently and efficiently use comments to help program understandability. 
+		Declarations:  what particular syntax to use to declare variables, data structures, classes, etc. in order to maximize code readability
+		Naming: how to give names to various named entities in a program as to convey meaning embedded into the names
+	basic rules to increase code readability/understandability
+		clear and consistent layout
+			indentation according to nesting level
+			blank lines to separate code components 
+		descriptive and mnemonic names for files, constants, types, variables, and functions/methods
+			generally accepted naming conventions:	
+				The length of a name should depend on its scope (global = long, small scope = shorter)
+				Constants: all upper case letters, with underscores
+				User defined type names or class names start with capital letter
+				method names start with lower case, use Upper case to separate words (ex: getScore())
+				attributes all lower case, use underscores to separate words (ex: start_time)
+				global names are prefixed with project name(ex: MMTstandardDeviation)
+			Brown University:	
+				file names use lower case charactes only
+				types & classes start with the projectname (ex: Project MagicMysteryTour ; Class MMTInterger, MMTUserInterface
+			Large Scale C++ softdev
+				prefix all attributes with d_ 
+			Hungarian notation
+				start with small number of lower case letters that identify the type of the variable
+				ex: lpszMessage: long pointer string terminated with zero byte
+		comments when the meaning of the code by itself is not completely obvious and unambiguous
+			eliminate pointless comments
+			improve existing code 
+				beginning of each file: purpose of file in project
+				class declaration: what the class is for
+				method: function, parameter description
+				variable declaration/class data members: not obvious roles
+			in-line comments should be used to highlight & explain important steps of algorithm
+			
+5 API documentation generation tools
+	Goal: make the software more understandable
+		Documentation is economically viable (time to write/maintain < time it allows to save by its use)
+	Hypertext: efficient browsing through huge documentation
+	Automated tools: extract API documentation from code
+	
+	JavaDoc
+		part of Java SDK
+		can output in different formats: HTML, RTF, PDF, LaTeX, manpages
+		Doxygen is most flexible: generate doc for various programming languages & output in various formats
+	
