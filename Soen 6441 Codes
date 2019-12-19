@@ -568,7 +568,352 @@ class StrategyExample {
     }
 }
 
+==========================================================================================================================================================================================================
+Stack unwinding
+
+public class DummyProcessor {
+  private Dummy pd;
+
+  public DummyProcessor(Dummy d) {
+    pd = d;
+  }
+
+  public void write() throws IOException {
+    System.out.println("Entering Function write");
+    // if anything fails below, localBDummy would be released 
+    // for the garbage collector to process
+    Dummy localBDummy = new Dummy("Local write() Dummy");
+    BufferedWriter file = new BufferedWriter(new FileWriter(
+                          “src/DummyOutput.txt"));
+    file.write(pd.dummyName + ", " + pd.age);
+    // file is never closed if write throws an exception!
+    // solution is to catch here, or else a resource is leaked
+    file.close();
+    System.out.println("Exiting Function write");
+  }
+
+  public void askUser() throws IOException {
+    System.out.println("Entering Function askUser");
+    // if anything fails below, localCDummy would be released 
+    // for the garbage collector to process
+    Dummy localCDummy = new Dummy("Local changeName() Dummy");
+    Scanner keyboard = new Scanner(System.in);
+    System.out.println("Enter the age of the Dummy: ");
+    pd.age = keyboard.nextInt();
+    this.write();
+    // Scanner is never closed if write throws an exception!
+    // solution is to catch here, or else a resource is leaked
+    keyboard.close();
+    System.out.println("Exiting Function askUser");
+  }
+} 
+ 
+ public class Dummy {
+  public String dummyName;
+  public int age;
+  Dummy(String s) {
+    dummyName = s;
+    System.out.println("Created Dummy: " + dummyName);
+  }
+
+  public void changeName() throws IOException {
+    System.out.println("Entering Function changeName"); 
+    // if anything fails below, localCDummy would be 
+    // released for the garbage collector to process
+    Dummy localCDummy = new Dummy("Local read() Dummy");
+    BufferedReader file = new BufferedReader(new FileReader(
+                          “src/DummyInput.txt"));
+    pd.dummyName = pd.dummyName + " " + file.readLine();
+    this.askUser();
+    // BufferedReader and FileReader are never closed if 
+    // write throws an exception! Solution is to catch here,
+    // or else a resource is leaked
+    file.close();
+    System.out.println("Exiting Function changeName");
+  }
+}
 
 
+public class StackUnwindingDemo {
+  public static void main(String[] args) {
+    System.out.println("Entering main");
+    Dummy d = null;
+    DummyProcessor dp = null;
+    try {
+      d = new Dummy("Buster");
+      dp = new DummyProcessor(d);
+      dp.changeName();
+    } catch (Exception e) {
+      System.out.println("Caught an exception");
+    }
+    System.out.println("Changed name of dummy: "+pd.dummyName);
+    System.out.println("Exiting main.");
+  }
+}
 
+==========================================================================================================================================================================================================
+Java Generics before erasure
+
+/**
+ * Generic class that defines a wrapper class around a single 
+ * element of a generic type. 
+ */
+public class Box<T extends Number> {
+
+    private T t;          
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get() {
+        return t;
+    }
+/**
+ * Generic method that uses both the generic type of the class
+ * it belongs to, as well as an additional generic type that is
+ * bound to the Number type. 
+ */
+    public void inspect(){
+        System.out.println("T: " + t.getClass().getName());
+    }
+    
+    public <U> void inspectWithAdditionalType(U u){
+        System.out.println("T: " + t.getClass().getName());
+        System.out.println("U: " + u.getClass().getName());
+    } 
+    
+    public static void main(String[] args) {
+        Box<Integer> integerBox = new Box<Integer>();
+        integerBox.set(new Integer(10));
+        integerBox.inspect();
+        integerBox.inspectWithAdditionalType("Hello world");
+        Integer i = integerBox.get();
+    }
+}
+
+==========after type erasure=========
+/**
+ * Generic class that defines a wrapper class around a single 
+ * element of a generic type. 
+ */
+public class Box {
+
+    private Number t;          
+
+    public void set(Number t) {
+        this.t = t;
+    }
+
+    public Number get() {
+        return t;
+    }
+/**
+ * Generic method that uses both the generic type of the class
+ * it belongs to, as well as an additional generic type that is
+ * bound to the Number type. 
+ *  
+ */
+    public void inspect(){
+        System.out.println("T: " + t.getClass().getName());
+    }
+    
+    public void inspectWithAdditionalType(Object u){ //if no bound is specified, Object is used
+        System.out.println("T: " + t.getClass().getName());
+        System.out.println("U: " + u.getClass().getName());
+    } 
+    
+    public static void main(String[] args) {
+        Box integerBox = new Box<Integer>();
+        integerBox.set(new Integer(10));
+        integerBox.inspect();
+        integerBox.inspectWithAdditionalType("Hello world");
+        Integer i = (Integer)integerBox.get(); //automatically casted to type used at instantiation
+    }
+}
+
+==========================================================================================================================================================================================================
+Java Generics  functions and wildcards
+
+class PairUtil {
+  public static <A extends Number, B extends Number> double add(Pair<A, B> p) {
+    return p.getFirst().doubleValue() + p.getSecond().doubleValue();
+  }
+
+  public static <A, B> Pair<B, A> swap(Pair<A, B> p) { //type parameters defines return and parameter types 
+    A first = p.getFirst(); //local variables in method are declared in terms of the type parameters 
+    B second = p.getSecond();
+    return new Pair<B, A>(second, first); //Type parameters are used as type arguments in constructor call
+  }
+}
+
+=============
+
+public void printCollection( Collection<?> c ){   //collection of elements of any type 
+  for (Object o : c){ 
+    System.out.println(o); 
+  } 
+}
+
+/**
+type of elements in the source List must be a subtype of type of elements in the destination List
+*/
+public static <T> void copy( List<? super T> dest, List<? extends T> src) {   
+  for (int i=0; i<src.size(); i++) 
+    dest.set(i,src.get(i)); 
+  } 
+}
+
+==========================================================================================================================================================================================================
+Java Generics instantiation vs type parameter 
+
+Basket b = new Basket();                    // OK but using raw type!
+Basket b1 = new Basket<Fruit>();            // OK but using raw type!
+Basket<Fruit> b2 = new Basket<Fruit>();     // OK !
+
+// Type mismatch: cannot convert from Basket<Fruit> to Basket<Apple>
+Basket<Apple> b3 = new Basket<Fruit>();     // WRONG !!! 
+
+// Type mismatch: cannot convert from Basket<Apple> to Basket<Fruit>
+Basket<Fruit> b4 = new Basket<Apple>();     // WRONG !!!
+
+Basket<?> b5 = new Basket<Apple>();         // OK! 
+
+// 1. Cannot instantiate the type Basket<?>
+// 2. Type mismatch: cannot convert from Basket<?> to Basket<Apple>
+Basket<Apple> b6 = new Basket<?>();         // WRONG !!!
+
+class Basket<E> {...}
+
+class Fruit {...}
+class Apple extends Fruit {...}
+class Orange extends Fruit {...}
+
+==========================================================================================================================================================================================================
+Java Generics Pair
+
+/**
+ *  Immutable generic pair class
+ */
+public class Pair<TypeOfFirst, TypeOfSecond>{
+    private TypeOfFirst first;
+    private TypeOfSecond second;
+
+    public Pair(){}
+
+    public Pair(TypeOfFirst first, TypeOfSecond second){
+        this.first = first;
+        this.second = second;
+    }
+
+    public Pair(Pair<TypeOfFirst, TypeOfSecond> newPair){
+        this.first = newPair.getFirst();
+        this.second = newPair.getSecond();
+    }
+
+    public String conc(Pair newpair){
+        return (String)newpair.getFirst()+String.valueOf(newpair.getSecond());
+    }
+
+    public TypeOfFirst getFirst() {
+        return this.first;
+    }
+
+    public TypeOfSecond getSecond() {
+        return this.second;
+    }
+
+    public String toString(){
+        return   first.getClass().getName()  + ":" + first.toString() + " , "
+                + second.getClass().getName() + ":" + second.toString();
+    }
+
+}
+
+import java.util.ArrayList;
+
+public class PairDriver {
+
+    public static void main(String[] args) {
+        Pair<String, Integer> p1 = new Pair<String, Integer>("Hello", 1);
+        System.out.println(p1);
+
+        ArrayList<Integer> v1 = new ArrayList<Integer>();
+        for (int x = 1; x <= 3; x++)
+            v1.add(new Integer(x));
+
+        ArrayList<String> v2 = new ArrayList<String>();
+        v2.add(new String("un"));
+        v2.add(new String("deux"));
+        v2.add(new String("trois"));
+
+
+        ArrayList<Pair<Integer, String>> v3 = new ArrayList<Pair<Integer, String>>();
+        for (int x = 0; x <= 2; x++)
+            v3.add(new Pair<Integer, String>(v1.get(x), v2.get(x)));
+
+        for (Pair<Integer, String> p : v3)
+            System.out.println(p);
+
+        System.out.println(p1.conc(v3.get(0)));
+
+    }
+}
+
+public class ComparablePair<TypeOfFirst extends Comparable<TypeOfFirst>, TypeOfSecond extends Comparable<TypeOfSecond>>
+  implements Comparable<ComparablePair<TypeOfFirst, TypeOfSecond>> {
+
+  private TypeOfFirst first;
+  private TypeOfSecond second;
+
+  public ComparablePair() {}
+
+  public ComparablePair(TypeOfFirst first, TypeOfSecond second) {
+    this.first = first;
+    this.second = second;
+  }
+
+  public ComparablePair(ComparablePair<TypeOfFirst, TypeOfSecond> newComparablePair) {
+    this.first = newComparablePair.getFirst();
+    this.second = newComparablePair.getSecond();
+  }
+
+  public String toString() {
+    return first.getClass().getName() + ":" + first.toString() + " , "
+           + second.getClass().getName() + ":" + second.toString();
+  }
+
+  public TypeOfFirst getFirst() { return this.first; }
+
+  public TypeOfSecond getSecond() { return this.second; }
+
+  public int compareTo(ComparablePair<TypeOfFirst, TypeOfSecond> otherComparablePair) {
+    int compareFirst = first.compareTo(otherComparablePair.getFirst());
+    int compareSecond = second.compareTo(otherComparablePair.getSecond());
+    if (compareFirst != 0) {
+      return compareFirst;
+    } else {
+      return compareSecond;
+    }
+  }
+}
+
+public class ComparablePairDriver {
+
+  public static void main(String[] args) {
+    ArrayList<ComparablePair<Integer, String>> alcp = new ArrayList<ComparablePair<Integer, String>>();
+    alcp.add(new ComparablePair<Integer, String>(3,"trois"));
+    alcp.add(new ComparablePair<Integer, String>(4,"quatre"));
+    alcp.add(new ComparablePair<Integer, String>(1,"un"));
+    alcp.add(new ComparablePair<Integer, String>(1,"one"));
+    alcp.add(new ComparablePair<Integer, String>(1,"one"));
+
+    ComparablePair<Integer, String> previousalcp = null; 
+    for (ComparablePair<Integer, String> p : alcp) {
+      System.out.println(p);
+      if (previousalcp != null) System.out.println(p.compareTo(previousalcp));
+      previousalcp = new ComparablePair<Integer, String>(p); 
+    }
+  }
+}
 

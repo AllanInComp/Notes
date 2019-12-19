@@ -397,3 +397,90 @@ GIT
 				strategy is to be called through a compute() method that will delegate to a concrete strategy method.  
 			Strategy Abstract Class: Superclass of all strategies containing the abstract compute() method to be implemented by all its subclasses. 
 			Concrete Strategies: Subclasses of Strategy that provide a different implementation for the compute() method.  
+10 Exception handling
+	Definition: mechanism that allows two separately developed program components to communicate when a program anomaly is encountered during the execution of the program
+		error codes: special codes written in case of malfunction and finish execution normally
+		creates complexity in simple programs
+		Earlist exception handling: LISP then PL/1
+	Methods:
+		clearly separate code should be provided for abnormal cases
+	Exception: data structure that is generated when a special error condition is met 
+		contains info about nature and context of this condition
+		pocessed by exception handling mechanism that only takes place when Exception is identified
+			normal excecution will be taken over by exception handling mechanism
+		can terminate or resume program depending on outcome of handling
+	try-throw-catch-finally:
+		try: code for normal execution of program 
+			try-with-resources block: declare an object as a resource managed during try block 
+				//declared class must implement java.lang.AutoCloseable interface, will automatically close whether or not try block is successful 
+				try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+				  String s = br.readLine();
+				}
+				
+		throw: trigger exeption handing mechanism 
+			throw new ExceptionClassName(/*PossiblySomeArguments*/"Some Descriptive String");
+			value thrown: argument to throw operator, must be an instance of the Throwable class/subclass
+		catch: handles exception	
+			only 1 parameter, type determines kind of exception the catch block handles 
+			specific to only 1 try block 
+			handling goes sequentially over catch block types (branches upon first catch)
+			handled locally in one of the following catch blocks
+		finally: code executes regardless 	
+		
+		outcome of try block:
+			1. No exception
+			2. Exception is thrown in try and caught in catch 
+				rest of code in try is skipped
+				control is transferred to a following catch block 
+				thrown object is passed to catch block 
+			3. Exception is thrown in try and no corresponding catch to handle 
+				rest of code in try is skipped
+				finally block is executed
+				function throws exception its calling function, calling function either catches or throws exception itself 
+				if main function can't catch, program ends 
+	stack unwinding:
+		Definition: once catch block takes control, stack unwinding releases all local variables that were used between execution site where exception was thrown 
+			physical deallocation of released objects done by garbage collector
+		Ex:
+			readers and writers are surrounded by try-catch to release the reader or writer class object if there is IO exception 
+		An object is only created if its constructor fully resolves. If it successfully calls other constructors before throwing, some resources allocated during the execution of the called constructors will be leaked.  
+	handle or declare rule
+		Definition: either handle the possible exception inside(with try-catch), or declare exception with throws
+		throws clause : public void readFile(String file) throws FileNotFoundException 
+			function readFile can only throw exceptions of type FileNotFoundException, will not handle FNF internally
+		only applies to checked exceptions 
+	Checked and unchecked exceptions:
+		checked: not of the RunTimeException type 
+			ex: IOException, SQLException, MalformedURLException
+	Custom exception classes:
+		extends Exception
+	Summary:
+		exception handling doesn't solve error handling problems, its only a mechanism 
+		exception handling doesn't provide a new way of dealing with errors, it only provides formal and explicit way of applying the standard techniques 
+
+11 Java Generics
+	Purpose:	
+		enables definition of classes and methods implemented independently of some type that they use as an abstraction by accepting type parameter
+		To define types and algorithms in different contexts 
+	Implementation:
+		uses type erasure to translate generic classes into executable code 
+			eliminiates all generic type information at compile time 
+			all remaining uses of type variables are replaced by the upper bound of the type variable (Object if there is no type bound)
+				code at runtime is makes the variables their upper bounds 
+				upper bound defined by <T extends Person>
+			whenever resulting code isn't type-correct, a cast to the appropriate type is automatically inserted
+		Java generics only provide compile-time type safety and eliminate the need for explicit casts when using type-abstract types and algorithms
+			java type erasure allows compile to keep track of generic definitions internally
+		C++ template on the other hand use template metaprogramming, by which whenever a template is instantiated with a new type parameter, the entire code for the template is generated adapted to the type parameter and then compiled, hence having several definitions for each template instance at run time
+	Benefits:
+		prevent explicit casting after extraction (invalid explicit casts throw ClassCastException)
+			compile can check at compile time whether such casts are valid or not
+		Define classes that are valid in different contexts of use.
+			Ensure that they are used correctly in each specific context of use.
+	parameter type bounds:
+		class Pair<A extends Comparable<A> & Cloneable,	B extends Comparable<B> & Cloneable > implements Comparable<Pair<A,B>>, Cloneable { ... }
+	wildcards:
+		syntactic construct that is used to denote a family of types in a generic class/method instantiation. Wildcards can be unbound or bound
+		" ? " : the unbounded wildcard. It stands for the family of all types.
+		" ? extends SuperType " : a wildcard with an upper bound. It stands for the family of all types that are SuperType itself or subtypes of SuperType.
+		" ? super SubType " : a wildcard with a lower bound. It stands for the family of all types that are SubType itself or supertypes of SubType.
