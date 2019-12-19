@@ -214,4 +214,186 @@ GIT
 		part of Java SDK
 		can output in different formats: HTML, RTF, PDF, LaTeX, manpages
 		Doxygen is most flexible: generate doc for various programming languages & output in various formats
-	
+		Generates browsable HTML, every identifier is a clickable link that leads to its own documentation
+		tags: start with @
+			@author
+			@version Used to create a version entry. A JavaDoc comment may contain at most one @version tag
+			@see Used to add a hyperlinked "See Also" entry to the class.
+			@param Used to add a parameter description for a method
+			{@inheritDoc} Used to copy the description from an overridden method
+			{@link reference} Used to link to another documented symbol, or to a URL external to the documentation. 
+
+6 Unit Testing Frameworks
+	Goal: avoid software failure caused by fault in code base
+	symptom: observable behavior of the system that enables us to observe a failure and possibly find its corresponding fault
+	debugging:
+		fault identification
+		fault correction 
+	Unit testing:
+		Definition: piece of code written by a developer that exercises a very small, specific area of functionality applied to one of the units of the code being tested
+		Benefits:
+			facilitates change: allows change or refactoring of code later & makes sure module still works 
+			simplifies integration: eliminate uncertainty
+			documentation: living documentation of the specifications of the units of the system 
+			distributes feedback 
+			confidence building
+			forces analysis
+		Automated testing: supports maintanability, extensibility and efficiency
+		Tested Class – the class that is being tested. 
+		Tested Method – the method that is tested. 
+		Test Case – the testing of a class’s method against some specified conditions.
+		Test Case Class – a class performing some test cases.
+		Test Case Method – a Test Case Class’s method implementing a test case.
+		Test Suite – a collection of test cases that can be tested in a single batch.
+		
+7 MVC
+	part of the basic of the smalltalk programming environment
+	Model
+		behavior and data of app domain
+		responds to requests for info about its state (usually from view)
+		responds to instructions to change state (usually from controller)
+		notifies observers
+	View
+		Model => visual, interaction (UI)
+		n view => 1 model
+			push model: view registers itself with model for change
+			pull model: view calls model when it needs to retrieve data 
+	Controller
+		receives user input
+		make calls on appropriate model objects
+	Procedure
+		Registration:
+			1. model objects are created
+			2. views register as observers on model objects
+			3. controller is bound to a view (reacts to user interaction)
+			4. controller is given reference to underlying model (trigger model's behavior on its methods)
+		User interacts with view
+			1. View recognizes GUI action
+			2. View calls method on controller
+			3. Controller translates signal to model function
+			4. model alteration reflected back to view by notifying observers 
+
+8 Refactoring
+	technique for restructuring an existing body of code, change only internal structure
+	doesn't fix bugs, but help find bugs
+	doesn't add new functionality, but helps further adding of functionality
+	essential to agile method
+	behavior-preserving transformation
+	is Cost overhead to project (add-on activity)
+	Pattern:
+		encapsulate downcast: moving downcast to within the method 
+			return (Reading) readings.lastElement();
+		consolidate Conditional Expression: combining same conditional results
+		consolidate duplicate conditional fragments: same fragment of code exists in all branches of conditional expression
+		rename method: increase readability
+		pull up field: moving shared field to superclass
+		push down method: moving exclusively relevant classes to subclasses
+		
+9 Design Patterns
+	General:
+		Pattern name: name of pattern, increases design vocabulary, allows higher level abstraction
+		Problem: specific design problems, list of conditions that must be met before application of pattern
+		Solution: elements that make up the design, their relationships, responsibilities and collaborations
+		Consequences: trade-offs of applying the pattern
+	Creational patterns 
+		- create objects for you, rather than having you instantiate objects directly. This gives your program more flexibility in deciding which objects need to be created for a given case.
+		Factory Pattern: a decision making class that returns one of several possible subclasses of an abstract base class depending on the data that are provided
+			Context: 
+				various objects should be used polymorphically, a class can't anticipate kind of objects it must create
+			Basic pattern:
+				base class is abstract (mostly)
+				base class contains default methods and only subclasses when insufficient
+				parameters are passed to factory to allow different Concrete subclasses to be made
+				subclasses may share same method names with different behaviors
+			Abstract Factory Pattern: an interface to create and return one of several families of related objects. 
+			Interface: shape
+				contains base method void draw();
+			Classes implements shape: Circle, Square, Rectangle
+				contains @Override public void draw();
+			Class ShapeFactory: contains method public static Shape getShape(String type)
+				returns Concrete shape classes (C,S,R) depending on string (with if statements)
+			Main:
+				Shape shape1 = ShapeFactor.getShape("Circle");
+				shape1.draw();
+		Builder Pattern: separates the construction of a complex object from its representation.
+			Context: 
+				algorithm for creating a complex object should be independent of the parts that make up the object and how they are assembled
+				the object type should be the same, the parts are different
+				objects may have different internal behavior and detailed structure, but overall structure and interface should be the same 
+			Basic pattern: provides construction abstraction
+				builder: an abstract interface for creating parts of a product
+				concrete builder: constructs and assembles parts of the product by implementing the builder interface
+					independent of each other -> improves modularity 
+				director: constructs an object using builder interface
+				product: complex object under construction
+					should have same attribute types, but will have different values depending on concrete builder
+		Prototype Pattern: starts with an initialized and instantiated class and copies or clones it to make new instances rather than creating new instances.
+		Singleton Pattern: a class of which there can be no more than one instance. It provides a single global point of access to that instance.
+			Context: lazy instantiation technique, not created until the Instance() method is called forthe first itme
+			ex: window managers, print spoolers, filesystems
+			private static SingleObject instance = new SingleObject(); //static member of the class itself
+			private SingleObject(){} //class won't be instantiated
+			public static SingleObject getInstance(){return instance;}
+			public void method(){}
+
+	Structural patterns 
+		- help you compose groups of objects into larger structures, such as complex user interfaces or accounting data.
+		Adapter Pattern: a client class to use another class that may provide a service to it, but whose API is incompatible with what the client is expecting. 
+			Context:
+				convert interface of a class into another interface
+				lets classes work together
+			Basic pattern:
+				Target: defines the domain-specific interface that Client uses.
+				Adapter: adapts the interface Adaptee to the Target interface.
+					extends Target class to acquire its functions/methods
+					contains private Adaptee object
+					constructor sets Adaptee as its object
+					Target functions called by Adapter will call private Adaptee's corresponding function 
+				Adaptee: defines an existing interface that needs adapting.
+				Client: collaborates with objects conforming to the Target interface.
+			2-way Variation (Class Adapter):
+				Both concrete classes implement their own Interface (ex: RoundPeg implements IRoundPeg)
+				Adapter implements both Interfaces
+				Adapter contains private copies of both classes
+		Flyweight pattern: pattern for sharing objects, each instance does not contain its own state, but stores it externally. allows efficient sharing of objects to save space, when there are many instances, but only a few different types.
+		
+		The Façade pattern: is used to make a single class represent an entire subsystem.
+
+		The Decorator pattern can be used to add features (functions, attributes) to objects dynamically at runtime
+			Basic pattern:
+				Component: Abstract class representing the objects to be decorated by the various Decorators. 
+					public abstract class Coffee{
+						public abstract double getCost();
+						public abstract String getIngredients();
+				Concrete Component: The potentially many sub-classes that can be decorated
+					public class Espresso extends Coffee {  
+						public double getCost() {
+							return 1.25;
+						}
+						public String getIngredients() {
+							return "Strong Coffee";
+						}
+					}
+				Decorator: Abstract class that wraps a Component and will have some of its subclasses to decorate it. 
+					extends the abstract Component class
+					contains protected final copy of Compoenent class object
+					constructor sets Componenet its object 
+					@Override methods defines main behaviors (wrapper withthe Componenet interface and delegates its methods to the wrapped Concrete object)
+				Concrete Decorator: Different decorators that add different members to the Component.
+					extends the abstract Decorator class 
+					constructor takes in Concrete Component object as parameter, calls super(object)
+					@Override methods defines specifics of the concrete decorator to override default Decorator 
+		
+	Behavioral patterns 
+		- help you define the communication between objects in your system and how the flow is controlled in a complex program.
+		Observer pattern: one-to-many 
+		Strategy pattern: change the behavior of an object depending on some conditions that are only to be determined at runtime
+			1. Define a group of algorithms that applies to a family of classes
+			2. Encapsulate each algorithm separately 
+			3. Make the algorithms interchangeable within that family
+		Basic pattern:
+			Context Class: uses a certain behavior that is to be changed during execution. 
+				contains a Strategy object and provides a setStrategy() method to change its own strategy. 
+				strategy is to be called through a compute() method that will delegate to a concrete strategy method.  
+			Strategy Abstract Class: Superclass of all strategies containing the abstract compute() method to be implemented by all its subclasses. 
+			Concrete Strategies: Subclasses of Strategy that provide a different implementation for the compute() method.  

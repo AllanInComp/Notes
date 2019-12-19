@@ -1,0 +1,574 @@
+SOEN 6441 Final Codes
+=====================================================================================================================================================================================================================================
+Builder Pattern
+
+/**
+ * Product class of the Builder pattern
+ */
+public class Shelter {
+  /**
+   * The components of the shelter to be constructed
+   */
+  private String roof, structure, floor;
+
+  /**
+   * Constructing the roof component
+   */
+  public void setRoof(String newRoof){
+    roof = newRoof;
+  }
+  /**
+   * Constructing the structure component
+   */
+  public void setStructure(String newStructure){
+    structure = newStructure;
+  }
+  /**
+   * Constructing the floor component
+   */
+  public void setFloor(String newFloor){
+    floor = newFloor;
+  }
+  public String toString(){
+    return new String("roof= " + roof + "\nstructure= " + structure + "\nfloor= " + floor + "\n");
+  }
+}
+
+/**
+ * Abstract Builder class of the Builder pattern
+ * 
+ */
+public abstract class ShelterBuilder {
+  /**
+   * Product to be constructed by the builder
+   */
+  protected Shelter shelterProduct;
+  /**
+   * Get the constructed Shelter from the Builder
+   */
+  public Shelter getShelter(){
+    return shelterProduct;
+  }
+  /**
+   * Create a new unspecified Shelter that 
+   * will be eventually build by calling the 
+   * following abstract methods in a concrete 
+   * class derived from the Shelter class
+   */
+  public void createNewShelter(){
+    shelterProduct = new Shelter();
+  }
+  abstract void buildRoof();
+  abstract void buildStructure();
+  abstract void buildFloor();
+}
+
+public class PolarShelterBuilder extends ShelterBuilder{
+  public void buildRoof(){                         // Build the different parts of the Shelter
+    shelterProduct.setRoof("ice dome");        
+  }                                              
+  public void buildStructure(){                    // The construction of the Shelter parts 
+    shelterProduct.setStructure("ice blocks");     // depends on the type of Shelter being built
+  }
+  public void buildFloor(){                        // The construction process in a real-life 
+    shelterProduct.setFloor("caribou skin");       // example may be more complex.
+  }
+}
+
+public class TropicalShelterBuilder extends ShelterBuilder{
+  public void buildRoof(){
+    shelterProduct.setRoof("palm tree leaves");    // The construction process may vary
+  }                                                // across the different Concrete Builders    
+  public void buildStructure(){
+    shelterProduct.setStructure("bamboo");
+  }
+  public void buildFloor(){
+    shelterProduct.setFloor("goat skin");
+  }
+}
+
+/**
+ * Director of the Builder pattern
+ * 
+ */
+public class Explorer {
+  /**
+   * The Explorer is to use a specific "build plan": the ShelterBuilder
+   */
+  private ShelterBuilder builder;
+
+  public void setBuilder(ShelterBuilder newShelterBuilder) {
+    builder = newShelterBuilder;
+  }
+  /**
+   * The Director assumes that all Shelters have the same parts
+   * and each part is built by calling the same method
+   * though what these specific methods do may be different.
+   */
+  public void constructShelter() {
+    builder.createNewShelter();
+    builder.buildRoof();
+    builder.buildStructure();
+    builder.buildFloor();
+  }
+  /**
+   * @return gets the Shelter after it has been built
+   */
+  public Shelter getShelter() {
+    return builder.getShelter();
+  }
+}
+
+/**
+ * Driver class for the Shelter Builder Example
+ *
+ */
+public class Expedition {
+  public static void main(String[] args){
+    Explorer explorer; 
+    Shelter hut, igloo;
+
+    ShelterBuilder tropicalBuilder = new TropicalShelterBuilder();
+    ShelterBuilder polarBuilder = new PolarShelterBuilder();
+
+    explorer = new Explorer();
+
+    explorer.setBuilder(tropicalBuilder);
+    explorer.constructShelter();
+    hut = explorer.getShelter();
+    System.out.println(hut);
+
+    explorer.setBuilder(polarBuilder);
+    explorer.constructShelter();
+    igloo = explorer.getShelter();
+    System.out.println(igloo);
+  }
+}
+=====================================================================================================================================================================================================================================
+Singleton Pattern
+
+public class SingleObject {
+   /** 
+    * create an object of SingleObject embedded as a static member of the class itself
+    */
+   private static SingleObject instance = new SingleObject();
+   /** 
+    * Make the constructor private so that this class cannot be instantiated
+    */
+   private SingleObject(){}
+   /**
+    * If the instance was not previously created, create it. Then return the instance
+    */
+   public static SingleObject getInstance(){
+      if (instance == null)
+      instance = new SingleObject();
+      return instance;
+   }
+   public void showMessage(){
+      System.out.println("Hello World!");
+   }
+}
+
+
+public class SingletonDriver {
+   public static void main(String[] args) {
+
+      //Get the only object available
+      SingleObject object = SingleObject.getInstance();
+
+      //use the Singleton
+      object.showMessage();
+   }
+}
+
+=====================================================================================================================================================================================================================================
+Adapter Pattern 
+
+/**
+* The SquarePeg class. This is the Target class.
+*/
+public class SquarePeg {
+  /**
+   * This is the interface that the client class knows about Pegs  
+   */    
+  public void insert(String str) {
+    System.out.println("SquarePeg insert(): " + str);
+  }
+}
+
+/**
+* The RoundPeg class. This is the Adaptee class.
+*/
+public class RoundPeg {
+  /**
+   * The client does not know this interface, though
+   * it provides the service that the client wants.  
+   */
+  public void insertIntoHole(String msg) {
+    System.out.println("RoundPeg insertIntoHole(): " + msg);
+  }
+}
+
+/**
+* The SquareToRoundPegAdapter class. This is the Adapter class.
+* It adapts a SquarePeg to a RoundPeg. Its interface is that of a SquarePeg.
+*/
+public class SquareToRoundPegAdapter extends SquarePeg {
+  /**
+   * The adapter contains the RoundPeg Adaptee
+   */
+  private RoundPeg roundPeg; 
+  /**
+   * Upon creation, the Adapter is plugged into the RoundPeg Adaptee
+   */
+  public SquareToRoundPegAdapter(RoundPeg peg) {
+    //the roundPeg is plugged into the adapter
+    this.roundPeg = peg;}
+  /**
+   * The Adapter provides the Target's method and translates it
+   * to the corresponding Adaptee's method call.  
+   */
+  public void insert(String str) {
+    //the roundPeg can now be inserted in the same manner as a squarePeg!
+    roundPeg.insertIntoHole(str);}
+}
+
+/** 
+ * Driver program using the Peg Adapter
+ */
+public class AdapterDriver{
+  public static void main(String args[]) {
+
+    // Create some pegs.
+    RoundPeg roundPeg = new RoundPeg();
+    SquarePeg squarePeg = new SquarePeg();
+
+    // Do an insert using the square peg (standard).
+    squarePeg.insert("I am a SquarePeg in a square hole.");
+
+    // Now we'd like to do an insert using the round peg.
+    // But this client only understands the insert()
+    // method of pegs, not a insertIntoHole() method.
+    // The solution: create an adapter that adapts
+    // a square peg to a round peg!
+
+    SquarePeg wannabeRound = new SquareToRoundPegAdapter(roundPeg);
+    wannabeRound.insert("I am a SquarePeg in a round hole!");}
+}
+
+==========================================================================================================================================================================================================
+Adapter Pattern two-way (Class Adapter)
+
+/**
+* The IRoundPeg interface.
+*/
+public interface IRoundPeg {
+  public void insertIntoHole(String msg);
+}
+
+/**
+ * The RoundPeg Target/Adaptee class.
+ */
+public class RoundPeg implements IRoundPeg {
+  public void insertIntoHole(String msg) {
+    System.out.println("RoundPeg insertIntoHole(): " + msg);}
+}
+
+/**
+* The ISquarePeg interface.
+*/
+public interface ISquarePeg {
+  public void insert(String str);
+}
+
+/** 
+ * The SquarePeg Target/Adaptee class.
+ */
+public class SquarePeg implements ISquarePeg {
+  public void insert(String str) {
+    System.out.println("SquarePeg insert(): " + str);}
+}
+
+
+/**
+* The PegAdapter class. This is a two-way adapter class.
+*/
+public class PegAdapter implements ISquarePeg, IRoundPeg {
+  private RoundPeg roundPeg;
+  private SquarePeg squarePeg;
+
+  public PegAdapter(RoundPeg peg) {
+    this.roundPeg = peg;}
+  public PegAdapter(SquarePeg peg) {
+    this.squarePeg = peg;}
+
+  public void insert(String str) {
+    roundPeg.insertIntoHole(str);}
+  public void insertIntoHole(String msg){
+    squarePeg.insert(msg);}
+}
+
+/**
+ * Driver class for two way Peg Adapter.
+ */
+public class TwoWayAdapterDriver {
+  public static void main(String args[]) {
+
+    // Create some pegs.
+    RoundPeg roundPeg = new RoundPeg();
+    SquarePeg squarePeg = new SquarePeg();
+
+    // Do an insert using the square peg.
+    squarePeg.insert("I am a SquarePeg into a square hole.");
+
+    // Create a two-way adapter and do an insert with it.
+    ISquarePeg wannabeRound = new PegAdapter(roundPeg);
+    wannabeRound.insert("I am a SquarePeg into a round hole!");
+
+    // Do an insert using the round peg.
+    roundPeg.insertIntoHole("I am a RoundPeg into a round hole.");
+
+    // Create a two-way adapter and do an insert with it.
+    IRoundPeg wannabeSquare = new PegAdapter(squarePeg);
+    wannabeSquare.insertIntoHole("I am a RoundPeg into a square hole!");}
+}
+==========================================================================================================================================================================================================
+Decorator class
+
+/** 
+ * The abstract Coffee class defines the functionality of any Coffee 
+ * implemented by subclasses of Coffee
+ */
+public abstract class Coffee {
+    public abstract double getCost(); 
+    public abstract String getIngredients(); 
+}
+
+/** 
+ * Kind of Coffee
+ */
+public class Espresso extends Coffee {  
+    public double getCost() {
+        return 1.25;
+    }
+ 
+    public String getIngredients() {
+        return "Strong Coffee";
+    }
+}
+
+/** 
+ * Kind of Coffee
+ */
+public class SimpleCoffee extends Coffee {
+    public double getCost() {
+        return 1;
+    }
+ 
+    public String getIngredients() {
+        return "Coffee";
+    }
+}
+
+/** 
+ * Abstract decorator class - note that it extends the Coffee abstract class
+ */
+public abstract class CoffeeDecorator extends Coffee {
+    protected final Coffee decoratedCoffee;
+    /**
+     * Wraps a Coffee object inside an object of one of 
+     * CoffeeDecorator's subclasses
+     */
+    public CoffeeDecorator (Coffee decoratedCoffee) {
+        this.decoratedCoffee = decoratedCoffee;
+    }
+    /**
+     * Provides the wrapper with the Coffee interface and delegates 
+     * its methods to the wrapped Coffee object. 
+     */
+    public double getCost() { 
+        return decoratedCoffee.getCost();
+    }
+    public String getIngredients() {
+        return decoratedCoffee.getIngredients();
+    }
+}
+
+/** Decorator that mixes Milk with coffee.
+ *  It is a subclass of CoffeeDecorator, and thus a subclass of Coffee. 
+ */
+class Milk extends CoffeeDecorator {
+/**
+ * When creating a decorated Coffee, pass a Coffee to be decorated
+ * as a parameter. Note that this can be an already-decorated Coffee.
+ */
+    public Milk (Coffee decoratedCoffee) {
+        super(decoratedCoffee);
+    }
+    /**
+     * Overriding methods defined in the abstract superclass. 
+     * Enables to provide different behavior for decorated Coffee methods
+     */
+    public double getCost() { 
+        return super.getCost() + 0.5;
+    }
+    public String getIngredients() {
+        return super.getIngredients() + ", Milk";
+    }
+    /**
+     * May also add additional members for decorated-specific data 
+     * or behavior
+     */
+}
+
+class Sprinkles extends CoffeeDecorator {
+  public Sprinkles (Coffee decoratedCoffee) {
+    super(decoratedCoffee);
+  }
+  public double getCost() {
+    return super.getCost() + 0.2;
+  }
+  public String getIngredients() {
+    return super.getIngredients() + ", Sprinkles";
+  }
+}
+
+class Whip extends CoffeeDecorator {
+  public Whip (Coffee decoratedCoffee) {
+    super(decoratedCoffee);
+  }
+  public double getCost() {
+    return super.getCost() + 0.7;
+  }
+  public String getIngredients() {
+    return super.getIngredients() + ", Whip";
+  }
+}
+
+public class DecoratorDriver {
+  public static final void main(String[] args) {
+    Coffee c = new SimpleCoffee();
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+ 
+    c = new Milk(c);
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+ 
+    c = new Sprinkles(c);
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+ 
+    c = new Whip(c);
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+ 
+    // Note that you can also stack more than one decorator of the same type
+    c = new Sprinkles(c);
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+
+    c = new Espresso();
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+ 
+    c = new Milk(c);
+    System.out.println("Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
+  }
+}
+
+Output:
+Cost: 1.0; Ingredients: Coffee
+Cost: 1.5; Ingredients: Coffee, Milk
+Cost: 1.7; Ingredients: Coffee, Milk, Sprinkles
+Cost: 2.4; Ingredients: Coffee, Milk, Sprinkles, Whip
+Cost: 2.6; Ingredients: Coffee, Milk, Sprinkles, Whip, Sprinkles
+Cost: 1.25; Ingredients: Strong Coffee
+Cost: 1.75; Ingredients: Strong Coffee, Milk
+
+==========================================================================================================================================================================================================
+Strategy Pattern
+
+/** Class configured with a ConcreteStrategy object and maintains
+*   a reference to a Strategy object. Depending on which strategy is 
+*   plugged in, it will execute a different operation.  
+*/
+class Calculator {
+    private Strategy strategy;
+ 
+    /**
+     * Plugs in a specific strategy to be used 
+     */
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+    
+    /**
+     * Method that executes a different strategy depending on what strategy was 
+     * plugged in upon instantiation. 
+     */
+    public int executeStrategy(int a, int b) {
+        return this.strategy.execute(a, b);
+    }
+
+/** 
+ * The classes that implement a concrete strategy should implement this.
+ * The Calculator class uses this to use a concrete strategy. 
+ */
+interface Strategy {
+/**
+ * Method whose implementation varies depending on the strategy adopted. 
+ */
+    int execute(int a, int b); 
+}
+
+/**
+ * A concrete Strategy that implements a addition operation
+ */
+class Add implements Strategy {
+    public int execute(int a, int b) {
+        System.out.println("Called Add's execute()");
+        return a + b;  // Do an addition with a and b
+    }
+}
+
+/**
+ * A concrete Strategy that implements a subtraction operation
+ */
+class Subtract implements Strategy {
+    public int execute(int a, int b) {
+        System.out.println("Called Subtract's execute()");
+        return a - b;  // Do a subtraction with a and b
+    }
+}
+ 
+/**
+ * A concrete Strategy that implements a multiplication operation
+ */
+class Multiply implements Strategy {
+    public int execute(int a, int b) {
+        System.out.println("Called Multiply's execute()");
+        return a * b;   // Do a multiplication with a and b
+    }    
+}
+
+/** 
+ * Driver class to test the Strategy pattern 
+ */
+class StrategyExample {
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator();
+        
+        // Three contexts following different strategies
+        calculator.setStrategy(new Add());
+        int resultA = calculator.executeStrategy(3,4);
+        System.out.println("Result A : " + resultA );
+
+        calculator.setStrategy(new Subtract());
+        int resultB = calculator.executeStrategy(3,4);
+        System.out.println("Result B : " + resultB );
+
+        calculator.setStrategy(new Multiply());
+        int resultC = calculator.executeStrategy(3,4);
+        System.out.println("Result C : " + resultC );
+    }
+}
+
+
+
+
+
