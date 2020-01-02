@@ -1,0 +1,19 @@
+Hibernate
+	Overview:	
+		Definition:	framework for persisting/saving Java objects in a database
+			-Java app <-> hibernate <-> database
+			download from www.hibernate.org
+		Benefits: 
+			Handles low-level SQL
+			Minimizes amount of JDBC code you have to develop
+			ORM: Provides Object-to_relational Mapping 
+				-Map java class to database table
+				ex: Student (int id; String firstName; String lastName; String email)
+					Use XML or java annotations to map the class instances into database
+		Saving java object with hibernate
+			//instantiate java object
+			Student theStudent = new Student("John","Doe","john@gmail.com")
+			//save it to database
+			int theId = (Integer) session.save(theStudent)
+			//retrieve from database using the primary key
+			Student myStudent = session.get(Student.class, theID)
