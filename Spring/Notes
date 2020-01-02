@@ -1,0 +1,140 @@
+Spring framework termininology
+
+Spring framework
+Inversion of Control:
+	Def: Control of objects or part of program is transferred to a container/framework
+	Advantage: 
+		-decoupling execution of task from its implementation
+		-easier to switch between implementations
+		-greater modularity of a program
+		-ease of testing by isolating a component or mocking its dependencies, allow components to communicate via contracts 
+	Implementations:
+		-Strategy Design Patterns:
+		-Factory Pattern
+		-Dependency Injection (Spring)
+Dependency Injection
+	Components:
+		-the service object(s) to be used
+			ex: A User-defined Class object to be instantiated (Ex: BaseBallCoach)
+		-the client object that is depending on the service(s) it uses
+			ex: Main method that calls for BaseBallCoach 
+		-the interfaces that define how the client may use the services
+		-the injector, which is responsible for constructing the services and injecting them into the client
+	Def: pattern through which IOC is implementated (by Spring) control being inverted = objects' dependencies
+	Mechanism:
+		-connecting objects (injection) is done by an assembler rather than objects themselves 
+			Spring IOC containiner ApplicationContext context = new ClassPathXmlApplicationContext("user-defined-context.xml");
+				-containing uses configuration metadata in the form of XML configuration
+		-constructor based DI3
+			<bean id="item1" class="org.baeldung.store.ItemImpl1" /> 
+			<bean id="store" class="org.baeldung.store.Store"> 
+				<constructor-arg type="ItemImpl1" index="0" name="item" ref="item1" /> 
+			</bean>
+		-setter-based DI: container calls setter methods of the class 
+			<bean id="store" class="org.baeldung.store.Store">
+				<property name="item" ref="item1" />
+			</bean>
+		-field-based DI
+Bean Scoping
+	Def: default initialization of Spring bean is singleton (all calls to obtain the bean will return same object from the spring framework)
+	Mechanism
+		-(default) bean scope is prototype (shared instance)
+			<bean id= "myCoach" class="com.allanudemy.springdemo.BaseBallCoach" scope = "singleton">	
+		-explicitly specify new instances of same object to be specified as prototype
+			<bean id= "myCoach" class="com.allanudemy.springdemo.BaseBallCoach" scope = "rototype">	
+
+Spring configuration with Annotation
+	Procedure:
+		1. Enable component scanning in Spring config file
+			<beans ...>
+				<context:component-scan base-package="com.allan.spring.specificclass"
+			</beans>
+		2. Add the @Component Annotation to Java classes
+			@Component ("myCoach")
+				-if only @Component, default bean id is class Name (first character would always be lowercase when retrieving the bean from spring container)
+			public class TennisCoach{....}
+				-special case of when BOTH the first and second characters of the class name are upper case, then the name is NOT converted to lower case.
+		3. Retrieve bean from Spring container
+			Coach theCoach = context.getBean("myCoach",Coach.class)
+			
+	Spring AutoWiring
+		Def: For dependency injection use auto wiring, look for a class that matches the property (ex: matches by type: class or interface) and injects it automatically 
+		Example:
+			1. Inject FortuneService into a Coach implementation
+			2. SPring will scan @Components
+			3. Any class/interface that implmenets FortuneService interface will be recognized
+			4. Recognized class/interface will be injected into dependency
+		Properties:
+			-If there are multiple implementation classes of an interface, can use @Qualifier annotation to specify which specific implemented class to use 
+		Autowiring Injection Types:
+			-Constructor Injection
+				1. Define dependency interface and class
+				2. Create ctor in class for injections
+				3. configure the DI with @AutoWired annotation
+					-Write @Autowired on Ctor of class 
+			-Setter Injection
+				1. Create setter methods in class 
+				2. configure DI with @AutoWired annotation
+			-Field Injection
+				Def: inject dependencies by setting field values on your class directly (even private fields)
+					-accomplished by using java reflection
+				Process: 
+					configure DI with @Autowired (no need for setter methods) on class attributes 
+	Qualifiers (when there are multiple implementations in the wiring dependency):
+		Prevents exception
+			org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'com.allanudemy.springannotation.FortuneService' available: expected single matching bean but found 2: happyFortuneService,sadFortuneService
+		Procedure: 
+			On top of the field attribute, add @Qualifier ("*specific implementation bean id*")
+			Can be used with @Autowired upon field injection 
+		With Constructors:	
+			the @Qualifier can only specify bean id inside the parameter of the ctor
+				@AutoWired
+				public TennisCoach (@Qualifier ("HappyFortuneService") FortuneService fs){
+					this.fortuneService = fs;
+				}
+	Injecting properties file with Java annotations:
+		1. Create properties file to hold properties 
+			values.properties
+		2. Load properties file in the XML config file
+			//after <context:component-scan .../>
+			<context:property-placeholder location = "classpath:values.properties"/>
+		3. Inject properties values with AutoWiring injection (ctor, setter, field)
+			@Autowired
+			@Value("${foo.email}")
+			private String email_address;
+	
+	Specify Scope with annotations:
+		Procedure:
+			@Scope under @Component (not @Autowired) since this is where an instance is created and put in the Spring container 
+	Bean lifecycle methods:
+		-not included in java 9 or higher, need to download javax annotation api jar file 
+		@PostConstruct: initial-method equivalent in xml 
+		@PreDestroy: destroy-method equivalent in xml
+		-both methods that implement these annotations will normally have void as return value, since the value won't be returned any way
+		-methods can't accept any arguments 
+		
+Spring configuration using java code (no xml)
+	Procedure:
+		1. Create java class and annotate as @Configuration
+		2. Add component scanning support @ComponentScan 
+		3. Read Spring Java configuration class
+		4. Retrieve bean from Spring container
+		
+Defining Spring Beans with Java Code (no xml)
+	Procedure:
+		1. Define method to expose bean
+			@Bean
+			public FortuneService happyFortuneService(){
+				return new HappyFortuneService();
+			}
+			@Bean
+			public Coach SwimCoach(){
+				return new SwimCoach(happyFortuneService());
+			}
+		2. Inject bean dependencies 
+		3. Read Spring Java configuration class 
+
+Injecting values from Properties file (no xml)
+	Procedure:
+		1. use @PropertySource("*property file name*") after @Configuration in the Configuration class 
+		2. use @Value("${*property name*}") on top of field name to obtain property value in the Bean class 

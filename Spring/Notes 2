@@ -1,0 +1,321 @@
+Spring MVC (with XML)
+
+Spring MVC benefits
+	-Able to use Java to build web app
+	-Set of reusable UI components
+	-Help manage application state for web requests
+	-Process form data: validation,conversion etc 
+	-Flexible configuration for view layer： not only limited to JSP, can use Thymeleaf, Freemarker...
+
+Components
+	Overview: 
+		Web Browser (view, web pages, UI)
+		-> Front Controller (DispatcherServlet): part of the Spring Framework, already given in jar file
+			Delegates UI requests to other objects in the controller layer 
+		-(passes model to)> Controller （to be created)
+			Processing Logic
+		-(passes model to)> View Template
+			JSP(Java Server Pages) + JSTL(JSP Standard Tag Library) (most common)
+			Thymeleaf, Groovy, Velocity, Freemarker ...
+		-> Web Browser 
+	-A set of web pages to layout UI components
+	-Collection of Spring beans controllers, services, etc)
+	-Spring configuration (XML, Annotations, or Java)
+	
+Configuration
+	1. Add configurations to file: WEB-INF/web.xml
+		Configure Spring MVC DispatcherServlet
+		Set up URL mappings to SPring MVC DispatcherServlet
+	2. Add configurations to file: WEB-INF/spring-mvc-demo-servlet.xml
+		Add support for Spring component scanning
+		Add support for conversion, formatting and validation
+		Configure Spring MVC View Resolver
+		
+Creating Spring Home Controller and View	
+	Procedure:
+		1. Create Controller class
+			Annotate class with @Controller (inherits from @Component, supports scanning and web MVC)
+		2. Define Controller method
+			flexible methods (any parameters, return different stuff)
+		3. Add Request Mapping to Controller method
+			@RequestMapping("/") over the defined controller methods 
+			String entered in the parameter of @RequestMapping will be used by the view pages to specify which method to call in the Controller 
+		4. Return view name
+			if method returns a String (ex:"main-menu") //not the complete name since config file will give complete name
+			this will cause Spring mvc to use the configuration file to find the view page called *prefix*+main-menu+*suffix*
+		5. Develop View Page 
+		
+Starting basic server Requirements
+	1. Spring library must be Referenced by Dynamic Project's Deployment Assembly (right click -> properties -> Deployment Assembly)
+	2. A server (ex: tom cat) must be connected (to IDE //eclipse), its server.xml must specify a port number >0 and not in use 
+	3. Web jsp files must be defined by the user 
+	4. Servlet xml must define a bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		where affixes and suffixes can be defined 
+		other features must be defined as well, better just use a readily available one with all the xml dependencies  
+	5. Servlet xml must include <context:component-scan base-package="*path to java class package*"/>
+	6. web.xml must include servlets with name specific to mapping, as well as corresponding servlet classes (the classes we define in java section)
+	7. Make sure server can run normally 
+		Steps to free port which is already used to run Tomcat server in Eclipse
+			For example , suppose 8080 port is used , we need to make free 8080 to run tomcat
+			Step 1: (open the CMD command)
+			C:\Users\username>netstat -o -n -a | findstr 0.0:8080
+			TCP    0.0.0.0:3000      0.0.0.0:0              LISTENING       3116
+			Now , we can see that LISTENING port is 3116 for 8080 ,
+			We need to kill 3116 now
+			Step 2:
+			C:\Users\username>taskkill /F /PID 3116
+			For MAC:
+			Step 1: lsof -i :8080
+			Step 2: kill$(lsof -t -i :8080)
+			
+Reading HTML form Data 
+	Procedure:
+		1. Create Controller class
+		2. Show HTML form
+			a. Create controller method to show HTML form
+			b. Create View Page for HTML form 
+		3. Process HTML Form
+			a. Create controller method to process HTML Form
+				@RequestMapping ("*corresponding name for method call*")
+				method should return String representing the file name 
+			b. Develop View Page for Confirmation
+
+Request Parameters
+	Definition:
+		Allow values to be mapped directly into parameter fields in the Controller method 
+	Procedure:
+		-use @RequestParameter("*variable name*")String var in the parameter field of the Controller, followed by the Model model paramter
+		ex:
+			@RequestMapping("/processFormV3")
+			public String letsShoutName(@RequestParam("studentName")String theName, Model model){...}
+		Or- use parameter HttpServletRequest object to obtain desired variable name 
+		ex: 
+			@RequestMapping("/processFormV2")
+		public String letsShoutName(HttpServletRequest request, Model model){
+			//read the reqeust parameter from the HTML form
+			String theName = request.getParameter("studentName");
+			...
+		}
+		-to add an attribute to be used by the view, do model.addAttribute("*name of attribute*",*value of attribute*)
+		ex: model.addAttribute("messsage",theName.toUpperCase());	
+			
+Resolving ambiguous mapping
+	Def: there will be error 500 if more than 1 method have the same @RequestMapping parameter value
+	Solution:
+		add Parent mapping to controller 
+	Consequency:
+		all other mappings in the controller will have an extra parent directory
+		in the jsp files, no need to specify parent directory for all mappings, only the root where ambiguity occured
+			This is because once you entered the sepecified differentiated mapping, you are inside the parent scope, all consequent mappings be inside the parent scope
+			
+Spring MVC Forms 
+	Advantages compared to normal forms:
+		-supports data binding
+		-generate html for you (instead of writing html code to create forms)
+	Procedure:
+		1. Specify Spring namespace at the beginning of JSP file 
+		<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+		
+		2. Parse Model object into Control class mapped methods for data binding 
+		@RequestMapping("/showForm")
+		public String showForm(Model model){
+			model.addAttribute("student",new Student());
+			return "student-form";
+		}
+		
+		3. Set up HTML form - Data Binding
+			Code:
+				<form:form action="processForm" modelAttribute="student">
+				First name: <form:input path="firstName"/>
+				<br><br>
+				Last name: <form:input path="lastName"/>
+				<br><br>
+				<input type="submit" value="Submit"/>
+			-when the form is submitted, Spring MVC will call setter methods to the specified paths 
+			-the path allocation allows population of form field, Spring MVC will get student.getFirstName()
+			
+Spring mvc Text field/Drop down/Radio buttons/Checkbox form: 
+	-Uses <form:form> from the spring api in the HTML file
+	Development Process example:
+		1. Create Student class
+			private String first_name, last_name;
+			private LinkedHashMap countryOptions;
+		2. Create Student controller class
+			@Controller
+			@RequestMapping("student")
+			public class StudentController{
+				@RequestMapping("/showForm")
+				public String showForm(){
+					return "student-form";
+				}
+				
+				@RequestMapping("/processForm)
+				public String processForm(@RequestParameter("student")Student theStudent){
+					return "student-confirmation";
+				}
+			}
+		3. Create HTML form 
+			Add <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+				to the head of the HTML form
+		4. Create form processing code
+			Text field:
+				<form:form action="processForm" modelAttribute="student">
+					First name: <form:input path = "first_name"/>
+					<br><br>
+					Last name: <form:input path = "last_name"/>
+					<br><br>
+					<input type = "submit" value= "Submit!"/>
+				</form:form>
+			Drop-down:
+				<form:select path="country">
+					<form:options items= "${student.countryOptions}" /> //student already has populated LinkedHashMap countryOptions as an attribute
+				</form:select>
+			Drop-down: Using properties file to load and parse HashMap values:
+				1. add line to *project-name*-servlet.xml
+					<util:properties id="countryOptions" location="classpath:../*file-name*.properties" /> 
+				2.inject the properties values into Spring controller class 
+					@Value("#{countryOptions}") 
+					private Map<String, String> countryOptions;
+				3. Add the injected HashMap to the MVC model 
+					theModel.addAttribute("theCountryOptions", countryOptions); 
+				4. Update the JSP page to allocate <form:select> options directly from the model object countryOptions
+					<form:select path="country"> //path sets attribute correspondence of student object
+						<form:options items="${theCountryOptions}/>
+					</form:select>
+			Radio button: 
+				-student has private String favoriteProgLanguage
+				<form:radiobutton path="favoriteProgLanguage" value="Java"/>
+				<form:radiobutton path="favoriteProgLanguage" value="C++"/>
+				<form:radiobutton path="favoriteProgLanguage" value="Python"/>
+				<form:radiobutton path="favoriteProgLanguage" value="Ruby"/>
+			Checkbox:
+				
+				<form:checkbox path="systems_used" value="MacOS" />
+				<form:checkbox path="systems_used" value="MS Windows" />
+				<form:checkbox path="systems_used" value="Linux" />
+
+		5. Create confirmation page 
+			Text field:
+				<body>
+					The Student is confirmed: ${student.first_name} ${student.last_name}
+				</body>
+				
+Spring mvc form validation
+	Base process:
+		1. Set up development environment
+			-Download Validation jar files from hibernate 
+				hibernate.org -> hibernate validator -> download
+		2. Required field
+		3. Validate number range: min, max
+		4. Validate using regex
+		5. Custom validation
+	Checking for required fields:
+		1. Add validation rule to Customer class 
+			Not null input:
+				@Notnull(message="is required") //will send error message back to HTML if field input is null
+				@Size(min=1, message="is required")
+				private String lastName 
+				..*getters and setters*..
+			Min and Max constraints
+				@NotNull
+				@Min (value=0, messeage="must be >=0")
+				@Max (value=10, message="must be<=10")
+				private Integer freePasses; //if want to check using @NotNull, need to change type to Integer, as well as getter/setter
+				..*getters and setters*..
+			Regex:
+				@Pattern(regexp="[A-Za-z][0-9][A-Za-z]([ ]||[-])?[0-9][A-Za-z][0-9]",message="must be in Postal Code format")
+				private String postal_code;
+			Make sure input is a specific type 
+				1. ex: only integer => use a properties file to define a type mismatch exception
+				message.properties:	
+					typeMissmatch.customer.freePass=Invalid number
+				2. relay to servlet.xml
+					<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+						<property name="basenames" value="resources/messages"/>
+					</bean>
+			Custom error message:
+				1. Print out the BindingResult object parsed into the processing method of the controller 
+					System.out.println("Binding Result":br);
+				2. Errors such as typeMismatch are shown in output, use the field name to define custom messages in messages.properties
+			
+		2. Display error messages on HTML form
+			<!-- inside HTML file, right after input for Last name field -->
+			<form:errors path="lastName" cssClass="error"/> 
+		3. Perform validation in the Controller class 
+			@RequestMapping("/processForm")
+			public String processForm(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult theBindingResult){
+				if(theBindingResult.hasErrors()){
+					return "customer-form";
+				}else{
+					return "customer-confirmation";
+				}
+			}
+		4. Update confirmation page 
+			<body>
+				The customer is confirmed: ${customer.firstName} ${customer.lastName}
+			</body>
+
+Spring mvc custom validation
+	Using custom java annotation defined by the user (ex: @CourseCode defined by the user to allow courses to be only start in "LUV")
+	Definition: to validate user input to a specific level defined by the user business logic 
+	
+	Procedure:
+		1. Create custom validation rule
+			a. Create @CourseCode annotation
+				@Constraint(validatedBy= CourseCodeConstraintValidator.class) //helper class that contains business rules/validation logic 
+				@Target({ElementType.METHOD, ElementType.FIELD}) //where the annotation can be listed ex: on a method or a field 
+				@Retention(RetentionPolicy.RUNTIME) //how long will the annotation be stored/used, .RUNTIME means run this policy at runtime
+				public @interface CourseCode{
+					
+					public String value() default "LUV";
+					
+					public String message() defult "must start with LUV"
+					
+					//define default groups, must be included
+					public Class<?>[] groups() default {};
+					
+					//define default payloads , must be included
+					public Class<? extends Payload>[] payload() default {};
+				}
+			b. Create CourseCodeConstraintValidator class(helper class)
+				public class CourseCodeConstraintValidator implements ConstraintValidator<CourseCode, String>{
+					private String coursePrefix;
+					
+					@Override
+					public void initialize(CourseCode theCourseCode){
+						coursePrefix = theCourseCode.value();		
+					}
+					
+					/**
+						theCode : data from the HTML form 
+						
+					*/
+					@Override
+					public boolean isValid(String theCode, ConstraintValidatorContext theConstraintValidatorContext){
+						boolean result;
+						if(theCode!= null){
+							result = theCode.startsWith(coursePrefix);
+						}else{
+							result = true;
+						}
+						return result;
+					}
+				
+				}
+		2. Add validation rule to Customer class
+			@CourseCode(value="LUV",message="Must start with LUV")
+			private String course
+		3. Display error messages on HTML
+		4. Update confirmation page 
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
