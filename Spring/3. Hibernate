@@ -183,7 +183,19 @@ SQL rev:
 		-by default, no operations are cascaded in hibernate (need to specify in a comma delimited list)
 	Eager vs Lazy Loading:
 		Eager: retrieve everything
-		Lazy: retrieve data on request
+			-loads all dependent entities (ex: load instructor and all of its courses)
+			Problem: retrieve too much irrelevant data, takes too much memory space
+		Lazy: retrieve data on request (best practice in the industry)
+			-loads main entity first
+			-load dependent entities on demand (lazy)
+			-requires an open Hibernate session (need connection to database to retrieve data)
+				-Hibernate will throw an exception if session is close and attempt to retrieve lazy data 
+		Fetch Type： determines how information is loaded, Eager or Lazy 
+			default fetch types:
+				@OneToOne(fetch= FetchType.EAGER)
+				@OneToMany(fetch= FetchType.LAZY)
+				@ManyToOne(fetch=FetchType.EAGER)
+				@ManyToMany(fetch= FetchType.LAZY)
 	Reverse Engineer (create EER diagram in mySQL):
 	
 Entity Lifecycle:
@@ -259,7 +271,7 @@ Advanced mappings
 			}
 			
 		4. Create Main App 
-		
+			
 			
 	Many to One: many courses map to 1 instructor
 	
