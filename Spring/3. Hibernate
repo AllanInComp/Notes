@@ -17,3 +17,250 @@ Hibernate
 			int theId = (Integer) session.save(theStudent)
 			//retrieve from database using the primary key
 			Student myStudent = session.get(Student.class, theID)
+		Querying for Java Objects
+			//use of HQL: Hibernate query language
+			Query query = session.createQuery("from student");
+			List<Student> students = query.list();
+		JDBC: Java DataBase Connectivity
+			Hibernate uses JDBC for all database communications 
+			-configure Hibernate to make use of the JDBC driver to communicate with database
+			-use hibernate API to connect to server via JDBC with the sql url, username and password 
+			
+	Setup Environment	
+		1. JDK
+		2. IDE
+		3. Database Server
+			Setting up MySQL:
+			https://dev.mysql.com/downloads/
+				1. install MySQL environment
+				2. open MySQL workbench
+				3. open and execute files (from hibernate demo directory):
+					a. create authorized use, ex: 
+						01-create-user.sql //create user hbstudent, allow the user to create tables and everything else with the database
+							-once successfully run, can test by closing the original sql server, try making new connection with hbstudent (password hbstudent)
+					b. create table with attribute, ex: 
+						02-student-tracker.sql //create a new database table: student 
+							-variables: id, first_name, last_name, email
+						
+		4. Hibernate Jar filees and JDBC Driver
+			Setting up Hibernate in eclipse
+				1. Create eclipse project
+					-java project 
+					-create new lib folder in project to add jar and JDBC files 
+				2. Download hibernate files
+					hibernate.org => download Hibernate ORM zip file 
+				3. Download MySQL JDBC Driver
+				4. Add JAR files to eclipse project, build path
+					if is Java 9 or higher, need additional jar files:
+						javax.activation-1.2.0.jar
+						jaxb-api-2.3.0.jar
+						jaxb-core-2.3.0.jar
+						jaxb-impl-2.3.0.jar
+			Setting up JDBC in eclipse:
+				https://dev.mysql.com/downloads/
+				1. download Connector/J 
+					-connector for java == JDBC driver 
+					-select Platform Independent zipfile
+				2. past the jar file to the lib directory 
+				3. add the jar in the build path 
+			Testing JDBC connection:
+				String jdbcUrl = "jdbc:mysql://localhost:3306/hb_student_tracker?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
+				String user = "hbstudent";
+				String pass = "hbstudent";
+				Connection myConn = DriverManager.getConnection(jdbcUrl,user,pass);
+
+	Hibernate Configuration
+		1. Add Hibernate Configuration file
+			create config file hibernate.cfg.xml at the src directory 
+		2. Annotate Java Class
+			Entity Class: java class that is mapped to a database table 
+			1. Map class to database table
+				Annotations to entity class:
+					@Entity 
+						-entity to be mapped to database table 
+					@Table(name="student")
+						-specify which table to map to (no need to specify if the class name and table name are the same)
+			2. Map fields to database columns
+				Annotations to entity class fields:
+					@Id 
+						-primary key to the class 
+					@Column(name="id")
+						-specify field name maps to database column id 
+						-no need to specify if field names are the same between class field and database column 
+					@GeneratedValue(strategy=GenerationType.IDENTITY) // let MySQL handle the generation AUTO_INCREMENT, most common strategy 
+						//custom generators still need to generate unique values 
+						-Custom generation strategy : create implementation of org.hibernate.id.IdentifierGenerator, override the method: public Serializable generate(...)
+		3. Develop Java Code to perform database operations
+		
+Hibernate query Language：
+	similar to SQL
+		//get all students in student table 
+		List<Student> theStudents = session.createQuery("from student").getResultList();
+		//get all students whose last name is 'Doe' or first name is daffy
+		List<Student> theStudents = session.createQuery("from Student s where s.lastName='Doe' OR s.firstName='Daffy'").getResultList();
+			"where s.email LIKE '%gmail.com'" //email address ends in gmail.com
+
+Hibernate CRUD Apps:
+	CRUD: 
+		Create objects (and save)
+			SessionFactory: java class that Reads the hibernate config file & creates session objects. Create the session factory object once in the app (heavy-weight object)
+			Session: wrapper around a JDBC connection to the database, used for saving and retrieving objects to the database 
+				// create session factory
+				SessionFactory factory = new Configuration().configure().addAnnotatedClass(Student.class).buildSessionFactory();
+				
+				//create session
+				Session session = factory.getCurrentSession();
+			
+				Student tempStudent = new Student ("Allan","Yu","ybox@gmail.com");
+		
+				//start a transaction
+				session.beginTransaction();
+				
+				//save the student object
+
+				System.out.println("saving the student...");
+				session.save(tempStudent);
+							
+				//commit transaction
+				session.getTransaction().commit();
+				
+			-When saving an object into sql, the parameters that represents the attributes of the objects can't be seen on the console, need following steps:
+				1. Add log4j to your project classpath 
+					log4j v1.2.17
+				2. Add log4j.properties to your “src” directory	
+				
+			MySQL altertable auto-increment:
+				//auto-increments from id=3000
+				ALTER TABLE hb_student_tracker.student AUTO_INCREMENT= 3000
+				//reset the table, including alterations to table 
+				truncate hb_student_tracker.student 
+		Read objects (retrieve)
+			Example of retrieving single student object from sql server 
+				//primary key of student
+				int studentId = 1;
+				
+				//start transaction
+				session = factory.getCurrentSession();
+				session.beginTransaction();
+				
+				//use the session object to save java object
+				System.out.println("Getting new student object...");
+				Student tempStudent = session.get(Student.class, studentId);
+				
+				//commit transaction
+				session.getTransaction().commit();
+				
+				System.out.println("Got student: "+tempStudent);
+			Retrieving a list of student objects using HQL:
+				//HQL query inside parentheses 
+				session.createQuery("from Student").getResultList()
+				
+		Update Objects
+			Retrieving single object and updating: once altered object, can commit directly back to sql with the session.getTransaction.commit(); 
+				int studentId = 1;
+				Student myStudent = session.get(Student.class, studentId);
+				
+				//update first name to "Scooby"
+				myStudent.setFirstName("Scooby")
+				
+				//commit the transaction, no hard requirement to do session.save on the object to retrieve it 
+				session.getTransaction.commit();
+			
+		Delete Objects 
+			Retrieve object, perform session.delete(obj);
+				int studentId = 1;
+				Student myStudent = session.get(Student.class, studentId);
+				session.delete(myStudent);
+			Delete using HQL:
+				session.createQuery("delete from Student where id=2").executeUpdate();
+			
+SQL rev:
+	Primary key: identify a unique row in a table
+	Foreign key: link tables together, a field in one table that refers to primary key in another table
+	Cascade: applying the same operation to related entities via configuration
+		-perfom a save on instructor -> saves instructor-detail as well
+		-casecade delete works as well (normally specify one-to-one use cases	
+		-by default, no operations are cascaded in hibernate (need to specify in a comma delimited list)
+	Eager vs Lazy Loading:
+		Eager: retrieve everything
+		Lazy: retrieve data on request
+	Reverse Engineer (create EER diagram in mySQL):
+	
+Entity Lifecycle:
+	Detach: no longer associated with a Hibernate session
+	Merge: reattached to session 
+	Persist: transitions new instances to managed state. Next flush/commit will save in db 
+	Remove: Next flush/commit will delete it in db 
+	Refresh: reload/synch object with data in db 
+
+Exception handling:
+	Unclosed connections:
+		Upon retrieving null value from database (due to null pointer), exception will prompt
+		Solution: add session.close(); and factory.close(); to the finally scope
+
+Advanced mappings 
+	One to One: instructor has one instructor-detail
+		Uni-directional & Bi-directional:
+		1. Define database tables
+		2. Create InstructorDetail class
+			@Entity
+			@Table(name="instructor_detail")
+			public class InstructorDetail{...}
+			//Bi-directional: keep the Uni-directional schema, only update the InstructorDetail class
+			//mappedBy tells Hibernate to use information from the Instructor class @JoinColumn to help find associated instructor 
+			@OneToOne(mappedBy="instructorDetail",cascade=CascadeType.ALL)
+			private Instructor instructor;
+			
+		3. Create Instructor class
+			@Entity
+			@Table(name="instructor")
+			public class Instructor{
+				@OneToOne (cascade=CascadeType.ALL) //if want to limit to certain types, do : cascade={CascadeType.MERGE,CascadeType.REMOVE,...}
+				@JoinColumn(name="instructor_detail_id")
+				private InstructorDetail instructorDetail;
+				...
+				}
+		3.5, Breaking the two-way chain:
+			session.beginTransaction();
+			int id =1;
+			Instructor tempInstructor = session.get(Instructor.class,id);
+			tempInstructor.setInstructorDetail(null);
+			session.delete(tempInstructor);
+			session.getTransaction.commit();
+			
+		
+		4. Create Main App 
+			1. Create object classes Instructor, InstructorDetail and instantiate them
+			2. Set instructor_detail for Instructor object 
+			3. begin transaction 
+			
+	One to Many: instructor has many courses, many courses have 1 instructor
+		Requirement: 
+			Bi-directional
+			Deleting an instructor doesn't delete the courses, vice versa 
+		1. Define database tables
+			
+			
+		2. Create Course class
+			@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}) //do not apply cascade delete 
+			@JoinColumn(name="instructor_id")
+			private Instructor instructor;
+			
+		3. Update Instructor class 
+			@OneToMany(mappedBy="instructor") //in the Course class
+			private List<Course> courses;
+			
+			//add convenience methods for bi-directional relationshp
+			public void addCourse(Course course){
+				if(courses==null) courses = new ArrayList<>();
+				courses.add(course);
+				course.setInstructor(this);
+				
+			}
+			
+		4. Create Main App 
+		
+			
+	Many to One: many courses map to 1 instructor
+	
+	Many to Many: many students map to many courses
