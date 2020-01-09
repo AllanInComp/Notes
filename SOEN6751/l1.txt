@@ -18,6 +18,9 @@ Definition (Interaction design):
 	Contributors to ID: psychology, social science, computing science, engineering
 	Design practices contributing to ID: graphic,product,artist-design,industrial,film
 
+Good design: easy to learn, effective to use, enjoyable, error tolerant (mistake recovery).
+
+
 Knowledge required before UI design:
 	-User profile, behavior, background, skill level
 	-task to accomplish
