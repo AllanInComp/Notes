@@ -190,6 +190,33 @@ SQL rev:
 			-load dependent entities on demand (lazy)
 			-requires an open Hibernate session (need connection to database to retrieve data)
 				-Hibernate will throw an exception if session is close and attempt to retrieve lazy data 
+			Resolving lazy issue:
+				fetch the object before session closes;
+				tempInstructor.getCourses();
+			HQL JOIN FETCH:
+				//start a transaction
+				session.beginTransaction();
+				
+				//perform hibernate query with HQL, join tables together, get all data at once
+				int id = 1;
+				Query <Instructor> query = session.createQuery("select i from Instructor i "
+						+"JOIN FETCH i.courses "   //also fetch the courses associated with each instructor
+						+"where i.id =:theInstructorId"
+						,Instructor.class);
+				
+				//set parameter on query "where i.id =:theInstructorId
+				query.setParameter("theInstructorId", id);
+				
+				//execute and get instructor
+				Instructor tempInstructor= query.getSingleResult();
+				
+				session.close();
+
+				
+				System.out.println(tempInstructor);
+				
+				//commit transaction, if session is closed, can't commit
+				session.getTransaction().commit();
 		Fetch Type： determines how information is loaded, Eager or Lazy 
 			default fetch types:
 				@OneToOne(fetch= FetchType.EAGER)
