@@ -273,9 +273,8 @@ Advanced mappings
 			2. Set instructor_detail for Instructor object 
 			3. begin transaction 
 			
-	One to Many: instructor has many courses, many courses have 1 instructor
+	One to Many (Bi-directional): instructor has many courses, many courses have 1 instructor
 		Requirement: 
-			Bi-directional
 			Deleting an instructor doesn't delete the courses, vice versa 
 		1. Define database tables
 			
@@ -298,8 +297,55 @@ Advanced mappings
 			}
 			
 		4. Create Main App 
+	One to Many (unidirectionl)		
+		Include reviews list for Course class 
+			@OneToMany(fetch= FetchType.LAZY,
+			cascade= {CascadeType.ALL} //once delete course, delete all associated reviews			
+			)
+			@JoinColumn(name="course_id")
+			private List <Review> reviews;
+		Do not include Course object for review(many) class 
+			@Id
+			@GeneratedValue(strategy=GenerationType.IDENTITY)
+			@Column(name="id")
+			private int id;
 			
-			
+			@Column(name="comment")
+			private String comment;
+		-deleting a Course also cascades deletion of reviews, but not vice versa 
+
 	Many to One: many courses map to 1 instructor
-	
+		-uses join tables to allow many to many relations between two classes/tables 
+		-do not specify cascade deletes since it's many to many , only cascading PERSIST,MERGE,REFRESH,DETACH
+		
+		
+		public class Course{
+			@ManyToMany
+			@JoinTable(
+				name = "course_student",
+				joinColumns= @JoinColumn (name = "course_id")
+				inverseJoinCOlumns= @JoinColumn (name = "student_id)  //inverse = "other side"
+			)
+			private List<Student> students;
+			
+		}
+		
+		public class Student{
+			@ManyToMany
+			@JoinTable(
+				name = "course_student",
+				joinColumns= @JoinColumn (name = "student_id")
+				inverseJoinCOlumns= @JoinColumn (name = "course_id)  //inverse = "other side"
+			)
+			private List<Course> courses;
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 	Many to Many: many students map to many courses
