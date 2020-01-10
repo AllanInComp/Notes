@@ -1,0 +1,89 @@
+Interaction Design Concepts
+
+Jayakumar@cse.concordia.ca 
+
+chapters 7 (needs->requirements) & 13(design framework: agile UEX) are not included in course, are reading material (included in exam/quiz)
+
+quiz covers material after previous quizzes to the date of the second quiz
+==================================================================================================
+
+
+Chapter 1:
+
+Definition (Interaction design): 
+	-The design of spaces for human communication and interaction
+	Designing interactive products to support how people communicate and interact with stuff
+	Goal: develop useful products providing intuitive & enjoyable user experience
+	Means: through interface interaction (how users act and react to events and inter-communicate)
+	Components of ID:
+		Contributors to ID: psychology, social science, computing science, engineering
+		Design practices contributing to ID: graphic,product,artist-design,industrial,film
+	User Interface Design:	
+		Difference to software dev: ensure that the system will be effectively usable
+			-focuses on ease of use/learning, efficiency of task completion instead of designing robust/reliable software
+			Knowledge required before User Interface Design:
+				-User profile, behavior, background, skill level
+				-task to accomplish
+				-context and environment where the system will be used
+				-technicality
+		Difficulties of UID: study on diversity/capability/preference of users, COI with software devs 
+	
+Good design: easy to learn, effective to use, enjoyable, error tolerant (mistake recovery).
+
+HCI: human-computer interaction
+	-bi directional relation to interaction design
+	-main difference: scope. 
+		ID: has a much wider scope (theory, research, practice of designing user experiences for all manner of technologies, systems, and products)
+			
+		HCI: concerns only with design, evaluation and implementation of interactive computing systems for human use
+
+User Experience (UX):
+	-central to interaction design
+	Core threads that make up holistic experience
+		-sensual: level of absorption people have with devices/applications (thrill, fear, pain, comfort)
+		-emotional: smooth functioning of an app increases happiness
+		-compositional: narrative part of an experience, how user understands composition & function of an app
+		-spatio-temporal: space and time where user interacts with product
+	
+Process of ID:
+	1. Establish requirements
+	2. Designing alternatives
+	3. Prototyping
+	4. Evaluating	
+
+Design Principles:
+	Visibility: more visible functions allow ease of use for user
+	Feedback: how consequences of action from use is fed back to them to allow continuation of activity
+	Constraints: restricting kinds of user interaction that can take place at a given moment
+	Consistency: designing interfaces to have similar operations and use similar elements for achieving similar tasks (easier to learn and use)
+	Affordance: attribute of an object that allows people to know how to use it (to give a clue)
+
+Multidisciplinary teams:
+	Adv: different perspectives, more ideas & methods to develop
+		Conceptualizing the design space early on;
+			orientation: enable design team to ask specific kinds of questions about how the conceptual model will be understood be the targeted users
+			open-mindedness: prevent design team to have narrow focus
+			common ground: set of common terms (reduce chance of misunderstandings)
+	DisAdv: difficult to communicate progress, COI (computer engineer vs graphical designer)
+	
+Chapter Summary:
+	ID is concerned with designing interactive products to support that way people communicate & interact
+	ID is multidisciplinary, many inputs from disciplines and fields
+	UE is central to ID
+	Optimizing interaction between users and products requires knowledge on: context of use, type of activity, accessibility, culture, user groups
+	Identifying and specifying relevant usability and user experience helps lead to design of good interactive products	
+
+==================================================================================================
+	
+Chapter 2:
+
+Conceptual model (abstraction outlining functionality of a product & its interaction with people):	
+	Components:
+		Metaphors and analogies: convey understanding of the product and its use
+		Concepts exposed: domain objects, attributes, operations 
+		Relationships between concepts (whether one object contains another)
+		Mappings between the concepts and the user experience the product is designed to support/invoke
+	Best models:
+		-appear obvious
+		-intuitive operations
+		-constrained way of performing a specific operation
