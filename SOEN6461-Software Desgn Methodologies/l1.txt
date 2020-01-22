@@ -1,0 +1,112 @@
+7 quizzes (must have cell phone) 20%
+	-topic of the quiz are in the slides
+7 programming exercises (must have laptop) 20% 
+deliverable 20%
+design project 20%
+50% min for final exam to pass 
+put [SOEN6461] in front of email topics
+
+
+Objective: learn software design processes & models
+	-not programming course
+	-patterns, architectural types, libraries, algorithms and data structures
+	
+	
+	
+Smalltalk = first OOP
+
+Learning processes
+	Bloom's taxonomy: 6 step process of educational learning process
+	Dreyfus' model: Rules (y axis) vs Quality of Decisions (x axis)
+	
+
+Systematic: 
+	Agile development 
+		-Test Driven Development(TDD): tests as criteria for completion
+		ex: write test-> check if test fails -> write production code -> run all tests -> clean up code
+	TDD
+	Oracle:
+		-determine the output that a software component should have for some given input (and possibly some state)
+		-depend on the abstraction level of the tests being written
+		-creating oracles is harder in OOP than procedural programming: depends on object instances & their state
+		-abstraction levels:
+			intra-method testing: basic unit testing
+			intra-class testing: testing of a class
+			inter-class testing: associations, aggregations, specialisations
+		ex: a specified test value to assert the test to be correct
+		
+Disciplined: quantifiable approach to SE
+	Sub-disciplines:
+		-software requirements, design, construction, testing, maintenance, config management, engineering management
+	Laws:
+		Lehman's Laws: 
+			Characteristics:
+				S: can be formally specified
+				P: follow iterative development process
+				E: embedded in environment
+			Laws (all on E-type systems):
+				Continuing change: adaptable to be satisfactory
+				Increasing complexity: evolving -> increase complexity
+				self regulation: with distribution fo product and process measures close to normal
+				conservation of organisational stability: avg effective global activity rate is invariant over product lifetime
+				conservation of familiarity: all must maintain mastery of its content and behavior
+				continuing growth: functional content must be continually increased to maintain user satisfaction over lifetime
+				declining quality: the quality of E-type systems will apear to be declining unless they are rigorously maintained and adapted
+				feedback system: multi-level, multi-loop, multi-agent feedback systems 
+			Rationale: it takes some time for people added to the project to become productive (ramp up time)
+				-communication overheads increase as # increases 
+			Comments, solutions:
+				Brook's law applies to projects already late
+	Principles:
+		SOLID:
+			Single responsibility(SRP) a class or module should have one and only one, reason to change
+			Open/closed: objects, classes and modules should be open for extension, but closed for modification
+				-typing vs inheritance, fragile base-class problem
+			Liskov substitution: objects in a program should be replaceable with instances of the subtypes without altering correctness
+				-inheritance, polymorphism
+			Interface segregation(ISP): many client-specific interfaces are better than 1 general-purpose interface
+				-less risk to make mistakes
+				-encapsulation(info hiding), abstraction
+			Dependency inversion: one should depend upon abstractions not upon implementations 
+				-typing, factory design pattern, iterator design pattern
+				Dependency injection:
+					visitor design pattern
+					strategy design pattern
+		Do not Reinvent the Wheel:
+			-always look for simpler solution
+			-existing piece of code/libraries?
+			DRY (don't repeat yourself) vs WET (write everything twice)
+		Deletable code: write code that is easy to delete, not easy to extend
+			Step 0: Don't write code
+				-more lines of code -> more time, effort, difficulty to replace
+			Step 1: Copy-paste code
+				-use existing code/libraries
+			Step 2: Don't copy paste code
+				-keep different utilities in dfferent files
+				-keep hard-to-delete parts as far away from easy-to-delete parts
+			Step 3: Write more boilerplate (manage dependencies)
+				-minimise dependencies or responsibilities of library code
+			Step 4: Don't write boilerplate
+				-building simple-to-use APIs, turn boilerplate into a library
+			Step 5: Write a big lump of code
+				-substantial amount of trashy code to hold the rest together
+				-don't write a web framework before writing an application
+			Step 6: Break your code into pieces
+				-isolate the most frustrating parts to write, maintain, or delete away from each other
+			Step 7: Keep writing code
+				-layering, isolation, common interfaces, composition 
+				-> build software that can change over time
+		
+
+	Best practices
+		Design patterns: a reusable solution to a recurring problem
+		
+		Anti-patterns
+
+		
+SE definition:
+	-Application of a systematic, disciplined, quantifiable approach to the design, development,
+	operation, and maintenance of software
+	-All about problem solving
+		SE is also all about information hiding and abstraction
+		-setting class fields to private

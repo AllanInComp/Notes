@@ -10,6 +10,27 @@ quiz covers material after previous quizzes to the date of the second quiz
 
 Chapter 1:
 
+Objectives:
+	-explain difference between good and poor interaction design
+		ans: easy to learn, effective to use, provide enjoyable experience
+		Five E's of Good Interface design: easy to learn, engaging,effective to use, enjoyable, error tolerant (mistake recovery).
+	-describe what interaction design is and how it relates to human-computer interaction and other fields
+		ans: designing interactive products to support the way people communicate an interact in their everyday and working lives.
+		relation with HCI: difference of scope, ID has wider net (theory, research, practice), HCI: (design, evaluation and implementation)	
+	-explain the relationship between the user experience and usability
+		user experience(UX): how a product behaves and is used by people in the real world, is psychological, not deterministic
+		usability: the ease of use and learnability of a human-made object such as a tool or device 
+		relation: good usability elevates UX quality
+	-describe what and who is involved in the process of interaction design
+		1. Establish requirements 2. Design alternatives 3. Prototyping 4. Evaluating
+	-outline the different forms of guidances used in ID
+		-visibility: more visible functions -> easier for users to recognize and know what to do next
+		-feedback: sends back info to the user after interaction(s)
+		-constraints: restricting kinds of user interaction that can take place at a given moment
+		-consistency: designing interfaces to have similar operations and use similar elements for achieving similar tasks
+		-affordance: attribute of an object that allows people to know how to use it (mouse button = pushing)
+	-evaluate an interactive product and explain what is good and bad about it in terms of the goals and core principles of ID
+
 Definition (Interaction design): 
 	-The design of spaces for human communication and interaction
 	Designing interactive products to support how people communicate and interact with stuff
@@ -28,7 +49,7 @@ Definition (Interaction design):
 				-technicality
 		Difficulties of UID: study on diversity/capability/preference of users, COI with software devs 
 	
-Good design: easy to learn, effective to use, enjoyable, error tolerant (mistake recovery).
+		
 
 HCI: human-computer interaction
 	-bi directional relation to interaction design
@@ -57,7 +78,8 @@ Design Principles:
 	Constraints: restricting kinds of user interaction that can take place at a given moment
 	Consistency: designing interfaces to have similar operations and use similar elements for achieving similar tasks (easier to learn and use)
 	Affordance: attribute of an object that allows people to know how to use it (to give a clue)
-
+		-ex: checkboxes tells the users they can choose multiple options
+		-in ID, 'perceived' affordances are most conceptualized (mapping conventions of the interface)
 Multidisciplinary teams:
 	Adv: different perspectives, more ideas & methods to develop
 		Conceptualizing the design space early on;
