@@ -1,0 +1,10 @@
+6751 Syllabus
+
+1 Interaction Design Concepts Chapter 1
+ 2 Interaction Design Process Chapter 2
+ 3–4 Requirements Gathering Chapter 11
+ 4–5 Design, Prototyping, and Construction Chapter 12
+ 6–7 Interface Evaluation Chapters 14–16
+ 8–9 Data Gathering and Analysis Chapters 8–10
+ 9–11 Interaction and Cognition Chapters 3, 4
+ 12–13 Factors influencing interaction Chapters 5, 6
