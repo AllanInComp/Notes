@@ -1,0 +1,82 @@
+AOP
+
+Definition:
+	-programming paradigm which complements Object-Oriented Programming (OOP) by separating concerns of a software application to improve modularization. The separation of concerns (SoC) aims for making a software easier to maintain by grouping features and behavior into manageable parts which all have a specific purpose and business to take care of.
+	-OOP already allows for modularizing concerns into distinct methods, classes and packages. However, some concerns are difficult to place as they cross the boundaries of classes and even packages. One example for such a cross-cutting concern is security: Although the main purpose of a Forum package is to display and manage posts of a forum, it has to implement some kind of security to assert that only moderators can approve or delete posts. And many more packages need a similar functionality for protect the creation, deletion and update of records. AOP enables you to move the security (or any other) aspect into its own package and leave the other objects with clear responsibilities, probably not implementing any security themselves.
+	-Aspect = class 
+		applying logging aspect: apply class features to entities (such as other classes)
+	
+Purpose:
+	prevents Code tangling
+		ex: if logging and security code is needed for multiple entities, codes for logging/security are tangled in all the required classes 
+	prevents Code scattering
+		ex: updating the logging features requires updating change to all concerned classes 
+	Inheritances don't work as well if there are multiple inheritance
+	
+Terminology: 
+	Aspect: module of code for a cross-cutting concern (logging, security)
+	Advice: what action is taken and when it should be applied
+		Before Advice: run before the method 
+		After Finally Advice: run after the method (finally)
+		After Returning Advice: run after the method (success execution)
+		After Throwing Advice: run after the method (if exception thrown)
+	Join Point: when to apply code during program execution
+	Pointcut: predicate expression for where advice should be applied 
+		execution(modifiers-pattern? return-type-pattern declaring-type-pattern? method-name-pattern(param-pattern) throws-pattern?) // ? is optional
+			-declaring-type-pattern : class name & method ex: com.allanudemy.aopdemo.dao.AccountDAO.addAccount();
+			Wildcard: 
+				@Before("execution(public void add*())") //add* := any method starting with 'add'
+				@Before("execution(& processCreditCard*())") //any return type 
+VS AspectJ
+	Advantages:
+		-simpler to use
+		-uses proxy pattern
+		-can migrate to AspectJ when using @Aspect annotation 
+	Disadvantages:	
+		-only supports method-level join points 
+		-can only apply aspects to beans crewated by Spring app context
+		-Minor performance cost for aspect execution 
+		
+@BeforeAdvice
+	-Most common uses: logging/security/transactions, audit logging(who/what/when/where) 
+	1. Create target object: Account DAO
+		@Component
+		public class AccountDAO {
+			public void addAccount(){
+				sysout..
+			}
+	2. Create Spring Java Config class
+		@Configuration //spring pure java configuration
+		@EnableAspectJAutoProxy //spring AOP proxy support 
+		@ComponentScan("com.allanudemy.aopdemo") //recurses to all subdirectories
+		public class DemoConfig{
+		
+		}
+	3. Create main app
+		psvm{
+			//read spring config java class
+			AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DemoConfig.class)
+			
+			//get the bean from spring container
+			AccountDAO theDAO = context.getBean("accountDAO", AccountDAO.class);
+			
+			//call the business method
+			theDAO.addAccount();
+			
+			context.close();
+			
+		}
+	4. Create Aspect with @Before Advice
+		@Aspect //indicate class as Aspect in network, listens to communications between aspects 
+		@Component
+		public class MyDemoLoggingAspect {
+			@Before("execution(public void addAccount())") //match any calls with addAccount method on any class 
+			public void beforeAddAccountAdvide(){
+			//custom code s.a. logging, security ..
+			
+			...
+			}
+		
+		}
+		
+Pointcut
