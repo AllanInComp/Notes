@@ -1,0 +1,91 @@
+	
+Chapter 2:
+
+Objectives:
+	-Explain what is mean by the problem space
+		A: understanding and conceptualizing what is currently the user experience/product and how this is going to be improved or changed
+	-Explain how to conceptualize interaction
+		
+	-Describe what a conceptual model is and how to begin to formulate one
+		Orientation: enable design team to ask specific kinds of questions about how the conceptual model will be understood by users
+		Open-mindedness: prevent design team from being narrowly focused
+		Common ground: allow design team to establish set of common terms
+	-Discuss the use of interface metaphors as part of a conceptual model
+		Convey to people how to understand what a product is for and how to use it 
+		Provide a structure that is similar to a familiar entity to the customer.
+	-Outline the core interaction types for informing the development of a conceptual model
+		Instructing: user issues instructions to system (ex: typing in commands, selecting options)
+		Conversing: users have dialog to system (ex: customer speak/type questions => text/speech output from system)
+		Manipulating: users interact with objects in virtual/physical space by manipulating them (ex: open, holding, closing, placing objects on desktop)
+		Exploring: users move through virtual environment/physical space (ex: 3D worlds)
+	-Introduce paradigms, visions, theories, models and frameworks informing interaction design
+		Paradigms: adopt a set of practices that a community has agreed upon 
+			-questions to be asked and how they should be framed
+			-phenomena to be observed
+			-way in which findings from studies are to be analyzed and interpreted
+		Visions: visions of the future (expectations, concrete scenarios of how society can use future imagined technologies)
+		Theories: analyze and predict performance of users carrying out tasks for specific kinds of computer interfaces/systems
+		Models: abstracted from a theory, can be directly applied to interaction design
+		Frameworks: help constrain and scope the UX for which they are designing
+		
+Conceptual model (abstraction outlining functionality of a product & its interaction with people):	
+	Components:
+		Metaphors and analogies: convey understanding of the product and its use
+		Concepts exposed: domain objects, attributes, operations 
+		Relationships between concepts (whether one object contains another)
+		Mappings between the concepts and the user experience the product is designed to support/invoke
+	Best models:
+		-appear obvious
+		-intuitive operations
+		-constrained way of performing a specific operation
+
+========================================================================================
+Slides:
+
+What is involved in process of interaction design
+	-identify needs and establish requirements for UX 
+	-develop alternative designs to meet requirements 
+	-build interactive prototype: do design and prototype together
+	-process of prioritizing user concerns
+		-key: choose between alternatives
+	-4 approaches:
+		user-centered design: everything done from the user's perspective
+		activity-centered design: behavior surrounding specific tasks (user behaviors also)
+		systems design: good for complex problems, structured design
+		genius design: creative flair of the designer
+		
+The double diamond of design
+	-problem -> design brief -> solution
+	
+Understanding the problem space
+	explore: current UX, why is a change needed, how will this change improve the situation
+	articulate problem space: team effort, explore different perspectives, avoid incorrect assumptions
+	
+Degres of user involvement
+	-Member of the design team: full(constant output, lose touch with users)/part time(stressful), short/long term
+
+
+
+User-centered approach: 
+	constant user feedback until user has no further feedback => stable
+	iterative design: find problems in user testing -> fix -> more testing
+	1. Early focus on users and tasks
+	2. Empirical measurement: help choose different alternate designs by measuring quantifiable usability
+	3. Iterative design: refine based on feedback
+	
+Google design sprints (iterations in linear fashion, short periods):
+	1. unpack
+	2. sketch
+	3. decide
+	4. prototype
+	5. test
+	
+Star lifecycle model:
+	designed more from practice rather than theory
+	
+Users/Stakeholders
+	Users:
+		primary: frequent hands-on
+		secondary: occasional
+		tertiary: affected by its introduction / will influence its purchase
+	Stakeholders: people affected directly/indirectly by the design

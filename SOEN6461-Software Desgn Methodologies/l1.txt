@@ -19,8 +19,16 @@ Learning processes
 	Bloom's taxonomy: 6 step process of educational learning process
 	Dreyfus' model: Rules (y axis) vs Quality of Decisions (x axis)
 	
+		
+SE definition:
+	-Application of a systematic, disciplined, quantifiable approach to the design, development,
+	operation, and maintenance of software
+	-All about problem solving
+		SE is also all about information hiding and abstraction
+		-setting class fields to private
 
-Systematic: 
+Systematic (thoroughness and regularity): 
+	Tools: hardware, OS, VM, Programming languages, algorithms/data structures/ libraries, design patterns
 	Agile development 
 		-Test Driven Development(TDD): tests as criteria for completion
 		ex: write test-> check if test fails -> write production code -> run all tests -> clean up code
@@ -47,12 +55,13 @@ Disciplined: quantifiable approach to SE
 			Laws (all on E-type systems):
 				Continuing change: adaptable to be satisfactory
 				Increasing complexity: evolving -> increase complexity
-				self regulation: with distribution fo product and process measures close to normal
+				self regulation: with distribution of product and process measures close to normal
 				conservation of organisational stability: avg effective global activity rate is invariant over product lifetime
 				conservation of familiarity: all must maintain mastery of its content and behavior
 				continuing growth: functional content must be continually increased to maintain user satisfaction over lifetime
 				declining quality: the quality of E-type systems will apear to be declining unless they are rigorously maintained and adapted
 				feedback system: multi-level, multi-loop, multi-agent feedback systems 
+		Brook's Law:
 			Rationale: it takes some time for people added to the project to become productive (ramp up time)
 				-communication overheads increase as # increases 
 			Comments, solutions:
@@ -76,6 +85,9 @@ Disciplined: quantifiable approach to SE
 			-always look for simpler solution
 			-existing piece of code/libraries?
 			DRY (don't repeat yourself) vs WET (write everything twice)
+		Beware of Assumptions:
+			-always validate assumptions with clients
+			ex: names should only include letters (some people have '-' that connects within their first name
 		Deletable code: write code that is easy to delete, not easy to extend
 			Step 0: Don't write code
 				-more lines of code -> more time, effort, difficulty to replace
@@ -102,11 +114,3 @@ Disciplined: quantifiable approach to SE
 		Design patterns: a reusable solution to a recurring problem
 		
 		Anti-patterns
-
-		
-SE definition:
-	-Application of a systematic, disciplined, quantifiable approach to the design, development,
-	operation, and maintenance of software
-	-All about problem solving
-		SE is also all about information hiding and abstraction
-		-setting class fields to private

@@ -1,0 +1,36 @@
+Project 1:
+
+	1. Establish requirements
+		Requirements Gathering: 
+	
+		Persona: Novice User learning programming
+			-Profile: little knowledge in programming languages, unable to understand 
+			GCC commands based on their names
+			-Needs: simple interface with limited but descriptive user options/commands
+		Product requirements: 
+			-Naming: the product is called SmartGCC interface
+			-Functions: compiler/linking/execute/debugging options via GCC compiler
+				compiler: compile a C++ source/header file with ex: gcc *filename*.cpp
+				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Invoking-G_002b_002b.html#Invoking-G_002b_002b
+				
+				linking: compiler links object files into an executable output file
+				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Link-Options.html#Link-Options
+				
+				debugging: To tell GCC to emit extra information for use by a debugger, 
+				in almost all cases you need only to add -g to your other options.
+				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Debugging-Options.html#Debugging-Options
+				
+			-Visual Interface: 
+				-one window for user program
+					-user program contains selectable options of GCC commands
+				-one window for program result output from GCC	
+				-menu includes "all options" containing all options the users can select			
+			-Execution: 
+				-user selects their user type => interface initializes menus and commands 
+				specific for the user (self-adjusting)
+				-upon user selection of operation, SmartGCC compiles and executes selected 
+				command
+				
+	2. Designing alternatives
+	3. Prototyping
+	4. Evaluating	

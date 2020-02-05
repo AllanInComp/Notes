@@ -1,0 +1,24 @@
+Programming Languages: encapsulation, inheritance and types, polymorphism, abstraction and types
+
+Structured Programming:
+	before 1968, most programming languages were unstructured (no explicit loops for while)
+		-instruction goto + line number / labels
+		
+Information Hiding:
+	Def: Structured programming languages, data and functions were all visible 
+	Information Hiding: solves lack of packaging and access control
+	Can be realized through Encapsulation and Lexical closures
+	
+	Encapsulation:	
+		Def: restrict access to some of the object's components (modifiers public, protected, private)
+		-bundle data with the methods operating on that data (classes and objects)
+		-first language is Smalltalk
+		
+	Inheritance, Types:
+		Def: a way to reuse code of existing objects, to establish a subtype from an existing object
+		Typing: upcasting (ex: Cat extends Animal, Size extends AbstractMeasure)
+		Reuse: extending classe to reuse its methods in another sub class
+			A deque supports insertion and deletion at both ends, so it has four functions insert-front, delete-front, insert-rear and delete-rear. If we use just insert-rear and delete-front we get a normal queue. On the other hand, if we use just insert-front and delete-front, we get a stack. In other words, we can implement queues and stacks in terms of deques, so as datatypes, Stack and Queue inherit from Deque. On the other hand, neither Stack not Queue are subtypes of Deque since they do not support all the functions provided by Deque. In fact, in this case, Deque is a subtype of both Stack and Queue
+		Why distinguish reuse and subtyping:
+			Subtyping refers to compatibility of interfaces. A type B is a subtype of A if every function that can be invoked on an object of type A can also be invoked on an object of type B.
+			Inheritance refers to reuse of implementations. A type B inherits from another type A if some functions for B are written in terms of functions of A.
