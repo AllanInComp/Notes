@@ -42,8 +42,27 @@ Finding dependencies
 		</dependency>
 	2. visit maven central repo search.maven.org  (best choice)
 	3. mvnrepository.com  
+	4. https://repo.maven.apache.org/maven2/
+	
+	if dependency is not in maven central repository, need to add <repository> in the <respositories> section in pom 
 	
 Maven archetypes (starter project):
 	used to create new Maven project 
 	maven-archetype-quickstart
 	maven-archetype-webapp 
+
+Updating prject after POM configuration
+	ex: set compiler version to jdk 1.8 
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+	(right click) project -> maven -> update project
+	
+Additional repositories
+<repositories>
+	<repository>
+		<id>atlassian</id>
+		...
+	</repository>
+</respositories>
