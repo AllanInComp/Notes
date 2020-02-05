@@ -55,7 +55,7 @@ What is involved in process of interaction design
 		genius design: creative flair of the designer
 		
 The double diamond of design
-	-problem -> design brief -> solution
+	-problem -(Define area to focus on)> design brief -(Different solutions)> solution
 	
 Understanding the problem space
 	explore: current UX, why is a change needed, how will this change improve the situation

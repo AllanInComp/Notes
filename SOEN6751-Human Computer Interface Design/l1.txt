@@ -231,13 +231,14 @@ Chapter 1:
 Objectives:
 	-explain difference between good and poor interaction design
 		ans: easy to learn, effective to use, provide enjoyable experience
-		Five E's of Good Interface design: easy to learn, engaging,effective to use, enjoyable, error tolerant (mistake recovery).
+		Five E's of Good Interface design: easy to learn, engaging, effective to use, enjoyable, error tolerant (mistake recovery).
 	-describe what interaction design is and how it relates to human-computer interaction and other fields
 		ans: designing interactive products to support the way people communicate an interact in their everyday and working lives.
 		relation with HCI: difference of scope, ID has wider net (theory, research, practice), HCI: (design, evaluation and implementation)	
 	-explain the relationship between the user experience and usability
 		user experience(UX): how a product behaves and is used by people in the real world, is psychological, not deterministic
-		usability: the ease of use and learnability of a human-made object such as a tool or device 
+		usability: the ease of use and learnability of a human-made object such as a tool or device (important quality indicator)
+			-uses 5 e's to quantify a product 
 		relation: good usability elevates UX quality
 	-describe what and who is involved in the process of interaction design
 		1. Establish requirements 2. Design alternatives 3. Prototyping 4. Evaluating
@@ -289,7 +290,20 @@ UX vs Usability:
 	efficiency and satisfaction with which specified users achieve specified goals 
 		in particular environments” whilst user experience is concerned with 
 		“all aspects of the user’s experience when interacting with the product, service, environment or facility” 
+	
+	Four elements of the Usability
+		Functionality: Can this product work normally?
+		Learnability: Can this product be used without extra learning?
+		Flexibility: Can this product do something more except accomplishing the main task?
+		Industry design: Is this product pretty enough?
+		Plus, keep these 5 crucial usability principles in mind all the time.
 
+	Four elements of the User Experience
+		Usability: Is it easy to complete tasks?
+		Adaptability: Will people start using the product?
+		Desirability: Is the experience fun and engaging?
+		Value: Does a product provide value to users?
+	
 Accessibility vs Inclusive Design:
 	Accessibility is about creating products that are usable by everyone. 
 	Inclusive design, on the other hand, is a mindset that involves understanding user diversity
@@ -308,6 +322,7 @@ Design Principles:
 	Affordance: attribute of an object that allows people to know how to use it (to give a clue)
 		-ex: checkboxes tells the users they can choose multiple options
 		-in ID, 'perceived' affordances are most conceptualized (mapping conventions of the interface)
+		
 Multidisciplinary teams:
 	Adv: different perspectives, more ideas & methods to develop
 		Conceptualizing the design space early on;
