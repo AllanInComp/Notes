@@ -1,36 +1,76 @@
 Project 1:
 
-	1. Establish requirements
-		Requirements Gathering: 
+ 
+Requirements Gathering: 
+
+	Stakeholders:
+		Identification:
+			-via analysing all tools and consequences related to the activity of the Interface
+		Programmers of 3 different levels:
+			-Novice Programming Learners: can benefit from a simplistic interface design that is limited to novices (compiler options, linking, execute & debugging)
+			-Typical Programmer: can use an interface with conventional functions such as code generation, optimization on top of the basic operations 
+			-Expert Developer： can use additional options on top of a typical programmer on the interface 
+		GCC compiler developer: can update GCC to better accomodate the interface 
+		
+	Establish requirements:
+		1. Requirements gathering &　capture techniques: observe users that are new to programming, record the most common and mandatory operations that are used in the IDEs they use.
+		2. Appropriate requirements elicitation techniques: quetionnaires containing questions not limited to:
+			1. What do you think is hindering you from efficiently using your IDE during your programming?
+			2. What was the first things you learned after opening your IDE?
+			3. What are the most obvious (accessible) functions avaiable to you in your IDE? 
+		3. Analysing the requirements: interpret all the information gathered from observing the users, as well as the quetionnaires, and list all the unique points gathered by the facts
+		4. Develop set of requirements based on the analysis 
+		
+	Non-functional requirements:
+		-Able to run on desktop operating systems such as windows, mac or linux
+			Users need to operate the interface on a familiar environment 
+		-A small compact program expected to be <1 MB, with fast response time 
+			Users must be able to open and close the interface with fast response time, a small and compact program should be developed
+		-The main memory usage would be from the operations with the relayed GCC compiler 
+			The interface should not develop unnecessary operations to consume memory space 
+	
+Requirements Documentation:
+	
+	User characteristics 
+		
+	
 	
 		Persona: Novice User learning programming
 			-Profile: little knowledge in programming languages, unable to understand 
 			GCC commands based on their names
+			-Capabilities: can only follow step-by-step instructions on how to compile and execute a code 
 			-Needs: simple interface with limited but descriptive user options/commands
 		Product requirements: 
-			-Naming: the product is called SmartGCC interface
-			-Functions: compiler/linking/execute/debugging options via GCC compiler
-				compiler: compile a C++ source/header file with ex: gcc *filename*.cpp
-				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Invoking-G_002b_002b.html#Invoking-G_002b_002b
-				
-				linking: compiler links object files into an executable output file
-				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Link-Options.html#Link-Options
-				
-				debugging: To tell GCC to emit extra information for use by a debugger, 
-				in almost all cases you need only to add -g to your other options.
-				https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Debugging-Options.html#Debugging-Options
-				
-			-Visual Interface: 
-				-one window for user program
-					-user program contains selectable options of GCC commands
-				-one window for program result output from GCC	
-				-menu includes "all options" containing all options the users can select			
-			-Execution: 
-				-user selects their user type => interface initializes menus and commands 
-				specific for the user (self-adjusting)
-				-upon user selection of operation, SmartGCC compiles and executes selected 
-				command
-				
+			Functional:
+				-Naming: the product is called SmartGCC interface
+				-Functions: compiler/linking/execute/debugging options via GCC compiler
+					compiler: compile a C++ source/header file with ex: gcc *filename*.cpp
+					https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Invoking-G_002b_002b.html#Invoking-G_002b_002b
+					
+					linking: compiler links object files into an executable output file
+					https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Link-Options.html#Link-Options
+					
+					debugging: To tell GCC to emit extra information for use by a debugger, 
+					in almost all cases you need only to add -g to your other options.
+					https://gcc.gnu.org/onlinedocs/gcc-9.2.0/gcc/Debugging-Options.html#Debugging-Options
+					
+				-Visual Interface: 
+					-one window for user program
+						-user program contains selectable options of GCC commands
+					-one window for program result output from GCC	
+					-menu includes "all options" containing all options the users can select			
+				-Execution: 
+					-user selects their user type => interface initializes menus and commands 
+					specific for the user (self-adjusting)
+					-upon user selection of operation, SmartGCC compiles and executes selected 
+					command
+			Non-functional:
+				-Small size (<1mb)
+				-fast reponse (relays commands to GCC　compiler and reflects responce on output)
+			Data: 
+				Only Strings, operations will be compiled and completed by the GCC 
+			
 	2. Designing alternatives
 	3. Prototyping
 	4. Evaluating	
+

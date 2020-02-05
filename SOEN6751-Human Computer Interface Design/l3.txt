@@ -1,0 +1,94 @@
+Discovering User Interface Requirements (Ch 10 in 4th edition) 
+
+Book Objectives:
+-Describe different kinds of requirements
+	Functional: what the system should do 
+	Non-functional: what constraints are on the system and its development
+-Identify different kinds of requirements from a simple description
+
+-Explain how differnet data gathering techniques may be used during the requirements activity
+
+-Develop a scenario, a use case, and an essential use case from a simple description 
+
+-Perform hierarchical task analysis on a simple description 
+
+===================================================================================================================================================
+
+Slides:
+
+Overview:	
+	Purpose
+		Explore problem space, understand users, tasks, context
+		Establish description of what is to be developped
+	How to capture requirements once discovered
+		Prototypes or operational product
+		Structured/rigorous notations
+		Capturing of aspects 
+	Why 
+		Requirements -
+			-gathering & capture: requirements exist and needs to be picked up
+			-elicitation: clients&users needs to tell developer what their requirement is
+			-analysis: investigating and analyzing an initial set of requirements that have been gathered, elicited and captured 
+				interpretation of the facts
+			-engineering: developing a set of requirements as an iterative process 
+		Requirements definition: stage where failure occurs most commonly 
+		
+User stories 
+	Format:
+		As <role>, want <behavior> to get <benefit> 	
+	Example:
+		As a Novice User learning programming, I want to use a simple but descriptive interface so I can compile and debug C++ code 
+		
+Seven product dimensions:
+	User
+	Interface: product that connects to users, systems and devices 
+	Action: capabilities for users 
+	Data: repository of data in the product that provides information 
+	Control: constraints enforced by the product 
+	Environment: physical properties and technology platforms 
+	Quality Attribute: product propertiese that qualify its operation and development 
+
+Kinds of requirements:
+	Function: what the system should do, main focus
+	Non-functional: memory size, response time
+	Data: kind of data it stores 
+	Environment or context of user: physical, social(sharing of files), organizational(hierarchy, user support, communications structure)
+	
+Establishing requirements:
+	requirements need clarification, refinement, completion, re-scoping 
+	input: requirements document
+	output: stable requirements
+	
+Bringing requirements to life:
+	Personas: rich descriptions of typical users, not specific people 
+		-good for developping product by reminding about who will use it 
+		-personality, goals, frustrations(pain points), motivation, background
+	Task descriptions:
+		Scenarios: informal narrative story, simple, 'natural', personal and not generalizable 
+		Use cases: assume interaction with a system, detailed understanding of the interaction
+			-focus on functional requirements and capture interaction
+			-step by step descriptions of interactions 
+		Essential Use cases: abstract away from the details, doesn't have same assumptions as use cases 
+			The goal of an essential use case is to convey the most important aspects of the user-system interaction by focusing on the user’s intent (avoiding any reference to an assumed UI design or technological implementation) and on the observable result of the system (without specifying the internal steps the system takes to achieve the result).
+Design fiction:
+	communicate a vision with future technologies 
+	
+	
+Summary: 
+
+A requirement is a statement about an intended product that specifies what it is expected to do or how it will perform.
+
+Articulating requirements avoids miscommunication and supports technical developers and users to contribute.
+
+Different kinds of requirements: functional, data, environmental (context of use), user characteristics, usability goals, and user experience goals.
+
+Requirements data gathering uses: questionnaires, interviews, observation, studying documentation, and similar products
+
+Scenarios are a story-based narrative to explore existing behavior, potential of new products, and futuristic visions of use.
+
+Personas capture characteristics of typical users that are relevant to the product under development.
+
+Scenarios and personas together bring requirements to life.
+
+Use cases capture details about an existing or imagined interaction between users and the product.
+	

@@ -264,11 +264,13 @@ Add JDBC Database (mySQL)
 		@Configuration
 		@EnableWebSecurity
 		public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
+			//inject the data source from DemoAppConfig bean
 			@Autowired
 			private DataSource securityDataSource;
 			
 			@Override
 			protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+				//reads users from the database
 				auth.jdbcAuthentication().dataSource(securityDataSource); //tell spring security to use jdbc authentication with our data source 
 			}
 			
