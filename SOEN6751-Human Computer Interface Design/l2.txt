@@ -64,8 +64,6 @@ Understanding the problem space
 Degres of user involvement
 	-Member of the design team: full(constant output, lose touch with users)/part time(stressful), short/long term
 
-
-
 User-centered approach: 
 	constant user feedback until user has no further feedback => stable
 	iterative design: find problems in user testing -> fix -> more testing

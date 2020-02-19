@@ -214,10 +214,26 @@ Add JDBC Database (mySQL)
 		CREATE TABLE 'authorities'
 		
 	2. Add database support to Maven 
-		MySQL 
+		MySQL connector 
 		C3PO (db connection tool)
 	3. Create JDBC properties file
 		mapping to database from java 
+		/spring-security-demo-jdbc-plaintext/src/main/resources/persistence-mysql.properties:
+			#
+			# JDBC connection properties
+			#
+			jdbc.driver=com.mysql.jdbc.Driver
+			jdbc.url=jdbc:mysql://localhost:3306/spring_security_demo_plaintext?useSSL=false
+			jdbc.user=springstudent
+			jdbc.password=springstudent
+
+			#
+			# Connection pool properties
+			#
+			connection.pool.initialPoolSize=5
+			connection.pool.minPoolSize=5
+			connection.pool.maxPoolSize=20
+			connection.pool.maxIdleTime=3000
 	4. Define DataSource in Spring Configuration
 		@Configuration
 		@EnableWebMvc
@@ -266,7 +282,7 @@ Add JDBC Database (mySQL)
 		public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 			//inject the data source from DemoAppConfig bean
 			@Autowired
-			private DataSource securityDataSource;
+			private DataSource securityDataSource; 
 			
 			@Override
 			protected void configure(AuthenticationManagerBuilder auth) throws Exception{
@@ -275,3 +291,4 @@ Add JDBC Database (mySQL)
 			}
 			
 		}
+		if multiple context path, search Server Project => Contexts => Resolve path conflicts 

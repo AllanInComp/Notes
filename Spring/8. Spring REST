@@ -1,0 +1,86 @@
+Spring REST 
+
+Overview:
+	REST: REpresentational State Transfer (communication between applications)
+		-language independent, either client or server 
+		-data format: XML and JSON (most popular)
+			JSON: collection of name value pairs in the form of JavaScript Object Notation
+			
+JSON
+	Just plain text 
+	Language indepenedent, not just for javascript
+	Example:	
+		{
+			"id":14,
+			"firstName":"Mario",
+			"lastName":"Rossi",
+			"active":true,
+			"address":{
+				"street":"100 main St",
+				.......
+			}
+			"languages":["Java","C#"]
+		}
+		values: number, String, booleans, nested JSON object, array, null
+
+JSON Data Binding: Convert JSON data to Java POJO (or reverse)
+	-also known as mapping, serializaiton/deserialization, mashalling/demarshalling
+	Spring uses Jackson Project to handle JSON data binding 
+		-com.fasterxml.jackson.databind 
+		or use maven 
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.10.2</version>
+			</dependency>
+	Example:
+		JSON:	
+			{
+				"id":14,
+				"firstName":"Mario",
+				"lastName":"Rossi",
+				"active":true
+			}
+		Java:
+			public class Student{
+				int id;
+				String firstName;
+				String lastName;
+				boolean active;
+				
+				*getters and setters*
+			}
+		Jackson calls setter methods automatically to databind JSON file to Java POJO 
+	
+	JSON to Java POJO (and reverse) coding:
+		public static void main(String []args){
+			//create object mapper 
+			ObjectMapper mapper = new ObjectMapper();
+			
+			//read JSON from file, parameter names must match between JSON and POJO 
+			Student myStudent = mapper.readValue(new File("data/sample.json),Student.class);
+			
+			//write JSON to output file 
+			mapper.enable(SerializationFeature.INDENT_OUTPUT); //configure mapper 
+			mapper.writeValue(new File("data/output.json"),myStudent);
+		}
+	If new property is added to JSON, and Java is not aware:
+		add specific notation to POJO class 
+		@JsonIgnoreProperties(ignoreUnknown=true)
+		public class Student {...}
+		
+REST over HTTP
+	leverage HTTP for CRUD operations 
+	HTTP response code ranges:
+		100-199: Informational
+		200-399: Successful
+		300-399: Redirection
+		400-499: Client error
+		500-599: Server error 
+	MIME: Multipurpose Internet Mail-Extension, to be processed by client 
+		Basic Syntax: type/sub-type 
+			ex: text/html, text/plain, application/json, application/xml 
+	Client tool: 
+		Postman
+		http://jsontest.com/ : provides backend REST services to test against 
