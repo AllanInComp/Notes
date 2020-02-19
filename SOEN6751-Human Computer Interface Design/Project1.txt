@@ -32,14 +32,28 @@ Requirements Gathering:
 Requirements Documentation:
 	
 	User characteristics 
+		Persona: 
+			Novice User learning programming
+				-Profile: little knowledge in programming languages, unable to understand GCC commands based on their names
+				-Capabilities: can only follow step-by-step instructions on how to compile and execute a code 
+				-Needs: simple interface with limited but descriptive user options/commands
+				
+	Task characteristics using Use Case Diagram:
+		Use Case Diagram:
+			https://www.lucidchart.com/invitations/accept/fcaf0d4b-2261-4626-b950-92042f006113
+		Appropriateness of use case diagrams: 
+			A Use Case Diagram is created to visualize the interaction between the user and the system.
+		Use cases:
+			Help identify all actors and their available operations on the specified systems during requirement and data gathering.
+		Essential Use Cases:
+			Help identify the core values provided by the interface system to the users without assuming any technologies or hardwares used before development.
+	
+	Task characteristics using hierarchical task model:
+	0. In order to use the SmartGCC
+	1. Login to specific role (Novice, Typical, Expert)
+	2. Compile file 
+	
 		
-	
-	
-		Persona: Novice User learning programming
-			-Profile: little knowledge in programming languages, unable to understand 
-			GCC commands based on their names
-			-Capabilities: can only follow step-by-step instructions on how to compile and execute a code 
-			-Needs: simple interface with limited but descriptive user options/commands
 		Product requirements: 
 			Functional:
 				-Naming: the product is called SmartGCC interface

@@ -322,6 +322,18 @@ Design Principles:
 	Affordance: attribute of an object that allows people to know how to use it (to give a clue)
 		-ex: checkboxes tells the users they can choose multiple options
 		-in ID, 'perceived' affordances are most conceptualized (mapping conventions of the interface)
+
+Usability Principles:
+	Visibility of system status
+	Match between system and the real world
+	User control and freedom
+	Consistency and standards
+	Help users recognize, diagnose and recover from errors	
+	Error prevention
+	Recognition rather than recall
+	Flexibility and efficiency of use
+	Aesthetic and minimalist design
+	Help and documentation
 		
 Multidisciplinary teams:
 	Adv: different perspectives, more ideas & methods to develop
