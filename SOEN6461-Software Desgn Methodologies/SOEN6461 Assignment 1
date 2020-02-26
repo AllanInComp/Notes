@@ -35,3 +35,40 @@ https://www.lucidchart.com/documents/edit/694b80ac-237e-44fc-a8ca-ea24a4c796f0/0
 
 3. Using at least one sequence diagram, describe one use of the IVisitor interface, e.g., a call to the
 walk(IWalker) method. Explain which walk(IWalker) method would be called first and why.
+
+ptidej.viewer.ProjectViewer: Main() -> SwintUtilities -> run();
+	DesktopFrame.getInstance().run();
+
+ptidej.viewer.ui.DesktopFrame: run();
+	new VisitorPanel();
+
+ptidej.viewer.ui.panel.VisitorPanel: VisitorPanel();
+	/**
+	* For each walker implementation, add a button for the Walker
+	* Specific function of interest: ProxyConsole.getInstance().normalOutput().println(walker.getResult());
+	*/
+	for (int i = 0; i < walkers.length; i++) {
+			final IWalker walker = walkers[i];
+			contentPADLWalkers.addButton(
+				walker.getName(),
+				new ActionListener() {
+					public void actionPerformed(final ActionEvent anActionEvent) {
+						walker.reset();
+						DesktopPane
+							.getInstance()
+							.getAbstractRepresentationWindow()
+							.getSourceModel()
+							.walk(walker);
+						ProxyConsole
+							.getInstance()
+							.normalOutput()
+							.println(walker.getResult());
+					}
+				},
+				false,
+				false,
+				Controls.getInstance().areVisitorsListening());
+		}
+IWalker: GetResult();
+	Implementation: ptidej.ui.analysis.repository.comparator.Comparator
+
