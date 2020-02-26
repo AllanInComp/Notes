@@ -40,6 +40,7 @@ User stories
 		As a Novice User learning programming, I want to use a simple but descriptive interface so I can compile and debug C++ code 
 		
 Seven product dimensions:
+	ECQUIAD
 	User
 	Interface: product that connects to users, systems and devices 
 	Action: capabilities for users 
@@ -47,9 +48,9 @@ Seven product dimensions:
 	Control: constraints enforced by the product 
 	Environment: physical properties and technology platforms 
 	Quality Attribute: product propertiese that qualify its operation and development 
-
+	
 Kinds of requirements:
-	Function: what the system should do, main focus
+	Functional: what the system should do, main focus
 	Non-functional: memory size, response time
 	Data: kind of data it stores 
 	Environment or context of user: physical, social(sharing of files), organizational(hierarchy, user support, communications structure)
