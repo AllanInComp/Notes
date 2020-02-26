@@ -1,0 +1,37 @@
+SOEN6461 Delivery 1
+
+1. What are the purposes of the packages padl.kernel and padl.kernel.impl and their contents? Use
+at least two class diagrams to describe their purposes. Use at least one sequence diagram to describe
+how a client developer can obtain an object of type IClass.
+
+Answer: 
+
+packages padl.kernel and padl.kernel.impl are part of the software code of the Pattern Trace Identification, Detection and Hencement in Java1 software. Their contribution is to define a set of 
+interfaces (in padl.kernel) and their implementations (in padl.kernel.impl) that are java class Objects. Those implementations would listen to front end user interface behaviors(such as Fields, Interface, InterfaceActor, Ob servable), as well as the back end content(such as data,structure and operations).
+
+padl.kernel: contains interfaces that categorize all object components that would be used in the object implementations. The Interfaces in padl.kernel define all necessary functions for all
+objects that would implement those interfaces. There are also multi-layered inheritance, as well as composition between the interfaces that allow for function reuse and dynamic function definitions for objects that implement the interfaces. 
+
+padl.kernel.impl: contains concrete objects that implement interfaces defined in padl.kernel
+
+sequence diagram to obtain IClass object:
+https://www.lucidchart.com/documents/edit/694b80ac-237e-44fc-a8ca-ea24a4c796f0/0_0
+
+2. Identify and report on at least one concrete example of:
+	1. Distinguishing typing from code reuse
+		Typing : 
+			padl.motif.IDesignMotifModel implemented by types padl.motif.repository.Adapter and padl.motif.repository.Builder
+			
+		Reuse : 
+			padl.kernel.impl.AbstractGenericContainerOfConstituents extended by padl.kernel.impl.GenericContainerOfInsertionOrderedConstituents
+			- GenericContainerOfInsertionOrderedConstituents is able to reuse methods written in AbstractGenericContainerOfConstituents such as 
+				public final void fireModelChange(final String eventType,final IEvent modelEvent)
+				public Iterator getIteratorOnModelListeners()
+				public final void removeModelListener()
+				
+	2. Implementing duck typing
+	3. Adding one level of indirection
+
+
+3. Using at least one sequence diagram, describe one use of the IVisitor interface, e.g., a call to the
+walk(IWalker) method. Explain which walk(IWalker) method would be called first and why.
