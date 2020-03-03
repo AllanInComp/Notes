@@ -239,7 +239,7 @@ Logging exceptions:
 
 	}
 	
-Add AOP Logging toi Spring MVC App - Real Time Project
+Add AOP Logging to Spring MVC App - Real Time Project
 	1. Add AspectJ jar file to web project
 	2. Enable AspectJ auto proxy
 			inside:	/web-customer-tracker-aop/WebContent/WEB-INF/spring-mvc-crud-demo-servlet.xml

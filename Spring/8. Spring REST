@@ -84,3 +84,78 @@ REST over HTTP
 	Client tool: 
 		Postman
 		http://jsontest.com/ : provides backend REST services to test against 
+	
+Creating REST Controller
+	-The job of @Controller is to create a Map of model object and find a view but @RestController simply return the object and object data is directly written into HTTP response as JSON or XML.
+
+	Overview:
+		1. Create REST Controller 
+		@RestController
+		@RequestMapping("/test)
+		public class DemoRestController{
+			//access the REST endpoint at /test/hello 
+			@GetMapping("/hello")
+			public String sayHello(){
+				return "Hello World!";
+			{
+		}
+		2. Test with postman or url 
+		
+	Development Process:
+		Project: spring-rest-demo 
+		1. Add Maven Dependency for Spring mvc and Jackson 
+			
+		2. Add code for all java config: @Configuration
+				@Configuration
+				@EnableWebMvc
+				@ComponentScan(basePackage="com.allanudemy.springdemo")
+				public class DemoAppConfig{
+				
+				}
+			
+		3. Add code for all java config: Servlet initializer 
+			//use autoextend to find AbstractAnnotationConfigDispatcherServletInitializer quickly
+			public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
+				@Override ... 
+			
+			}
+		4. Create Spring REST Service using @RestController
+		
+Retrieve POJOs as JSON 
+	REST client -> REST Service (return a list of students as REST json)
+	
+	1. Make student POJO class 
+		public Student(int id, String firstName, String lastName, boolean active)
+	2. Create REST controller (with Jackson)
+		@RestController
+		@RequestMapping("api")
+		public class StudentRestController {
+			//define endpoint for "/students" - return list of students
+			//called only once when the data is constructed
+			@PostConstruct
+			public void loadData() {
+				List<Student> theStudents = new ArrayList<>();
+				theStudents.add(new Student(1, "Susan","Boyle",true));
+				theStudents.add(new Student(2, "Manik","Daree",true));
+				theStudents.add(new Student(3, "Abran","Link",true));
+				theStudents.add(new Student(4, "Trump","Orange",false));
+			}
+			
+			@GetMapping("/students")
+			public List<Student> getStudents(){
+		
+				return theStudents;
+			}
+		}
+	3. Retrieve JSON file via url or Postman
+		-sometimes returned data from url is incomplete, add '?' add the end of the url to solve caching bug
+			
+	Path Variables
+		Allows specific object retrieval from REST service 
+		/api/studnets/{studentId}
+		
+		@GetMapping("students/{studentId}")
+		public Student getStudent (@PathVariable int studentId) {
+			
+			return theStudents.get(studentId-1);
+		}
