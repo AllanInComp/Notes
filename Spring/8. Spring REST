@@ -159,3 +159,131 @@ Retrieve POJOs as JSON
 			
 			return theStudents.get(studentId-1);
 		}
+		
+Exception Handling 
+	-Handle exception and return error as JSON
+		1. REST client -> trigger exception (/api/students/999)
+		2. REST service -> Throw exception -> Exception Handler -> send error message as JSON 
+	Process	
+		1. Create custom error response class
+			-will be sent back to client as JSON 
+			-POJO class
+			public class StudentErrorResponse{
+				private int status;
+				private String message;
+				private long timeStemp
+				ctors and getters/setters
+			}
+			
+		2. Create custom exception class
+			public class StudentNotFoundException extends RuntimeException {
+				ctor(String message){super(message);}
+			}
+			
+		3. Update REST service to throw exception if student not found in the REST controller getStudent method
+			if((studentId >= theStudents.size())||theStudents.size()==0){
+				throw new StudentNotFoundException("Student id not found :"+ studentId);
+			}
+		4. Add exception handler method in the Controller using @ExceptionHandler
+			-define exception handler method, returns ResponseEntity
+			@ExceptionHandler
+			public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
+				StudentErrorResponse error = new StudentErrorResponse();
+				error.setStatus(HttpStatus.NOT_FOUND.value());
+				error.setMessage(exc.getMessage());
+				error.setTimeStamp(System.currentTimeMillis());
+				
+				//jackson will convert response entity to JSON 
+				return new ResponseEntity<>(error, HttpStatus.NOT_FOUND):
+			}
+		5. Add exception handler for generic exceptions
+			public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+				// same thing as 4.
+			}
+		6. Use @ControllerAdvice to generalize exception handling methods to all controllers
+			-for global exception handling, AOP based 
+			-annotation directly helps class to be integrated into system
+			1. Create new @ControllerAdvice
+			2. Refactor REST service, remove exception hadnling code
+			3. Add exception handling code to @ControllerAdvice class 
+			
+API design best practices
+	1. Review API requirements
+		ex: create REST API for CRM system 
+		Full CRUD support:
+			-get list of customers
+			-get single customer by id
+			-add new customer
+			-update/delete a customer
+			
+	2. Identify main resource/entity
+		look for most prominent "noun"
+			ex: "Customer"
+			/api/customers 
+	
+	3. Use HTTP methods to assign action on resource 
+		C:Post
+			/api/customers
+		R:Get
+			/api/customers
+			/api/customers/{customerId} //read a single customer 
+		U:Put 
+			/api/customers
+		D:Delete 
+			/api/customers/{customerId} //delete a single customer 
+		Don't include actions in the endpoint	
+			ex: /api/customersList , /api/deleteCustomer
+			-instead use HTTP methods to assign actions
+	Examples of real time projects
+		Paypal: invoicing API 
+			create/list invoices: post/get /v1/invoicing/invoices
+			
+		Github: Repositories API 
+			POST /users/repos : create new repository 
+			GET /user/repos
+
+CRUD based real-time projects
+	@RestController
+	@RequestMapping("/api")
+	public class CustomerRestController{
+		//autowire CustomerService
+		@Autowired
+		private CustomerService customerService;
+		
+		//add mapping for GET/customers
+		@GetMapping("/customers")
+		public List<Customer> getCustomers(){
+			return customerService.getCustomers();
+		}
+		
+	}
+	
+	Add Customer using POST 
+	REST client -> POST/api/customers -JSON-> Customer REST Controller
+	Jackson converts request body from JSON to POJO 
+	
+	@PostMapping("/customers")
+	public Customer addCustomer(@RequestBody Customer theCustomer){
+		theCustomer.setId(0); //backend DAO use saveOrUpdate(theCustomer) checks primary key, if id = null or 0, insert new customer 
+		customerService.saveCustomer(theCustomer);
+		return theCustomer;
+	}
+	-add using Postman:
+		send JSON to RestController using POST method to /api/customers 
+	Body: 
+	{
+	"firstName": "Maria",
+	"lastName": "Gomez",
+	"email":"maria.gomez@luv2code.com"
+	}''
+
+	Update Customer using PUT 
+	//add new customer, use PUT /customers to update existing customer
+	//since customer ID is set at the JSON, DAO will update customer in the Database automatically
+	@PutMapping("/customers")
+	 public Customer updateCustomer(@RequestBody Customer theCustomer) {
+		 customerService.saveCustomer(theCustomer);
+		 return theCustomer;
+	 }
+	 
+	 
