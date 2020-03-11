@@ -1,0 +1,94 @@
+The Singleton DP
+
+Problem: Several unnecessary instances of Factory
+
+Solution:
+  modify Factory so that Clients can obtain and use the one and only one instance of this class
+
+Applicability:
+  must be exactly one instance of a class
+  must be accessible to clients from a well-known access point
+  unique instance should be extensible by subclassing and clients should be able to use its subclass without modifying their code:
+    Beware of the Fragile Base Class Problem
+
+Design:
+  Singleton
+  fields:
+    static uniqueInstance
+    singletonData
+  methods:
+    static Instance() //return uniqueInstance
+    SingletonOperation()
+    GetSingletonData()
+
+Implementation:
+  public class Factory {
+    private static Factory theUniqueFactory;
+
+    public static Factory getInstance(){
+      if(Factory.theUniqueFactory ==null){
+        Factory.theUniqueFactory = new Factory(); //Broken in multi-threaded programs
+      }
+      return Factory.theUniqueFactory;
+    }
+
+    private Factory(){
+      //prevents public constructor calling
+    }
+
+    public <E> ISort<E> getSortAlgorithm(){
+      return new InsertionSort<E>();
+    }
+  }
+
+In multi-threaded programs:
+  Problem:
+    token must be locked and released correctly before and after instantiating the unique instance of Factory
+    difficult to identify all exits in the control flow because of possible return, break and continue statements and uncaught exceptions
+
+  Solutions:
+    C++: guard class including mutex locks (possible dead-locks on recursive calls)
+    Java: keyword synchronized on methods (high performance cost, used on Hashtable<K,V>)
+      -prevent threads to access same block at the same time
+      public static synchronized Factory getInstance(){
+        ...
+      }
+    Java: keyword volatile on variables
+      -make some instances variables volatile to prevent threads to cache their values and make their reading/writing atomic
+================================================================================
+  First solution for java:
+  Using synchronized and volatile:
+    public class Factory{
+      private static volatile Factory theUniqueFactory;
+
+      public static Factory getInstance(){
+        if(Factory.theUniqueFactory == null){
+          synchronized(Factory.class){
+            if(Factory.theUniqueFactory==null){
+              Factory.theUniqueFactory = new Factory();
+            }
+          }
+        }
+        return Factory.theUniqueFactory;
+      }
+
+    }
+================================================================================
+  Second solution for java:
+  Without synchronized and volatile:
+  public class Factory{
+    private static class FactoryUniqueInstanceHolder{
+      private static final Factory THE_UNIQUE_FACTORY = new Factory();
+    }
+
+    public static Factory getInstance(){
+      return FactoryUniqueInstanceHolder.THE_UNIQUE_FACTORY;
+    }
+  }
+
+No Matter the choice of the implementation of the singleton, Factory, and sort algorithm,
+the client remains the same
+
+Conclusion:
+  when instantiating classes whose instances must be shared across threads, beware of race conditions
+  use appropriate constructs and idioms to prevent race conditions

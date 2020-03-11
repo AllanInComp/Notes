@@ -1,0 +1,23 @@
+Fragile base class problem:
+  Reuse of code + Subtyping will result in broken results
+  public class InstrumentedHashSet<E> extends HashSet<E> }
+    private int addCount = 0;
+
+    @Override public boolean add(final E e){
+      this.addCount++:
+      return super.add(e);
+    }
+
+    @Override public boolean addAll(final Collection<? extends E> c){
+      this.addCount+= c.size();
+      return super.addAll(c);
+    }
+
+    public int getAddCount(){
+      return this.addCount;
+    }
+
+  }
+  Broken: addAll() calls add(), addCount will be added twice;
+
+  Solution:
