@@ -1,0 +1,162 @@
+Spring BOOT
+
+Overview:
+	-Auto-configuration based on props fils and jar classpath 
+	-Maven to resolve dependency
+	-Provide embedded HTTP server (Tomcat, Jetty, Undertow)
+		-self-contained unit, nothing else to install
+	-Doesn't replace MVC,REST,etc, just a configuration facilitator
+	-Uses the same code of Spring Framework
+	-contains cascading dependencies which matches versions of spring mvc, rest, and hibernate, etc
+		
+Spring Initializr
+	-used to quickly create a spring boot project
+	-go on https://start.spring.io/ to optimize (ex: choose specific dependencies such as Spring Web, Security, Themyleaf)
+	
+Maven Wrapper files
+	-mvnw allows to run a Maven Project (no need to have Maven installed on present in the path)
+	-mvnw.cmd for MS Windows, .sh for Max/Linux (no need if we already have maven installed locally)
+		mvnw clean compile test
+		-to use cmd, need to have JAVA_HOME as system variable
+		
+Main Spring Boot Class
+	/* 
+		@SpringBootApplication is composed of
+		@EnableAutoConfiguration : spring boot's auto-config support
+		@ComponentScan : component scanning of current package and sub packages 
+		@Configuration : can register extra beans with @Bean or import other configuration classes 
+	*/ 
+	@SpringBootApplication 
+
+	public class MyBootAppApplication {
+
+		public static void main(String[] args) {
+			//bootstrap the spring app, starts the embedded servers as well 
+			SpringApplication.run(MyBootAppApplication.class, args);
+		}
+
+	}
+	
+	-Component Scanning: need to place components underneath the package of the main Spring App java file  
+		-To add other packages that are not under the default, need to explicitly list under the class annotation
+			@SpringBootApplication (scanBasePackages={"com.someotherpackages.pack",""})
+			
+	-src/main/resources/application.properties
+		can add Spring Boot properties
+			#configure server port 
+			server.port=8585
+			#configure my props 
+			coach.name=Mickey Mouse
+		read data:
+			@RestController
+			public class MyRestController{
+				@Value("${coach.name}")
+				private String coachName;
+			}
+	
+	-src/main/resources/static 
+		By default, spring boot loads static resources from /static 
+		Ex: HTML files, CSS, JavaScript, images
+	
+	-src/main/resources/templates
+		Can load templates from this directory such as Thymeleaf
+	
+	-Do use src/main/webapp if the project is packaged as jar 
+	
+Spring Boot Dev Tools 
+	1. Edit pom.xml to add spring-boot-devtools
+	2. Add new REST endpoint to the app
+	3. Verify if the app is automatically loaded 
+
+Spring Boot Actuator
+	-Monitor and manage application, Check application health, Access application metrics
+	-Exposes endpoints for metrics out-of-the-box
+	/health checks status of the application 
+	/info give information about hte application, default is empty
+		-update application properties with the app info
+		info.app.name=My Cool App is Cool
+		info.app.description=It's an App
+		info.app.version=1.0.0
+	/beans 
+	/mappings : list of all @RequestMapping
+	/shutdown
+	/threaddump : check for bottlenecks
+	
+	To expose all actuator endpoints over HTTP:
+	application.properties:
+		management.endpoints.web.exposure.include=*
+	to exclude:
+		management.endpoints.web.exposure.exclude=health,info
+		
+	Adding Spring Security to protect against illegal endpoint access
+	1. Add maven dependency: spring-boot-starter-security
+	2. Try to access endpoint (user login form will be prompted)
+	3. username: user password: *shown in console
+	4. To override defaults:
+		application.properties:
+		spring.security.user.name=allan
+		spring.security.user.password=pass
+	5. Customizing Spring Security
+	public class DemoSecurityConfig extends WebSecurityConfigurerAdapter{
+		@Autowired
+		private DataSource securityDataSource;
+		
+		@Override
+		protected void configure(AuthenticationManager auth) throws Exception){
+			auth.jdbcAuthentication().dataSource(securityDataSource);
+		}
+		
+			
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.authorizeRequests().antMatchers("/actuator/**").hasRole("ADMIN")...;
+		}
+	}
+	
+Application Properties file
+	Spring Boot App can access user defined value pairs with @Value
+		
+		1. Define custom properties
+		coach.name=Mickey Mouse
+		team.name=Lakers
+		
+		2. Inject properties with @Value 
+		@Value("${coach.name}")
+		private String coachName;
+		
+		@Value("${team.name}")
+		private String teamName;
+	
+	Spring Boot Properties:
+		core, web, security, data, actuator, integration, dev tools
+		
+		Core: 
+			#set logging levels based on package names 
+			logging.level.org.springframework=DEBUG or TRACE or INFO 
+			#Log file name
+			logging.file=my-crazy-stuff.log
+		
+		Web:
+			# HTTP server port
+			server.port=7070
+			# Context path of the application
+			server.servlet.context-path=/my-silly-app
+			# Default HTTP session time out 
+		
+		Actuator:
+			management.endpoints.web.exposure.include=*
+			management.endpoints.web.exposure.exclude=health,info
+			management.endpoints.web.base-path=/nolongeractuator
+		
+		Security:
+			spring.security.user.name=admin
+			spring.security.user.password=pass
+			
+		Data Properties:
+			#JDBC URL of the database 
+			spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce
+			spring.datasource.username=springstudent
+			spring.datasource.password=springstudent
+
+Spring Boot REST API (connects to database):
+	
