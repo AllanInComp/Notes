@@ -3,8 +3,19 @@ Design, Prototyping and Construction （Chapter 11 in ebook e4)\
 Objective:
 
 Describe prototyping and different types of prototyping activities.
-	-
-
+	-For users to evaluate the design of an interactive product effectively, designers must prototype their ideas. 
+	-Prototype definition: manifestation of a design that allows stakeholders to interact with it and to explore its suitability 
+	-Low fidelity prototyping: 
+		low in : meterial quality, set of functions (or only represent/can't perform)
+		adv: simple, cheap, quick to produce 
+		ex: 
+			storyboarding (series of sketches on user interaction)
+			sketching (simple boxes & stick figures of actions, no narrative)
+			index cards (small pieces of cardboard, each card represents a screen or one element of the interaction)
+			Wizard of Oz (assume software-based prototype, user interacts with software mimicing product interaction, human operator simulates software's response to user
+	-High fidelity prototyping:
+		adv: useful in selling ideas (demos) and testing out technical issues
+	
 Enable you to produce simple prototypes from the models developed
 during the requirements activity.
 
@@ -17,10 +28,15 @@ Introduce physical computing kits and software development kits, and
 their role in construction.
 
 
+
+====================================================================================================================================================================================
+
 Lecture:
 
 Conceptual design: from requirements to design
 	requirements/needs => conceptual model 
+	Conceptual Model:
+		Outline of what people can do with a product and what concepts are needed to understand how to interact with it 
 	understandable by users in manner intended 
 	iterative 
 	prototypes allow alternatives 
@@ -41,11 +57,60 @@ Mental models (knowledge of system):
 	evoked through metaphors (picture, word, message)
 
 Metaphore evaluation:
-	how much structure it provides 
-	relevance to problem
-	easy to represent
-	understandable by audience 
-	extensibility
+	1.how much structure it provides 
+	2.relevance to problem
+	3.easy to represent
+	4.understandable by audience 
+	5.extensibility (useful later on)
+	
+	
+Using Scenarios:
+
+Scenario 3: Hyper-wonderland
+	This scenario addresses the positive aspects of how a hypermedia solution
+	will work.
+	The setting is the Lindholm construction site sometime in the future.
+	Kurt has access to a portable PC. The portables are hooked up to the
+	computer at the site office via a wireless modem connection, through which
+	the supervisors run the hypermedia application.
+	Action: During inspection of one of the caissons1 Kurt takes his portable PC,
+	switches it on and places the cursor on the required information. He clicks
+	the mouse button and gets the master file index together with an overview of
+	links. He chooses the links of relevance for the caisson he is inspecting.
+	Kurt is pleased that he no longer needs to plan his inspections in advance.
+	This is a great help because due to the ‘event-driven’ nature of inspection,
+	constructors never know where and when an inspection is taking place.
+	Moreover, it has become much easier to keep track of personal notes,
+	reports etc. because they can be entered directly on the spot.
+	The access via the construction site interface does not force him to deal with
+	complicated keywords either. Instead, he can access the relevant
+	information right away, literally from where he is standing.
+	A positive side-effect concerns his reachability. As long as he has logged in
+	on the computer, he is within reach of the secretaries and can be contacted
+	when guests arrive or when he is needed somewhere else on the site.
+	Moreover, he can see at a glance where his colleagues are working and get
+	in touch with them when he needs their help or advice.
+	All in all, Kurt feels that the new computer application has put him more in
+	control of things.
+	1 Used in building to hold water back during construction.
+Scenario 4: Panopticon
+	This scenario addresses the negative aspects of how a hypermedia solution
+	will work.
+	The setting is the Lindholm construction site sometime in the future.
+	Kurt has access to a portable PC. The portables are hooked up to the
+	computer at the site office via a wireless modem connection, through which
+	the supervisors run the hypermedia application.
+	Action: During inspecting one of the caissons Kurt starts talking to one of the
+	builders about some reinforcement problem. They argue about the recent lab
+	tests, and he takes out his portable PC in order to provide some data which
+	justify his arguments. It takes quite a while before he finds a spot where he
+	can place the PC: either there is too much light, or there is no level surface
+	at a suitable height. Finally, he puts the laptop on a big box and switches it
+	on. He positions the cursor on the caisson he is currently inspecting and
+	clicks the mouse to get into the master file. The table of contents pops up
+	and from the overview of links he chooses those of relevance – but no lab
+	test appears on the screen. Obviously, the file has not been updated as
+	planned.
 
 Prototype
 	Definition: manifestation of a design that allows stakeholders to interact with it 
@@ -81,3 +146,35 @@ Prototype
 		use personas, card-based prototypes or stickies to model the UX 
 		Visual representation: design map, customer/user journey map, experience map 
 		Representations: wheel or timeline 
+
+Low-fidelity prototype
+	Adv:
+		Lower development cost
+		Evaluates multiple design concepts
+		Useful communication device
+		Addresses screen layout issues
+		Useful for identifying market requirements
+		Proof of concept
+	Disadv:
+		Limited error checking 
+		Poor detailed specification to code to
+		Facilitator-driven
+		Limited utility after requirements established
+		Limited usefulness for usability tests
+		Navigational and flow limitations
+		
+High-fidelity prototype
+	Adv:
+		Complete functionality
+		Fully interactive
+		User-driven
+		Clearly defines navigational scheme
+		Use for exploration and	test
+		Look and feel of final product
+		Serves as a living specification
+		Marketing and sales tool
+	Disadv:
+		More resource-intensive to develop
+		Time-consuming to create
+		Inefficient for proof-of-concept designs
+		Not effective for requirements gathering
