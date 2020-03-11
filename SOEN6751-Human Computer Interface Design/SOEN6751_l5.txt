@@ -1,1 +1,42 @@
 Evaluation Chapter 13
+
+The specific aims of this chapter are to:
+
+Explain the key concepts and terms used in evaluation. Introduce a range of different types of evaluation methods.
+
+
+
+Show how different evaluation methods are used for different purposes at different stages of the design process and in different contexts of use.
+Show how evaluators mix and modify methods to meet the demands of evaluating novel systems.
+Discuss some of the practical challenges that evaluators have to consider when doing evaluation.
+
+================================================================================================
+Lectures:
+
+UI evaluation is:
+  Test design ideas with representative end-users in as natural an environment as possible
+  Discover how good/bad the design is and as many ways as possible
+  A de-risking activity and a diagnostic tool
+
+UI evaluation is not:
+  Design review with team members or stakeholders
+  QA of the software
+  Rubber stamp of approval, applied on a product before it goes out the door
+
+Why: check that users can use the product and that they like it
+What: conceptual model, early prototypes of a new system and later, more complete prototypes
+Where: natural and lab settings
+When: throughout design, even finished products
+
+Things to consider when interpreting disadvantages
+  Reliability: method produce same results
+  Validity: method measures correct subjects
+  Ecological Validity: environment doesn't distort results
+  Biases: Human bias
+  Scope: how generalizable are the results
+
+Evaluation approaches
+  Usability testing: controlled env tasks on prototype stage, quantitative results measured
+  Field studies: natural env behavior by users on early stage, qualitative results described
+  Analytical Evaluation: no users involved, prototype, problems presented by experts
+  Combining approaches
