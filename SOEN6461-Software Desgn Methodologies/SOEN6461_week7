@@ -1,4 +1,5 @@
 Fragile base class problem:
+
   Reuse of code + Subtyping will result in broken results
   public class InstrumentedHashSet<E> extends HashSet<E> }
     private int addCount = 0;
@@ -20,4 +21,125 @@ Fragile base class problem:
   }
   Broken: addAll() calls add(), addCount will be added twice;
 
+  Reason:
+  -provider can't determine whether a change to a base class is safe for
+  users by examining in isolation the methods of the base class
+  -user can't determine whether extending the base class is safe by reading the API fo the base class
+
   Solution:
+  Favor composition over inheritance
+  -allow safe inheritance by adding one level of indirection
+  ForwardingSet delegates to HashSet
+  InstrumentedHashSet extends ForwardingSet
+
+  public class ForwardingSet<E> implements Set<E>{
+    private final Set<E> s;
+    public boolean add(E e){return s.add(e);}
+    ...
+  }
+  public InstrumentedHashSet<E> extends ForwardingSet<E>{
+    private int addCount=0;
+    ...
+  }
+
+  Other problem:
+    constructor of inheritable class must never call overridable method
+    public class SuperClass{
+      //Broken! - constructor invokes an overridable method
+      public SuperClass(){
+        this.overrideMe();
+      }
+      public void overrideMe(){
+        ...
+      }
+    }
+    ex: values initiated in subclass ctor will be null
+
+    Solution:
+    public class SuperClass{
+      public SuperClass(){
+        this.cantOverrideMe();
+      }
+      public final void cantOverrideMe(){
+        ...
+      }
+    }
+
+    Conclusion: adding one level of indirection solves the Problems
+      -encapsulation
+      -delegation
+      => information hiding
+
+
+==============================================================================
+Some Theory and Practice on Patterns
+
+Idioms: recurring motifs in a program source code
+  connote a recognized acknowledge style of programming
+
+Definition:
+A pattern is a general reusable solution to a commonly occurring problem within a given context in software development, operation, and maintenance
+-The solution must not be particular, can be adapted, must be adapted(Forces, Variants)
+
+Quality:
+A means to enhance the reusability:
+-of the code written using the Patterns (+its flexibility)
+-of the problem and its solution
+-a means to encapsulate design experience
+-Quality without a name: basically experience increased by practical expertise
+
+Form:
+-Books, articles
+-Coplien's Form
+  -name
+  -problem
+  -Solution
+  -consequences
+-UML-like class diagrams
+
+Example:
+  Simplified compiler
+    -parse files to build and AST, iterate over the AST
+
+----------------------------------------------------------------------------
+Naive Implementation: how to generate microcode for
+  -Microsoft Windows operating system
+  -Intel processor
+
+  Add a generateCode() method in each class
+
+  public class Method{
+    public String generateCode(){
+      String generatedCode = "";
+      final Iterator iterator = this.statements.iterator();
+      while(iterator.hasNext()){
+        final Statement aStatement = (Statement) iterator.next();
+        generatedCode += aStatement.generateCode();
+      }
+      return generatedCode;
+    }
+  }
+
+-----------------------------------------------------------------------------
+Requirements:
+  -decouple the data structure
+  -from algorithms on the dataStructure
+    -the generateCodeForXXX() method
+    solution: visitor design pattern
+
+The Visitor Design Pattern
+
+Motivation: when an element accepts the visitor, it sends a request to the visitor
+that encodes the element's class. It also includes the element as an argument.
+-The visitor will then execute the operation for that element
+
+Participants:
+  Visitor
+
+
+
+Catalogue:
+  Design patterns:
+    -development and maintenance
+    -design/implementation levels
+    -examples in C++ and Smalltalk
