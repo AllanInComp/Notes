@@ -129,17 +129,68 @@ Requirements:
 
 The Visitor Design Pattern
 
-Motivation: when an element accepts the visitor, it sends a request to the visitor
-that encodes the element's class. It also includes the element as an argument.
--The visitor will then execute the operation for that element
+Motivation: 
+	-To have type-checking code mixed with pretty-printing code or flow analysis code 
+	-To have each new operation be added separately, node class are independent of the operations that apply to them
+	-when an element accepts the visitor, it sends a request to the visitor that encodes the element's class. It also includes the element as an argument.
+	-The visitor will then execute the operation for that element
 
 Participants:
-  Visitor
+	ConcreteVisitors
+	AST Node components
 
+Achievements:
+	Decouple data structure and algorithms 
+	put the traversal in only one place, the AST 
+	allow addition of new algorithms without changing the data structure
 
+Conclusion:
+	Visitor design pattern useful anywhere having:
+	-A (stable) data structure
+	-Algorithms on that data structure
+
+-----------------------------------------------------------------------------
 
 Catalogue:
-  Design patterns:
+	Design patterns:
     -development and maintenance
     -design/implementation levels
     -examples in C++ and Smalltalk
+	
+	Categories:
+		-Behavioural
+		-Creational
+		-Structural 
+
+	Examples:
+		Abstract Factory: provide an interface for creating families of related or dependent objects without specifying their concrete classes 
+		Adapter: convert interface of a class into another one the client expects => compatibility
+		Bridge: decouple an abstraction from its implementation so that the two can vary independently 
+		Builder: Separate the construction of a complex object from its representation => same construction -> different objects 
+		Chain of responsibility: avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request
+			-chain receiving objects and pass the request along the chain until an object handles it 
+		Command: encapsulate a request as an object, allow parameterize clients with different requests 
+		Composite: Compose objects into tree structures to represent part-whole hierarchies
+		Decorator: attach different responsibilities to an object dynamically (flexible alternative to subclassing)
+		Facade: provide a unified interface to a set of interfaces in a subsystem => easier to use sub interfaces 
+		Factory method: interface for creating objects, let subclasses decide which class to instantiate 
+		Flyweight: use sharing to support large numbers of fine-grained objects efficiently
+		Interpreter: given a langugage, define a representation of its grammar along with a interpreter
+		Iterator: access elements of an aggregate objects without exposing object's aggregation
+		Mediator: define an objects that encapsulates how a set of objects interacts -> promotes loose coupling (objects don't refer to each other explicitly)
+		Memento: without violating encapsulation, capture and externalize an object's internal state to restore the state later 
+		Observer: one-to-many dependency between objects, when one changes state, all dependencies are notified and updated automatically
+		Prototype: specify the kinds of objects to create using a prototypical instance, create new objects by copying its prototype 
+		Proxy: provide a surrogate or placeholder for another object to control access to it 
+		Singleton: ensure a class has only one instance 
+		State: allow an object to alter its behaviour when its internal state changes (object will appear to change its class)
+		Strategy: define a family of algorithms, encapsulate each one and make them interchangeable 
+		Template Method: define skeleton of an algorithm in an operation, deferring some steps to subclasses 
+		Visitor: represent operation to be performed on the leements of an object structure 
+
+-----------------------------------------------------------------------------
+
+Practice
+	Scattered information: informal text 
+	
+	Access the trade-offs: Flexibility, Complexity
