@@ -1,0 +1,52 @@
+Usability Testing Chapter 14 in e4
+
+Objectives
+Explain how to do usability testing.
+Outline the basics of experimental design.
+Describe how to do field studies.
+
+==============================================================================
+Lecture:
+
+Overview:
+  recording performance of typical users doing typical tasks
+  controlled environment
+  users observed and timed
+  data is recorded on video and key presses are logged
+  data is used to calculate performance times
+  user satisfaction is evaluated using questionnaires and Interviews
+  field observation for contextual understanding
+
+Testing iPad usability:
+  7 participants with 3+ months experience with iPhones
+  signed consents to explain experience and follow regulations
+  explore => perform randomly assigned specified tasks
+  Problems detected:
+    -accessing the web was Difficulties
+    -lack of affordance and Feedback
+    -knowing where to tap
+  Actions by evaluators:
+    -reported to developers
+  Testing conditions:
+    usability lab or other controlled space
+    emphasis on selecting representative users, developing representative tasks
+  Some type of data:
+    time to complete task (+after specified time away from product)
+    number and type of errors per task/unit of time
+    number of users making particular error/completing task successfully
+
+Testing conditions:
+
+Summary (continued)
+ The experimenter controls independent variable(s) in
+order to measure dependent variable(s)
+ Field studies are evaluation studies that are carried out in
+natural settings to discover how people interact with
+technology in the real world
+ Field studies that involve the deployment of prototypes or
+technologies in natural settings may also be referred to as
+‘in-the-wild’ studies
+ Sometimes the findings of a field study are unexpected,
+especially for in-the-wild studies that explore how novel
+technologies are used by participants in their own homes,
+places of work, or outside

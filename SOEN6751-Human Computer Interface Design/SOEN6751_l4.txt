@@ -34,12 +34,11 @@ their role in construction.
 Lecture:
 
 Conceptual design: from requirements to design
-	requirements/needs => conceptual model 
-	Conceptual Model:
-		Outline of what people can do with a product and what concepts are needed to understand how to interact with it 
-	understandable by users in manner intended 
-	iterative 
-	prototypes allow alternatives 
+
+	requirements/needs => conceptual model
+	understandable by users in manner intended
+	iterative
+	prototypes allow alternatives
 	characteristics of the concept model:
 		-what functions will the product perform?
 		-how are functions related to each other? (sequential/parallel, categorizations)
@@ -47,12 +46,12 @@ Conceptual design: from requirements to design
 
 Concrete design:
 	vs Conceptual design: more emphasis on many aspects (color, icons, buttons, interaction devices, ...)
-	user characteristics and context (ex: inclusiveness, input, and output modes) 
+	user characteristics and context (ex: inclusiveness, input, and output modes)
 	accessibility (ex: web content accessibility guidelines)
 	cross-cultural design (languages, colors, icons, indigenous knowledge)
-	
-Mental models (knowledge of system): 
-	Understand system by learning/using it 
+
+Mental models (knowledge of system):
+	Understand system by learning/using it
 	used as inference when carrying out tasks
 	evoked through metaphors (picture, word, message)
 
@@ -112,31 +111,37 @@ Scenario 4: Panopticon
 	test appears on the screen. Obviously, the file has not been updated as
 	planned.
 
+	how much structure it provides
+	relevance to problem
+	easy to represent
+	understandable by audience
+	extensibility
+
 Prototype
-	Definition: manifestation of a design that allows stakeholders to interact with it 
-		-small scale model 
+	Definition: manifestation of a design that allows stakeholders to interact with it
+		-small scale model
 	Purpose:
 		Evaluate and feedback in interaction design
-		Stakeholders can see,hold,interact with a prototype better than document/drawing 
-		Communication between team members, idea testing, reflection 
+		Stakeholders can see,hold,interact with a prototype better than document/drawing
+		Communication between team members, idea testing, reflection
 	Low fidelity prototyping:
-		uses a medium which is unlike the final medium 
-		Adv: quick, cheap and easily changed 
+		uses a medium which is unlike the final medium
+		Adv: quick, cheap and easily changed
 		Dis: limited error checking, poor detailed specs, limited usability
 		ex: sketches of screens, post-it notes, storyboards
 		Storyboards: brings more detial and chance of role play
-			-series of sketches showing how a user might progress through a task using the device 
-			-early design 
+			-series of sketches showing how a user might progress through a task using the device
+			-early design
 		Sketching: important in low fidelity prototyping
 		Wizard of Oz prototyping: interact with user, gain insight by developer pretending to be system output
-			disadvantages: simulations require training so wizard can respond in a credible way, inconsistent responses, need to control behavior to be predictable, improvisation of wizard to go beyond expected behavior 
+			disadvantages: simulations require training so wizard can respond in a credible way, inconsistent responses, need to control behavior to be predictable, improvisation of wizard to go beyond expected behavior
 	High fidelity prototyping:
-		materials expected in final product 
+		materials expected in final product
 		danger that users think they have a full system
 		Adv： complete functionality, fully interactive, user-driven, marketing and sales tool
-		Dis: resource-intensive, time-consuming, inefficient proof-of-concept designs, ineffective requirements gathering 
+		Dis: resource-intensive, time-consuming, inefficient proof-of-concept designs, ineffective requirements gathering
 	Scenarios in design:
-		express proposed or imagined situations 
+		express proposed or imagined situations
 		scripts, concrete examples of tasks
 		plus and minus scenarios to explore extreme cases 
 	Compromises (compared to final product): 
@@ -178,3 +183,6 @@ High-fidelity prototype
 		Time-consuming to create
 		Inefficient for proof-of-concept designs
 		Not effective for requirements gathering
+		plus and minus scenarios to explore extreme cases
+	
+
