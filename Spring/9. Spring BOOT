@@ -1,5 +1,4 @@
 Spring BOOT
-
 Overview:
 	-Auto-configuration based on props fils and jar classpath 
 	-Maven to resolve dependency
@@ -21,20 +20,17 @@ Maven Wrapper files
 		
 Main Spring Boot Class
 	/* 
-		@SpringBootApplication is composed of
+	@SpringBootApplication is composed of: 
 		@EnableAutoConfiguration : spring boot's auto-config support
 		@ComponentScan : component scanning of current package and sub packages 
 		@Configuration : can register extra beans with @Bean or import other configuration classes 
 	*/ 
 	@SpringBootApplication 
-
 	public class MyBootAppApplication {
-
 		public static void main(String[] args) {
 			//bootstrap the spring app, starts the embedded servers as well 
 			SpringApplication.run(MyBootAppApplication.class, args);
 		}
-
 	}
 	
 	-Component Scanning: need to place components underneath the package of the main Spring App java file  
@@ -67,7 +63,6 @@ Spring Boot Dev Tools
 	1. Edit pom.xml to add spring-boot-devtools
 	2. Add new REST endpoint to the app
 	3. Verify if the app is automatically loaded 
-
 Spring Boot Actuator
 	-Monitor and manage application, Check application health, Access application metrics
 	-Exposes endpoints for metrics out-of-the-box
@@ -157,6 +152,271 @@ Application Properties file
 			spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce
 			spring.datasource.username=springstudent
 			spring.datasource.password=springstudent
-
 Spring Boot REST API (connects to database):
+	Boot Setup:
+		Web, Devtools, JPA(Connect to database)
+	Easy solution to set up database connection:
+		Spring BOOT automatically configure data source
+			-use application.properties
+			spring.datasource.url=jdbc:mysql://localhost:3306/employee_directory?useSSL=false&serverTimeZone=UTC
+			spring.datasource.username=springstudent
+			spring.datasource.password=springstudent
+		Based on configs Spring Boot will automatically configure:
+			DataSource, EntityManager(similar to hibernate SessionFactory, wraps session object), ... by JPA 
+	JPA (Java Persistence API): 
+		Hibernate is the most populate implementation of JPA specificaiton
+		Benefits:
+			-maintain portable flexible code by coding to JPA spec(interfaces)
+			-no need for vendor lock on
+		
+	//Extra Service layer: EmployeeService
+	public interface EmployeeService {
+		public List<Employee>findAll();
+		public Employee findById(int theId);
+		public void save(Employee theEmployee);
+		public void deleteById(int theId);
+	}
 	
+	//implementation of EmployeeService (can be service layer to both hibernate and JPA DAO implementations : 
+	@Service
+	public class EmployeeServiceImpl implements EmployeeService{
+		@Autowired
+		EmployeeDAO employeeDAO;
+		
+		@Override
+		@Transactional
+		public List<Employee> findAll() {
+			return employeeDAO.findAll();
+		}
+		
+		@Override
+		@Transactional
+		public Employee findById(int theId) {
+			return employeeDAO.findById(theId);
+		}
+		
+		@Override
+		@Transactional
+		public void save(Employee theEmployee) {
+			employeeDAO.save(theEmployee);
+		}
+		
+		@Override
+		@Transactional
+		public void deleteById(int theId) {
+			employeeDAO.deleteById(theId);
+		}
+	}
+	
+	//DAO interface:
+	public interface EmployeeDAO{
+		public List<Employee>findAll();
+		public Employee findById(int theId);	
+		public void save(Employee theEmployee);	
+		public void deleteById(int theId);
+	}
+	
+	// Different implementations of DAO: 
+	1.
+	DAO Hibernate impl:
+		@Repository
+		public class EmployeeDAOHibernateImpl implements EmployeeDAO {
+			@Autowired
+			private EntityManager entityManager;
+			
+			//another way to inject EntityManager would be:
+			/*
+			private EntityManager entityManager;
+			@Autowired
+			private class EmployeeDAOHibernateImpl(EntityManager entityManager){
+				this.entityManager = entityManager;
+			}
+			*/
+			
+			@Override
+			//transaction handles all database communications automatically
+			@Transactional //use springframework.transaction.annotation.Transactional
+			public List<Employee>findAll(){
+				//get current hibernate session 
+				Session currentSession = entityManager.unwrap(Session.class);
+				Query<Employee> theQuery = currentSession.createQuery("from Employee",Employee.class);
+				List<Employee> employees = theQuery.getResultList();
+				return employees;
+			}
+			
+			@Override
+			public Employee findById(int theId) {
+				Session currentSession = entityManager.unwrap(Session.class);
+				
+				Employee theEmployee = currentSession.get(Employee.class,theId);
+				
+				return theEmployee;
+			}
+			@Override
+			public void save(Employee theEmployee) {
+				// TODO Auto-generated method stub
+				Session currentSession = entityManager.unwrap(Session.class);
+				
+				//save employee
+				currentSession.saveOrUpdate(theEmployee);
+			}
+			@Override
+			public void deleteById(int theId) {
+				// TODO Auto-generated method stub
+				Session currentSession = entityManager.unwrap(Session.class);
+				
+				Query theQuery = currentSession.createQuery("delete from Employee where id=: employeeId");
+				
+				theQuery.setParameter("employeeId", theId);
+				
+				theQuery.executeUpdate();
+			}
+			
+		}
+	
+	2. 
+	DAO EntityManager and standard JPA impl:
+	-Advantage: uses EntityManager directly without unwrapping it as a Session object 
+	@Repository
+	public class EmployeeDAOJPAImpl implements EmployeeDAO {
+		@Autowired 
+		private EntityManager em;
+
+		@Override
+		public List<Employee> findAll() {
+			System.out.println("Used EmployeeDAOJPAImpl");
+			TypedQuery<Employee> theQuery = em.createQuery("from Employee", Employee.class);
+			List<Employee> employees = theQuery.getResultList();
+			return employees;
+		}
+
+		@Override
+		public Employee findById(int theId) {
+			return em.find(Employee.class, theId);
+		}
+
+		@Override
+		public void save(Employee theEmployee) {
+			em.merge(theEmployee);
+		}
+
+		@Override
+		public void deleteById(int theId) {
+			Query theQuery = em.createQuery("delete from Employee where id=:emloyeeId");
+			theQuery.setParameter("employeeId", theId);
+			theQuery.executeUpdate();
+
+		}
+
+	}
+	
+	3.
+	DAO Spring Data JPA
+	-Advantage: Allows implementations built for several different entitity types (Customer, Employee, Student, etc)
+		-reduce code needed to build DAO layer
+	-No longer need @Transactional in the Service layer since JpaRepository provides this functionality
+	-Need to change findById method:
+	@Override
+	public Employee findById(int theId) {
+		Optional<Employee> result = employeeDAO.findById(theId);
+		Employee emp= null;
+		if(result.isPresent()) {
+			emp= result.get();
+		}else {
+			throw new RuntimeException("Did not find employee id - "+theId );
+		}
+		return emp;
+	}
+	
+	
+	// Entities (Tables) to correspond to database:
+	public class Employee {
+		//fields: id, firstName, lastName, email
+		@Id
+		@GeneratedValue(strategy=GenerationType.IDENTITY)
+		@Column(name="id")
+		private int id;
+		
+		@Column(name="first_name")
+		private String firstName;
+		
+		@Column(name="last_name")
+		private String lastName;
+		
+		@Column(name="email")
+		private String email;
+		
+		//empty ctor
+		public Employtee(){}
+		//ctor excluding id (its already generated)
+		public Employee(String firstName, String lastName, String email){...}
+		
+		//getters and setters for all
+		...
+		//toString method
+		...
+	}
+	
+	//REST Controller for DAO 
+	@RestController
+	@RequestMapping("/employee")
+	public class EmployeeRestController {
+		@Autowired
+		private EmployeeDAO employeeDAO;
+		
+		@GetMapping("/all")
+		public List<Employee> findAll(){
+			return  employeeDAO.findAll();
+		}
+	}
+	
+
+Spring Data REST:
+	-Leverages REST repository
+	-methods for CRUD
+	-By default, create endpoints based on entity types
+		If POJO is Employee, endpoint will be /employees (first character lower case, adds 's' to entity)
+	-Gets endpoints for free after adding Spring data rest in POM file (can be through initilizr)
+	-HATEOAS compliant:
+		Hypermedia as the Engine of Application State 
+		Hypermedia-driven sites provide information to access REST interfaces 
+	
+	Main components:
+		1. Entity 
+		2. JpaRepository
+		3. Maven Dependency
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		
+	Process:
+		
+	1. No longer need REST controller or service packages 
+	2. Specify Database location, username, password in application.properties:
+		spring.datasource.url=jdbc:mysql://localhost:3306/employee_directory?useSSL=false&serverTimeZone=UTC
+		spring.datasource.username=springstudent
+		spring.datasource.password=springstudent
+		server.port=6060
+		spring.data.rest.base-path= /magic-api
+	3. Log on and test the url (default is localhost:*port*/*entity (lowercase + ending s)*
+		-to change default endpoint, use @RepositoryRestResource(path="*specific endpoint name*") on the repository class
+		@RespositoryRestResource (path = "members")
+		public interface EmployeeRepository extends JpaRepository<Employee, Integer>{}
+		
+	Sorting JSON files by attritutes:
+		localhost:6060/magic-api/members?sort=lastName,desc
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		

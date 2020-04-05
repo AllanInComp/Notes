@@ -1,0 +1,45 @@
+Performance Regression Detection in DevOps
+
+By: Jinfu Chen
+
+System failures are often due to performance issues rather than functional bugs:
+	performance regression: 
+		-financial impact: page load slowdown of only  second could cost $1.6 billion dollars
+		-pre defined workload make requests to the old & new versions of the testing environment to measure the performance regression
+		-large amount of resources are required to detect, locate and fix performance regression 
+		-performance testing is time consuming 
+	
+	Load tests may not be representative to the field workload 
+	increasing volume and complexity of operational data is beyond the capacity
+	
+	The level of granularity of  a workload is important
+		-files less than 1kb account for 35% of all requests
+		-a workload can simply replay the exact field workload 
+		
+	Case study: what is the granularity of a workload
+	
+Approach of generating user load test:
+	(captured 1.png)
+	1. Extracting user actions
+	2. Enriching user action with context
+	3. Identifying frequent action sequences
+		-load1->read1->read2->read2->read1->read2-(200second wait)->write1->write2->read1 
+		-splitting user action sequences, extract frequent sub sequences 
+	4. Grouping similar frequent action sequences 
+		(captured 2.png)
+		-compute sequences distance matrix using levenshtein distance 
+	5. Grouping users into clusters
+		-use hierarchical clustering 
+		-users can be grouped into the same cluster 
+	6. Generating load test 
+		1. identify representative user in each cluster 
+		2. calculate a probability of each frequent action sequence 
+		
+Result: Load tests from recovered workloads have similar behavior to the original workload 
+	-large overhead to develop model if too many clusters of users are detected 
+	
+DevOps:
+	why would this approach help in DevOps:
+		challenges in coping with performance regressions in Dev 
+			-prior approaches cannot perform well 
+			-in true devops, we have a running system early on 

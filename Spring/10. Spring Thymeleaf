@@ -1,0 +1,30 @@
+ThemyLeaf
+
+Overview
+	-Java templating engine
+	-commonly used to generate HTML views
+	-Thymeleaf expressions help access Spring features such as beans
+	-Browser -> Spring mvc -> ThemyLeaf template -> Browser
+	-Basically a substitute for JSP, but has non-web use cases (is a general use template)
+	
+Process: 
+	1. Thymeleaf to maven
+		in initializr, select Spring Web Starter, Thymeleaf, Spring Boot DevTools
+	2. Develop Spring mvc
+		//Controller
+		@Controller
+		public class DemoController{
+			@GetMapping("/")
+			public String sayHello(Model theModel){
+				theModel.addAttribute("theDate",new jata.util.Date());
+				return "helloworld";
+			}
+		
+		}
+		
+		
+		
+	3. Create Thymeleaf template
+		-have .html format
+		To use Themyleaf expressions, need to add  as an attribute to the html
+		<html xmlns:th="http://www.thymeleaf.org">
