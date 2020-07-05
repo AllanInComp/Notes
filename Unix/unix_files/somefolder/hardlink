@@ -1,0 +1,5 @@
+Link test
+
+This is a hard link to an original text file
+
+However, this keeps original content despite the deletion of the original

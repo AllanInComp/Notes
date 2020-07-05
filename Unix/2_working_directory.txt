@@ -1,0 +1,109 @@
+Difference between cd Users/allan and /User/allan
+  -/Users/allan is the absolute path starting from the parent disk
+
+FileSystem organization
+  /: Root
+  /bin: Binaries, programs
+  /sbin: System binaries, system programs
+  /dev: devices
+  /etc: system config
+  /home: user home directories
+  /lib: libraries of code
+  /tmp: temporary files
+  /var: various
+  /usr: user programs, tools and libraries (not files)
+
+Mac-only FileSystem
+/Applications: Mac Programs
+/Library: Mac libraries of code
+/Network: Networked devices
+/System: Mac OS X
+/Users: User home directories
+/Volumes: Mounted Volumes
+.DS_Store: Holds folder view options, icon positions
+
+File naming:
+  -max 255 characters
+  -Avoid certain symbols: >?/\|$?%&^~
+  -hyphen not as first character
+  -typically lowercase (UNIX is case sensitive)
+  -underscores better than spaces (easier for unix to recognize)
+
+To access file with space (ex: Application Support)
+  -cd Application\ Support
+  -cd "Application Support"
+
+Creating files
+  touch somefile.txt
+    -if somefile.txt doesn't exist, command will create one
+
+Unix Text editors
+  nano somefile.txt
+
+Reading files
+  cat somefile.txt
+    -concatenante 1 or more text file inputs to display on command
+  more somefile.txt
+    -some thing but has pagenation
+  less somefile.txt
+    -backward scrolling, better memory use, overall replaces more command
+    less commands:
+      g : go to the top
+      q : quit view
+      less -M : tells % of the page
+      less -N : shows line numbers
+
+Reading Portions Of Files:
+  head: Displays lines from beginning
+  tail: Displays lines from end
+  tail -f : "Follow" the tail of a file, shows any updates to the file
+
+Making a directory
+  mkdir somefolder
+  mkdir -p somefolder/nested1/nested2/nested3 : need to add -p for multiple folder creation for nested Structure
+
+Moving and removing files
+  mv newfile.txt newfolder
+
+Rename files
+  mv newfile.txt newfile2.txt : will rename the txt wile moving it
+  -n : no overwriting
+  -f : force overwriting (turned on by default)
+  -i : interactive overwriting (ask me)
+  -v : verbose
+
+Copy files and directories
+  cp original_file.txt somefolder/pastedfile.txt
+  -f : force overwriting
+
+Deleting files and directories
+  rm somefile.txt
+  rmdir somefolder
+  -R : remove everything inside the folder recursively
+  -deleting files in unix will not make the file go to trash
+
+Finder aliases in Unix
+  -aliases needs storage space to contain information to its linked file
+  -mac aliases are useless to UNIX, will give nonsense characters
+  -points to the same storage spage (not the path)
+  Unix uses Hard Links :
+  ln filetolink hardlink
+    -reference a file in the system
+    -do not break if file is moved or deleted
+    -required size is exactly the same as the orignal file (points to the same spot)
+
+Symbolic Links
+  ln -s filetolink symlink
+  -references a file path or a directory path
+  -will show symlink -> filetolink in ls -lah command
+  -only uses memory to store file path
+  -will break if original file is renamed, moved or removed
+
+Searching for files and directories
+  find path expression
+  ex: find ~/Documents -name "someimage.jpg"
+  Wildcard characters
+  *: 0 or more characters (glob)
+  ?: any one character
+  []: any character in the brackets
+  ex: find ~/Documents -name "s?me*[s,a,r]" : a file/folder named "somefolder" can be matched up

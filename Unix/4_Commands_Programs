@@ -1,0 +1,47 @@
+which ls : know which path ls command is using
+
+
+PATH variable
+PATH = Users/apple/anaconda3/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  -assigns path
+
+Date
+  date : shows current date and time
+  uptime : time since computer is booted up
+  users: shows who is using os
+  who : shows all users using programs (bash + finder = 2 users)
+  uname : shows operating system name (Darwin for Mac OS X)
+    -mnrsvp : all useful information on hardware and system
+  hostname
+
+Disk information
+  df : disk free space
+    -h : humanize view (with unit abbreviations s.a. Gi for Gigabyte)
+    -H : base 10 humanize view (less supported)
+  du <path> : show disk usage for all content (and nested) in path
+    -hd 1 : humanize view of disk usage with depth of 1
+
+Viewing Processes
+  ps : gives a snapshot of the processes that are running
+    -a : other users processes as well as your own
+    aux : a = all processes, u = include a column that shows owner of process, x = show background processes
+
+Monitoring Processes
+  top : gives a list of the ongoing processes
+  -n <number>: gives the top n processes
+  -o cpu : cpu usage
+
+ctrl+c : stop the process SIGINT (polite kill)
+ctrl+z : suspend the process SIGTSTP (resumable spleep)
+
+Stopping processes
+kill <process ID>
+
+Text file helpers
+wc <file name> : gives the word count (lines, words, characters including space)
+sort <file name> : display sorted words on the file
+  -n : number sort
+  --qsort : quick sort
+  -u : distince (unique) values
+  -r : reverse
+unique: outputs unique lines in a file
