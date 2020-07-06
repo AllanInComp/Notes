@@ -1,0 +1,31 @@
+Grep : searching with regular expressions
+  -output all lines matching a regular expression
+  grep apple new_file.txt : find all lines containing 'apple'
+    -n : give line number
+    -c : how many times found in file
+    -R : recursively search sub directories
+  history | grep nano | less : show in history all occurrence of "nano"
+
+  Grep wildcards
+    * ? []
+
+  Color matched text:
+  grep --color=auto apple new_file.txt
+
+Regular expressions
+  grep '.a.a.a' fruit.txt  : will match banana or papaya
+  . : any single character except line breaks
+  [] : any one character inside
+  [^]: any one character not inside
+  - : range indicator (ex: [A-Za-z0-9])
+  * : Preceding element can occur 0 or more times (ex: a* 0 or more 'a's)
+  + : Preceding element can occur 1 or more times
+  ? : 0 or 1
+  | : OR operator
+  $ : end of line, nothing after preceding input
+  [[:upper:]] : any uppercase letter
+
+Translating characters
+  tr '123456' 'EBGDAE' : 1 to E, 2 to B, 3 to G...
+  echo '1238572934357280934570293875' | tr '123456' 'ABCDEF'
+    -output: ABC8E7B9CDCE7B809CDE70B9C87E

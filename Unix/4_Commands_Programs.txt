@@ -45,3 +45,18 @@ sort <file name> : display sorted words on the file
   -u : distince (unique) values
   -r : reverse
 unique: outputs unique lines in a file
+  -d : lines that are repeated
+  -u : only show unduplicated lines
+
+Utility Programs
+  cal <month> <year>: calendar
+    -y : of the current year
+  bc : calculator (can parse in files to return result)
+    quit: exit calculator
+  expr : expression evaluator, returns quick calculation of expression
+    1122 * 3344 wont work, need 1122 \* 3322
+  units : unit conversion
+
+Command history
+  history : look at all bash history in the session
+    -can be changed if using the up arrow to modify (*)

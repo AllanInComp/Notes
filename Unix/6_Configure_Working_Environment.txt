@@ -1,0 +1,52 @@
+Upon login to a bash shell
+  /etc/profile
+  ~/.bash_profile, ~/.bash_login, ~/.profile, ~/.login
+
+Upon starting a new bash subshell
+~/.bashrc
+
+Upon logging out of bash shell
+~/.bash_logout
+
+Bash Shells: Login vs Non-Login
+  Add to ~/.bash_profile
+  if [-f ~/.bashrc]; then
+    source ~/.bashrc
+  fi
+  Then put all shell configuration in ~/.bashrc
+
+Creating aliases for commands
+  -aliases only last for the current login
+    -must beconfigured in .bashrc or .bash_profile to persist through logins
+  -can also redefine a command to add options
+  alias ll='ls -la' : now ll will be equal to the command on rhs
+  alias hello='echo " Hello World"'
+
+Shell Variables
+  $SHELL
+  MYNAME = "Allan Yu" : variable assignment doesn't include '$'
+  echo $MYNAME : variable usage uses '$'
+  FOUR='4'
+  FIVE='5'
+  $ echo $FOUR+$FIVE | bc
+
+Setting the PATH variable (for bash commands)
+  PATH ='' : no bash commands will work if there is no PATH
+Adding an extra path:
+  nano .bashrc
+  add line: export PATH="$PATH:/Developer/Tools"
+  save
+
+Configuring history with variables
+  nano .bashrc
+  export HISTSIZE=10000 #500 is default
+  export HISTFILESIZE=1000000 #if exceed, will truncate oldest records in file
+  export HISTTIMEFORMAT='%b %d %I:%M %p'
+  export HISTCONTROL=ignoreboth #ignoredups:ignorespace
+  export HISTIGNORE="history:pwd:exit:df:ls:ls -la:ll" #omit commands in the quotes in history
+
+Customize Unix Command promt
+  PS1="\u:Allan$"
+
+Logout files
+  nano .bash_logout

@@ -1,0 +1,29 @@
+Standard input
+  stdin
+
+Standard outputs : is defined as the monitor
+  stdout
+
+When directing input and output, the input is always placed first
+
+To output to a new file : use ">"
+  sort -n numbers.txt > new_numbers.txt
+
+Add a new line to a text file
+  echo "My New Line" >> existing_file.txt
+
+Directing input from a file
+  1. echo "(3*4)+5/2" > calculation.txt
+  2. bc < calculation.txt : takes content of calculation.txt as input and returns calculation result
+
+Combination of IO
+  sort < fruit.txt > sorted_fruit.txt : reads from left to right first
+
+Use pipes to direct output without using an intermediate file
+  echo "Hello World" | wc
+  echo "(3*2)+(11/12)" | bc
+  cat fruit.txt | less
+
+Suppressing Output (no output at all)
+  ls -la > /dev/null :will not output to anything
+  echo < /dev/null : will not input anything
