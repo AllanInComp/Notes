@@ -1,0 +1,57 @@
+#list directory contents
+ls
+-l : extra information on file (such as create date and permissions)
+  -rw-r--r--@ 1 apple  staff  5  4 Jul 16:12 1_intro.txt
+-la : also lists hidden files (ex: parent directory reference and dot files [invisible config files])
+-lah : adds indicator character for byte size (200 -> 200B)
+
+#format and display the on-line manual pages
+man
+
+#return working directory name
+pwd
+
+#change directory
+cd
+cd.. : go to parent directory (can be multiple ex: cd ../..)
+cd - : go to directory before
+cd ~ : go to home directory
+
+#remove directory entries
+rm, unlink
+
+#change file access and modification times
+touch <file name>
+
+#Unix text editor
+nano <file name>
+
+#Reading files
+cat <file name>
+more <file name>
+less <file name>
+head <file name>
+tail <file name>
+  -f : follow file update
+
+#Making directories
+mkdir <folder name>
+mkdir -p <folder name>/<sub folder name> : to create multiple layers of folder
+
+#Rename files & moving files
+mv <file name> <new file name/location>
+  -f: forced overwriting
+  -i: interactive overwriting
+
+#Remove files / directores
+rm somefile.txt
+rmdir somefolder
+  -R : remove everything inside recursively
+
+#HardLink a file
+ln file_to_link.txt hardlink : Hard Link (hard copy that doesn't break)
+ln -s file_to_link.txt symlink : Symbolic Link (only contains fixed path to original)
+
+#finding files
+find path expression
+find ~/Documents -name "s?me*[s,a,r]"

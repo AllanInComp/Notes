@@ -1,0 +1,47 @@
+What is Unix?
+-Operating System
+
+Why use Unix directly instead of a GUI?
+-difference in power and control (automatic vs manual)
+
+Terminal Application
+
+Hello World with terminal:
+  echo 'Hello World!'
+
+Exit command:
+  exit
+
+Command Structure
+ command options arguments
+ command: echo
+ options: <optional>
+ arguments: "Hello world"
+
+ echo 'Hello World'
+ echo -n 'Hellow World' //where -n removes extra lines when returned
+
+ ruby -v or ruby --version
+ ls -l -a -h Desktop
+
+Clear Screen:
+  cmd -k
+
+Kernel And Shells:
+  Kernel:
+    -Core of the OS
+    -Allocates time and memory to programs
+    -Mac OS X uses the Mach kernel
+  Shell:
+    -Outer layer of the OS
+    -Interacts with user
+    -Sends requests to kernel
+    -Mac uses bash shell by default
+
+Find Shell:
+  -login shell: echo $SHELL
+  -current shell: echo $0
+
+Manual command
+  man <input content>
+  ex: man echo //gives manual on the echo command

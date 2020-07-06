@@ -1,0 +1,43 @@
+User has total access to own files, and limited access to other files
+
+whoami : command to check user's own identity
+
+User groups
+-User defined group names
+-group permissions help facilitate individual user access permissions
+
+chown allan:staff ownership.txt
+  -changes the ownership of ownership.txt to allan in group staff
+sudo chown allan:staff ownership.txt
+  -executes the same command, but as another user
+
+File permissions: Alpha Notation
+            User    Group   Other
+read(r)   |  y        y       y
+write(w)  |  y        y       n
+execute(x)|  y        n       n
+            rwx      rw-     r--
+-the combined 9 characters (rwxrw-r--) is shown in ls -l to show permissions for each file in the directory
+
+chmod ugo = rwx filename : set permissions rwx for all 3 types of users
+chmod u=rwx,g=rw,o=r filename
+chmod ug+w filename : add the w permission for users and groups
+chmod o-w filename : remove the w permission for others
+chmod a+rwx : set all permissions for all
+
+File permissions: Octal Notation
+r=4,w=2,x=1
+rwx = 7, rw- = 6, r--= 4
+rwxrw-r-- = 764
+chmod 777 file.txt : give all permissions to all users on file.txt
+-changing permissions on symlink also changes that of originals
+
+The Root User
+-superuser account that can do anything on the system
+-disabled by default by Mac OS X
+
+Using sudo
+-substitute user and do
+-basically a prefix to set user permission as root
+-will prompt authentication
+sudo ls -la
