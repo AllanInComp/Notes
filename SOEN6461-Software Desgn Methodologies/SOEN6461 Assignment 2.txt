@@ -1,0 +1,39 @@
+SOEN 6461 Deliverable 2
+
+Question 1:
+Using Eclipse hierarchy view (or other such tools), provide a UML-like class diagram of the
+hierarchy of classes starting from the type padl.kernel.IFactory. Do not include/expand all
+the hierarchy but only those sub-hierarchies that you find interesting. Do include only
+interesting subsets of methods. Explain why you find them interesting.
+
+Answer:
+An interesting focus on the provided heirachy is the extension of IFactory to the Interface IAspectJFactory and its implementation AspectJFactory.
+The main focus of IFactory is to define an interface whose implementations have the main function of producing entities 
+with methods starting with 'create', such as IConstructor createConstructor(...), IField createField(...).
+IAspectJFactory extends IFactory, meaning its implentations must also implement IFactory methods. However, AspectJFactory implements AspectJFactory, but also
+extends Factory(which is a solid class implementing the methods of IFactory), this allows the class AspectJFactory to focus on defining implementations specific to IAspectJFactory,
+such as the definition of methods which create Aspect-Oriented-Programming extensions, such as Aspects, Advices, and Pointcuts.
+The method calls specific to AspectJFactory are called by classes that are related to AspectJ, such as the AspectWalker, which demands creation of advices, aspects, and pointcuts from its 
+field object IAspectJFactory factory that has access to both Factory class methods and the extended AspectJFactory methods.
+
+Question 2:
+Still focusing on padl.kernel.IFactory, read the implementation of the various create…(…)
+methods in padl.kernel.impl.Factory. Explain the implementation of
+createPrimitiveEntity(…)
+
+Answer: 
+in the implementation class Factory, createPrimitiveEntity(final char[] aPrimitiveEntityName){...} allows the retrieval/creation of a primitive entity object (which is a Constituent of the padl kernel).
+If the static IPrimitiveEntity HashMap in Factory does not contain an IPrimitiveEntity implemenation with the same name as the parameter, the method creates a Primitive Entity object by calling the constructor new PrimitiveEntity(aPrimitiveEntityName), which calls for and returns the object of construction of a Constituent class base object. 
+The factory then adds the primive entity into its static HashMap to prevent the creation of a new IPrimitiveEntity implementation with the same name.
+If a primitive entity object with the same name already exists, the method will not create a new IPrimitiveEntity implementation.
+The method will return the created (or existing) IPrimitiveEntity implemenation object. 
+
+Still focusing on padl.kernel.IFactory, explain how padl.kernel.impl.Factory and
+padl.cpp.kernel.impl.CPPFactoryEclipse work together.
+
+Answer: 
+padl.kernel.impl.Factory and padl.cpp.kernel.impl.CPPFactoryEclipse both implement the IFactory Interface, this means that their main role is to create entites specific to the calling create methods. 
+CPPFactoryEclipse in addition to extending Factory (meaning it gains all of the Factory class object's functionalities), also implements the interface ICPPFactoryEclipse. This means CPPFactoryEclipse 
+implements additional methods that are specific to the CPP class group, those methods cannot be used by padl.kernel.impl.Factory.
+In summary, class Facory acts as an extension class for CPPFactoryEclipse, allowing the latter to use all its methods, while CPPFactoryEclipse implements additional functionalities specific to CPP Eclipse.
+

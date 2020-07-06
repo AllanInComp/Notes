@@ -1,0 +1,46 @@
+css
+
+/*inline css:*/
+	<h1 style="color:red">
+
+/*internal css*/
+	<head>
+		<title> CSS Cheat Sheet</title>
+		<style type = "text/css">
+		h1{	
+			color:blue;
+		}
+
+/*external css (.css file)*/
+	/*mydoc.html file:*/
+	<head>
+		<link rel="stylesheet" href="css/mystyle.css">
+	</head>
+	
+	/*mystyle.css file:*/
+	h1{
+		color:green;
+	}
+	
+-Always end with semi colon
+
+-class: repeatable
+	<div class="box-1">
+		...
+		div>
+
+	.box-1{
+		background-color:#333;
+		color:#fff;
+		/*responsive css designs use % instead of px */
+		width:50%;
+		height:auto;
+	}
+	
+-Css box model:
+	Margin (transparent) -> Border -> Padding (transparent) -> Content (text and images)	
+	
+	.container{
+		margin: 5px 10px 5px 10px; /* top right bottom left */
+		
+	}

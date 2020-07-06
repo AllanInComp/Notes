@@ -1,0 +1,160 @@
+# SQL
+
+Crash Course:
+-Overview: Structured Query Language, work with databse, used on servers
+	-databases: MySQL, dBase, PostgreSQL, Hadoop, Oracle, MS SQL, MaxDB, MariaDB, SQLite, Openbase, MongolDB
+	-tools: CMD Client, Adminer, Firebird, Mysql Workbench, PHPMyAdmin, Sequel Pro(mac)
+	-sensitivity: Keywords are case-insensitive (SELECT, FROM, WHERE,...), In some setups (MySQL can enable/disable), table/column names are case-sensitive
+
+Commands
+	-Create Databas
+		CREATE DATABASE myDB;
+		remove db: DROP DATABASE myDB;
+	-Create Table
+		CREATE TABLE customers (
+			id INT not null auto_increment,
+			firstName varchar(255) not null,
+			lastname varchar(255) not null,
+			email varchar(255),
+			address varchar (255),
+			city varchar(255),
+			zipcode varchar (6),
+			primary key(id) /* Can indicate as primary key after declaration */
+		);
+	-Insert Into Table
+		INSERT INTO customers(firstName, lastname, email, address, city, zipcode) VALUES
+		('John','Doe','jdoe@gmail.com','55 Main st','Boston','H2H3H3'),
+		/* Any other rows */
+		;
+	-Update records
+		UPDATE  customers
+		SET email = 'test@gmail.com'
+		WHERE id = 1;
+	-Delete Records
+		DELETE FROM customers
+		WHERE id = 3;
+	-Alter Table structures
+		/* Add column */
+		ALTER TABLE customers ADD testCol VARCHAR(255);
+		/* Modify column */
+		ALTER TABLE customers MODIFY testCol int（11）;
+		/* Drop column */
+		ALTER TABLE customers DROP COLUMN testCol int（11）;
+	-Select
+		SELECT * FROM customers
+		SELECT DISTINCT firstName, lastName from customers
+		SELECT COUNT(DISTINCT Country) FROM Customers;
+		SELECT Count(*) AS DistinctCountries FROM (SELECT DISTINCT Country FROM Customers);
+	-AND / OR / NOT  operators
+		-and
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE condition1 AND condition2 AND condition3 ...;
+		-or
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE condition1 OR condition2 OR condition3 ...;
+		-not
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE NOT condition;
+	-ORDER BY
+		SELECT * FROM Customers
+		ORDER BY Country;
+		SELECT * FROM Customers
+		ORDER BY Country DESC;
+		/* Order by Country first, then CustomerName if they have the same Country */
+		SELECT * FROM Customers
+		ORDER BY Country, CustomerName;
+	-NULL values
+		SELECT column_names
+		FROM table_name
+		WHERE column_name IS NULL;
+		SELECT column_names
+		FROM table_name
+		WHERE column_name IS NOT NULL;
+	-SELECT TOP
+		SELECT TOP number|percent column_name(s)
+		FROM table_name
+		WHERE condition;
+		-SQL
+		SELECT TOP 3 * FROM Customers
+		WHERE Country='Germany';
+		SELECT TOP 50 PERCENT * FROM Customers;
+		-MySQL
+		SELECT * FROM Customers
+		LIMIT 3;
+	-MIN & MAX
+		SELECT MIN(Price) AS SmallestPrice
+		FROM Products;
+		SELECT MAX(Price) AS LargestPrice
+		FROM Products;
+	-COUNT(), AVG(), SUM()
+		SELECT COUNT(column_name)
+		FROM table_name
+		WHERE condition;
+		SELECT AVG(column_name)
+		FROM table_name
+		WHERE condition;
+		SELECT SUM(column_name)
+		FROM table_name
+		WHERE condition;
+	-LIKE
+		SELECT column1, column2, ...
+		FROM table_name
+		WHERE columnN LIKE pattern;
+			WHERE CustomerName LIKE 'a%'	Finds any values that start with "a"
+			WHERE CustomerName LIKE '%a'	Finds any values that end with "a"
+			WHERE CustomerName LIKE '%or%'	Finds any values that have "or" in any position
+			WHERE CustomerName LIKE '_r%'	Finds any values that have "r" in the second position
+			WHERE CustomerName LIKE 'a_%'	Finds any values that start with "a" and are at least 2 characters in length
+			WHERE CustomerName LIKE 'a__%'	Finds any values that start with "a" and are at least 3 characters in length
+			WHERE ContactName LIKE 'a%o'	Finds any values that start with "a" and ends with "o"
+	-WILDCARDS
+		%	Represents zero or more characters	bl% finds bl, black, blue, and blob
+		_	Represents a single character	h_t finds hot, hat, and hit
+		[]	Represents any single character within the brackets	h[oa]t finds hot and hat, but not hit
+		^	Represents any character not in the brackets	h[^oa]t finds hit, but not hot and hat
+		-	Represents a range of characters	c[a-b]t finds cat and cbt
+
+	-IN
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name IN (SELECT STATEMENT);
+		SELECT * FROM Customers
+		WHERE Country NOT IN ('Germany', 'France', 'UK');
+		SELECT * FROM Customers
+		WHERE Country IN (SELECT Country FROM Suppliers);
+	-Between
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name BETWEEN value1 AND value2;
+		SELECT * FROM Products
+		WHERE Price BETWEEN 10 AND 20;
+		SELECT * FROM Products
+		WHERE Price NOT BETWEEN 10 AND 20;
+	-Aliases
+		SELECT o.OrderID, o.OrderDate, c.CustomerName
+		FROM Customers AS c, Orders AS o
+		WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+	-Join
+		SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+		FROM Orders
+		INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+		SELECT column_name(s)
+		FROM table1
+		LEFT JOIN table2
+		ON table1.column_name = table2.column_name;
+		SELECT column_name(s)
+		FROM table1
+		FULL OUTER JOIN table2
+		ON table1.column_name = table2.column_name
+		WHERE condition;
+		/* Self Join */
+		SELECT column_name(s)
+		FROM table1 T1, table1 T2
+		WHERE condition;
+	-Union
+		SELECT column_name(s) FROM table1
+		UNION
+		SELECT column_name(s) FROM table2;

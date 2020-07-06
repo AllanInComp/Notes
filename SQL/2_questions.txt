@@ -1,0 +1,315 @@
+1. What's the difference between DELETE and TRUNCATE statements?
+-DELETE command is used to delete a row in the table
+  Can rollback data after a delete statement
+  DML command
+  slower
+-TRUNCATE is used to delete all the rows in the table
+  Can't rollback data
+  DDL command
+  faster
+
+2. Different subsets of SQL?
+  -DDL: Database Definition Language, define database schema
+    ex: CREATE, ALTER, DROP, RENAME
+  -DML: Database Manipulation Language, Manipulation of data present in database
+    ex: SELECT, INSERT, UPDATE, DELETE
+  -DCL: Database Control Language, deals with the rights, permissions and other controls of the database system
+    ex: GRANT, REVOKE
+  -TCL: Transaction Control Language, manage transactions - changes made by DML statements
+    ex: COMMIT, ROLLBACK, SAVEPOINT
+
+3. What is DBMS?
+  Database Management System: Software Application that interacts with the user, applications and the database itself to retrieve and analyze data
+
+4. What is a table and a field?
+-table: collection of data in an organized manner of rows and columns
+-field: number of columns in the table
+
+5. What are joins in SQL?
+-JOIN clause is used to combine rows from 2+ tables based on a related column between them -> merge tables from there
+
+6. Difference between CHAR and VARCHAR2
+-CHAR : fixed length, only store data of that length
+-VARCHAR2: variable length
+
+7. Primary Key
+-Set of attributes that can be used to uniquely identify every tuple in a table
+-one of the candidate keys can be chosen as a primary key
+
+8. What are Constraints ?
+-limits set on the data type of the table
+  Not NULL, UNIQUE, CHECK, DEFAULT (when no values specified, give default), INDEX(used to create and retrieve data from db very quickly)
+
+9. Difference between SQL and MySQL
+-SQL: Structured Query Language, core of RDBMS
+-MySQL: open source RDBMS developed by Oracle, uses SQL at its core
+
+10. Unique Key
+-uniquely identifies single row in the table
+-null values are allowed
+-multiple values are allowed, but not duplicates
+
+11. Foreign Key
+-Maintains referential integrity by enforcing a link between the data in two tables
+-foreign key in child references primary key in parent
+
+12. Data Integrity
+-Accuracy of data
+-Consistency of data
+-Integrity Constraints to enforce business rules on data
+
+13. Clustered vs Non-Clustered index
+-Clustered: easy retrieval of data from the db (faster), alters record storage, only one clustered index in one table
+-Non-Clustered: easy retrieval of data from the db (slower), creates new record storage object, many non-clustered indexes in on table
+
+14. SQL query to display the current date:
+SELECT GETDATE();
+
+15. Different types of JOIN
+-Inner JOIN: matching values in both tables
+-FULL JOIN: either have match in left or right
+-LEFT JOIN: all records from left table, and matching records on the right
+-RIHGT JOIN: opposite to left join
+
+16. Denormalization
+-Technique used to access data from higher to lower forms of a database
+-Increase the performance of the infrastructure by introducing redundancy into a table
+-Use Database queries that combine data from different tables into a single table
+  -Pros: Few joins, simpler queries (look at fewer tables)
+  -Cons: Updates and inserts are more expensive & harder to write (more columns), inconsistent data, more storage
+
+17. Entities and Relationships
+-Entities: object in real world whose data can be stored in a database. Stored as columns
+-Relationships: Relation/link between entities.
+
+18. Index
+-Performance Tuning Method, Allows faster retrieval of records from the table, Creates and entry for each value
+
+19. Difference types of index
+-Unique Index: no duplicate values, if primary key is defined, unique index can be applied automatically
+-Clustered Index: reorders physical order of the table and searches based on the basis of key values
+-Non-Clustered Index: maintains a logical order of the data
+
+20. Normalization
+-Process of organizing data to avoid duplication and redundancy
+-Pros: Better Organization, More tables with smaller rows, Efficient data access, flexibility for queries, easier to implement security, compact database
+
+21. Difference between DROP and TRUNCATE
+-DROP: Removes a table and can't be rolled back from the database
+-TRUNCATE: Removes all rows from the table, also can't be rolled back
+
+22. Different types of Normalization
+-1NF:
+  No duplicated rows
+  Each cell is single-valued (no repeating groups or arrays)
+  Entries in a column are of the same kind
+  Rows Uniquely Identified (with unique key)
+-2NF:
+  1NF
+  All non-key attributes are dependent on all of the key (no partial dependencies)
+  ex: teacher age dependent on teacher id, must create separate table for teacher_id,teacher_age
+-3NF:
+  2NF
+  No transitive dependencies
+  ex:
+-BCNF
+  3NF
+  every determinant is a candidate key
+-4NF
+  BCNF
+  no multi-valued dependencies
+
+23. What is ACID property in databases
+  Atomicity: a transaction must be treated as an atomic unit (all or nothing)
+  Consistency: database remains in consistent state after any transaction
+  Isolation: parallelism of multiple concurrent transactions won't affect one another
+  Durability: transaction will eventually persist after system failure & recovery
+
+24. Trigger in SQL
+-Stored procedures that are defined to execute automatically in place or after data modifications
+  BEFORE, AFTER | INSERT, UPDATE, DELETE
+
+25. Different operators available in SQL
+  Arithmetic
+  Bitwise
+  Comparison
+  Compound
+  Logical
+
+26. Are NULL values same as zero or blank space?
+-NULL value: represents a value which is unavailable, unknown, assigned or not applicable
+-zero: number
+-blank space: character
+
+27. Difference between cross join and natural joins
+-Cross: produces cross product or Cartesian product of two tables
+-Natural: based on all columns having the same name and data types in both the tables
+
+28. What us subquery in SQL
+-Query inside another query
+-Subqueries are always executed first
+
+29. Different types of subquery
+-Correlated Subquery: select data from a table reference in the outer query
+-Non-Correlated Subquery: independent query where the output of subquery is substituted in the main query
+
+30. Ways to list the count of records in a table
+-SELECT * FROM table1;
+-SELECT COUNT(*) FROM table1;
+-SELECT rows FROM sysindexes where id = OBJECT_ID(table1) AND indid <2
+
+31. SQL query to find names of employees wthat begin with 'A'
+-SELECT * from [Employees] where names LIKE 'A%'
+
+32. SQL query to get third highest salary of an employee from employee-table
+SELECT TOP 1 salary
+FROM(
+  SELECT TOP 3 salary
+  FROM employee_table
+  ORDER BY salary DESC) AS emp
+  ORDER BY salary ASC;
+)
+
+33. What is the need of group functions in SQL?
+-Group functions work on a set of rows and returns one result per group (AVG, COUNT, MAX, MIN , SUM, VARIANCE)
+
+34. What is a relationship and what are the different type of relationships?
+-Relation: links between entities that have something to do with each other
+-Relationships: connection between tables in a database
+  one to one, one to many, many to one, self referencing
+
+35. How to insert NULL values in a column while inserting the data:
+  -implicitly omitting column from column list
+  -explicitly specifying NULL keyword
+
+36. Difference on 'BETWEEN' and 'IN' condition operators?
+-BETWEEN: display rows based on range of values in a row
+-IN: values contained in a specific set of values(list)
+
+37. Why are SQL functions used?
+-Convert data types
+-Perform calculations on data
+-Modify individual data items
+-Format dates and numbers
+-Manipulate output
+
+38. What is the need of MERGE statements
+-Allows conditional update or insertion of data into a table
+-Performs an update if a row exists or an insert of a row doesn't exist
+
+39. Recursive Stored Procedure
+-Stored procedure which calls by itself until it reaches some boundary condition
+-helps reuse of code\
+
+40. CLAUSE in SQL
+-Helps limit the result set by providing a condition to the query
+-WHERE & HAVING
+
+41. Difference between WHERE and HAVING clauses?
+-WHERE: applied to each row before GROUP BY functions in a Query
+-HAVING: after GROUP BY
+
+42. Ways in which Dynamic SQL can be executed
+-Write a query with parameters
+-Using EXEC
+-Using sp_executesql
+
+43. Various levels of constraints
+-Column level
+-Table level
+
+44. How to fetch common records from two tables?
+-Use INTERSECT
+  SELECT column1, column2, ...
+  FROM table_names
+  WHERE condition
+  INTERSECT
+  SELECT column1, column2, ...
+  FROM table_names
+  WHERE condition
+
+45. List some case manpulation functions in SQL
+  LOWER('string') //converts the string to lower case
+  UPPER('string') //converts it to upper case
+  INITCAP('string') //returns string with the first letter in uppercase and rest in lowercase
+
+46. What are the different set operators available in SQL?
+  UNION
+  INTERSECT
+  MINUS
+
+47. What is an ALIAS command
+  -as command, name can be referred in WHERE clause to identify a particular table or a column
+
+48. Aggregate and Scalar functions
+  -Aggregate: used to evaluate mathematical calculation and returns a single value
+    -MAX,MIN,AVG,SUM,COUNT
+  -Scalar: return a single value based on the input value
+    -UCASE,NOW
+
+49. how to fetch alternate records in a table
+  -SELECT studentId from(Select rowno, studentId from student) where mod(rowno,2)=0
+
+50. Name the operator which is used in the query for pattern matching
+  -LIKE with % and _
+
+51. How to select unique records from a table?
+  -SELECT DISTINCT studentID FROM Student
+
+52. How to fetch first 5 characters of the string?
+  -SELECT SUBSTRING(StudentName,1,5) as studentname FROM student
+  -SELECT RIGHT(StudentName,5) as studentname FROM student
+
+53. Main difference between SQL and PLSQL
+  SQL: query language that allows issuing single query of INSERT/UPDATE/DELETE
+  PL/SQL: language that allows to write full program (loops, variables, etc) to acoomplish multiple operations
+
+54. What is a View
+  -Virtual table which consists of a subset of data contained in a table.
+  -Takes no space to store
+  -Can have data of one or more tables combined, dependent on the relationship
+
+55. What are Views used forms
+  -Restrict access to database
+  -Making complex queries simple
+  -Ensure data independence
+  -Provide different views of same data
+
+56. What is a Stored Procedure
+  -function which consists of many SQL statements to access the database system
+
+57. Pros and Cons of Stored Procedure
+  P: modular programming - create once, store and call for several times => faster execution
+  C: Can be executed only in the database and utilizes more memory in the database server
+
+58. List all types of user-defined functions
+  -Scalar
+  -Multi-statement functions
+  -Inline Table-valued functions
+
+59. Collation
+  -Set of rules that determine how data can be sorted as well as compared
+
+60. Different types of Collation Sensitivity:
+  Case
+  Kana
+  Width
+  Accent
+
+61. Local and Global variables
+  Local: used or exist only inside the function
+  Global: accessed throughout the program
+
+62. What is Auto Increment in SQL?
+  Allows user to create a unique number to get generated whenever a new record is inserted into the table
+
+63. Datawarehouse
+  -Central repository of data where the data is assembled from multiple sources of information
+
+64. Different authentication modes in SQL Server? How can it be changed?
+  Windows Mode & Mixed Mode
+  -Start->Programs->Microsoft SDQL Server -> SQL Enterprise Manager -> Select server from Tools menu -> Select Server Configuration Properties -> Security page
+
+65: STUFF and REPLACE functions
+  STUFF: used to overwrite existing character or inserts a string into another string
+  REPLACE: used to replace the existing characters of all the occurrences 

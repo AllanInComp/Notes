@@ -1,0 +1,7 @@
+how to use js to change inner content of a container?
+-document.getElementById("someId").innerHTML = <p> This is some new content </p>
+
+debugging
+
+functions
+

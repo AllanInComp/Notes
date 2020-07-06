@@ -1,0 +1,77 @@
+<html> : starting tag
+
+<head> : contains meta information, define information about the file
+
+<meta> : in header, defines what kind of meta data is in the html file
+	-passes type of information in the 'name' attribute, plus giving it content 
+	ex:     <meta name="description" content="This is an awesome Website">
+			<meta name="author" content="Allan Yu">
+			<meta name="keywords" content="HTML, Tutor">
+			<meta name="viewport" content="width=devide-width, initial-scale=1.0">
+
+<title> : specifies title for document
+
+
+<body> : html content
+
+<h1> : header tag, bigger & bolder words
+
+<p> : paragrah
+	-block level (takes up entire width of the page)
+
+<big>, <small>, <b>, <i> : some inline modifiers for text 
+
+<br>, <hr> : horizontal separators
+
+<header>,<main>,<footer>: divides body into 3 sections
+
+<nav>: usually in <header>, used to create navigation bars
+
+<article>: usually in <main>
+	-articles and sections important for search engine to qualify the website
+
+<section>: breaks up <article> in different sections
+
+<aside> : normally used for advertisements
+
+<img>: image, can be local
+	attributes: 
+		src = "../images/exalt.jpg"; /* links a jpg in local directory */
+		alt = "an exalted orb"; /* alternative text for an image if it can't be displayed */
+		
+<video>: puts a video
+	attributes:
+		controls /* shows controls for video */
+		autoplay 
+		loop 
+	src: 
+		local: src="videos/small.mp4"
+		online: use embedding functions of the side then paste to body
+		
+<table>: table
+	<th>: table heading
+	<td>: table data
+	<thead>, <tbody> allows logictic separation of table (for styling purposes)
+	attribute:
+		colspan="2"; one data takes up 2 horizontal spaces
+		
+<div>: block container
+
+<span>: inline container
+
+<form>: acts like a input wrapper, send user input to server
+	attributes:
+		action = "process.php"
+		method = "GET" 
+		method = "POST"
+
+	<label>: label for the input, specified by
+		for = "First Name":
+	<input>: element used to define a user input element	
+		type =
+			text, radio, date, password, email, file
+	<input type = "submit" value="Submit">
+			
+<iframe>: inline frame, used to embed another document within the current html doc 
+	attributes:
+		allow /* allow other websites to use this html as their iframe */
